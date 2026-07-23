@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grill House</title>
+<style>
+  :root{
+    --navy:#2d3a45;
+    --navy-dark:#212b34;
+    --tan:#d5ab87;
+    --tan-dark:#b4894f;
+    --cream:#f7f3ec;
+    --dark:#1a1a1a;
+    --text:#2c2c2c;
+    --serif:'Georgia','Times New Roman',serif;
+    --sans:'Segoe UI',Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--sans);color:var(--text);background:var(--cream);}
+  a{text-decoration:none;color:inherit;}
+  ul{list-style:none;}
+  img{max-width:100%;display:block;}
+  h1,h2{font-family:var(--serif);font-weight:400;}
+  .btn{
+    display:inline-block;
+    background:var(--navy);
+    color:#fff;
+    padding:10px 30px;
+    border-radius:2px;
+    font-weight:600;
+    letter-spacing:1px;
+    font-size:0.78rem;
+    text-transform:uppercase;
+    border:none;
+    cursor:pointer;
+  }
+  .btn:hover{background:var(--navy-dark);}
+  .btn-tan{background:var(--tan);color:var(--navy-dark); font-size: 13px;}
+  .btn-tan:hover{background:var(--tan-dark);}
+
+  /* NAVBAR */
+  header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:35px 48px;
+    background:#fff;
+    border-bottom:1px solid rgba(45,58,69,0.08);
+    position:relative;
+    z-index:10;
+  }
+  .logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    color:var(--navy);
+    font-family:var(--serif);
+    letter-spacing:2px;
+    font-weight:700;
+    font-size:1.1rem;
+    text-transform:uppercase;
+  }
+  .logo .icon{
+    width:26px;height:26px;
+    display:flex;align-items:center;justify-content:center;
+    color:var(--tan-dark);
+    font-size:1rem;
+  }
+  nav ul{display:flex;gap:30px;font-weight:600;font-size:0.85rem;letter-spacing:0.5px;text-transform:uppercase;
+          font-size: 13px;
+  }
+  nav a:hover{color:var(--tan-dark);}
+
+  /* HERO - split layout, sloped bottom edge to match gallery/testimonials */
+  .hero{
+    display:grid;
+    grid-template-columns:1fr 1.4fr;
+    min-height:100vh;
+    clip-path:polygon(0 0, 100% 0, 100% 96%, 0 100%);
+    position:relative;
+    z-index:2;
+  }
+  .hero-left{
+    background:var(--tan);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:60px 30px 90px;
+  }
+  .hero-left .hero-logo{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    color:var(--navy-dark);
+    font-family:var(--serif);
+    letter-spacing:2px;
+    font-weight:700;
+    font-size:1rem;
+    text-transform:uppercase;
+    margin-bottom:40px;
+  }
+  .hero-left .hero-logo .icon{
+    width:30px;height:30px;
+    display:flex;align-items:center;justify-content:center;
+    background:var(--navy);
+    color:#fff;
+    border-radius:50%;
+    font-size:0.85rem;
+  }
+  .hero-left .subtitle{
+    font-size:0.85rem;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    color:var(--navy-dark);
+    margin-bottom:10px;
+  }
+  .hero-left h1{
+    font-size:3.2rem;
+    color:#fff;
+    margin-bottom:18px;
+    text-shadow:0 2px 6px rgba(0,0,0,0.15);
+  }
+  .hero-left .desc{
+    max-width:380px;
+    color:rgba(33,43,52,0.85);
+    font-size:0.95rem;
+    line-height:1.6;
+  }
+  .hero-right{
+    position:relative;
+    background:
+      linear-gradient(180deg, rgba(0,0,0,0.05), rgba(0,0,0,0.15)),
+      url('https://loremflickr.com/1600/900/steak,food') center/cover no-repeat;
+  }
+  .social-rail{
+    position:absolute;
+    right:20px;top:50%;
+    transform:translateY(-50%);
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  .social-rail a{
+    width:34px;height:34px;
+    background:#fff;
+    color:var(--navy);
+    border-radius:2px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:0.85rem;
+    font-weight:700;
+    box-shadow:0 2px 6px rgba(0,0,0,0.15);
+  }
+
+  /* ABOUT - navy background, image aside */
+  .about{
+    display:grid;
+    grid-template-columns:1fr 1.1fr;
+    gap:60px;
+    padding:165px 60px;
+    align-items:center;
+    background:var(--navy);
+    color:#fff;
+    margin-top:-40px;
+    position:relative;
+    z-index:1;
+  }
+  .about h2{font-size:2rem;margin-bottom:18px;color:#fff;}
+  .about .lead{font-style:italic;color:rgba(255,255,255,0.75);margin-bottom:18px;}
+  .about li{margin-bottom:14px;line-height:1.6;color:rgba(255,255,255,0.8);list-style:disc;margin-left:18px;}
+  .about .btn{margin-top:24px;}
+  .about-img{
+    position:relative;
+    border-radius:2px;
+    overflow:hidden;
+    min-height:449px;
+    background:
+      linear-gradient(0deg, rgba(0,0,0,0.5), rgba(0,0,0,0.05)),
+      url('https://loremflickr.com/900/700/croissant,bakery') center/cover no-repeat;
+    display:flex;
+    align-items:flex-end;
+    padding:24px;
+  }
+  .about-img .cap{color:#fff;text-align:right;width:100%;}
+  .about-img .cap .small{font-style:italic;font-size:0.9rem;display:block;}
+  .about-img .cap .big{font-family:var(--serif);font-size:1.7rem;letter-spacing:1px;}
+
+  /* GALLERY */
+  .gallery{
+    background:var(--tan);
+    padding:80px 0 100px;
+    text-align:center;
+    clip-path:polygon(0 3%, 100% 0, 100% 97%, 0 100%);
+    margin-top:-40px;
+    position:relative;
+    z-index:1;
+  }
+  .gallery h2{color:var(--navy-dark);font-size:2.1rem;margin-bottom:44px;padding:0 60px;}
+  .gallery-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:0;
+    max-width:1200px;
+    margin:0 auto;
+  }
+  .gallery-grid .g-item{
+    aspect-ratio:1/1;
+    overflow:hidden;
+  }
+  .gallery-grid .g-item img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+
+  /* TESTIMONIALS */
+  .testimonials{
+    background:var(--cream);
+    padding:90px 60px 100px;
+    text-align:center;
+    clip-path:polygon(0 4%, 100% 0, 100% 100%, 0 96%);
+    margin-top:-40px;
+    position:relative;
+    z-index:1;
+  }
+  .testimonials h2{font-size:2.1rem;margin-bottom:44px;color:var(--navy-dark);}
+  .testimonial-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:32px;
+    max-width:1140px;
+    margin:0 auto;
+    text-align:left;
+  }
+  .t-card{
+    background:#fff;
+    border-radius:4px;
+    padding:34px 30px 28px;
+    box-shadow:0 10px 30px rgba(45,58,69,0.08);
+  }
+  .t-quote-mark{
+    font-family:var(--serif);
+    font-size:3.2rem;
+    color:var(--tan);
+    line-height:1;
+    margin-bottom:4px;
+  }
+  .t-stars{
+    color:var(--tan-dark);
+    letter-spacing:2px;
+    font-size:0.85rem;
+    margin-bottom:16px;
+  }
+  .t-card .quote{
+    color:#4a4a4a;
+    line-height:1.7;
+    font-size:0.92rem;
+    margin-bottom:22px;
+  }
+  .t-person{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    border-top:1px solid rgba(45,58,69,0.1);
+    padding-top:16px;
+  }
+  .t-avatar{
+    width:42px;height:42px;
+    border-radius:50%;
+    background:var(--navy);
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:700;
+    font-size:0.8rem;
+    flex-shrink:0;
+  }
+  .t-person .name{font-weight:700;color:var(--navy-dark);font-size:0.9rem;}
+  .t-person .role{font-size:0.76rem;color:#8a8a8a;}
+
+  /* FAQ */
+  .faq{
+    background:#fff;
+    padding:100px 60px 90px;
+    max-width:none;
+    margin:0;
+    clip-path:polygon(0 4%, 100% 0, 100% 100%, 0 96%);
+    margin-top:-40px;
+    position:relative;
+    z-index:1;
+  }
+  .faq .faq-inner{max-width:900px;margin:0 auto;}
+  .faq h2{text-align:center;font-size:1.9rem;margin-bottom:40px;color:var(--navy-dark);}
+  .faq-item{
+    background:#fff;
+    border:1px solid rgba(45,58,69,0.1);
+    border-radius:2px;
+    padding:18px 24px;
+    margin-bottom:12px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-weight:600;
+    color:var(--navy-dark);
+    cursor:pointer;
+  }
+  .faq-item .chev{color:var(--tan-dark);transition:transform 0.2s;}
+  .faq-item.open .chev{transform:rotate(180deg);}
+  .faq-answer{
+    max-height:0;
+    overflow:hidden;
+    color:#555;
+    font-weight:400;
+    transition:max-height 0.25s ease;
+    padding:0 24px;
+  }
+  .faq-item.open + .faq-answer{max-height:200px;padding:12px 24px;}
+
+  /* FOOTER - centered, navy */
+  footer{
+    background:var(--navy);
+    color:#fff;
+    padding:60px 40px 26px;
+    text-align:center;
+    margin-top:-40px;
+    position:relative;
+  }
+  footer .foot-logo{
+    display:inline-flex;
+    flex-direction:column;
+    align-items:center;
+    gap:4px;
+    font-family:var(--serif);
+    letter-spacing:3px;
+    text-transform:uppercase;
+    font-weight:700;
+    margin-bottom:34px;
+  }
+  footer h2{font-size:1.6rem;margin-bottom:24px;}
+  .footer-top{
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:20px;
+    max-width:1000px;
+    margin:0 auto;
+    padding-bottom:30px;
+    border-bottom:1px solid rgba(255,255,255,0.18);
+  }
+  .footer-top div{flex:1;min-width:220px;font-size:0.9rem;line-height:1.6;opacity:0.9;}
+  .footer-links{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:22px;
+    padding:26px 0 6px;
+    font-size:0.85rem;
+    max-width:900px;
+    margin:0 auto;
+  }
+  .footer-links a{opacity:0.85;}
+  .footer-links a:hover{opacity:1;color:var(--tan);}
+  .footer-bottom{
+    margin-top:20px;
+    padding-top:16px;
+    border-top:1px solid rgba(255,255,255,0.15);
+    font-size:0.78rem;
+    opacity:0.8;
+  }
+
+  @media(max-width:768px){
+    .hero{grid-template-columns:1fr;}
+    .hero-right{min-height:320px;}
+    .about{grid-template-columns:1fr;padding:50px 24px;}
+    header{flex-direction:column;gap:14px;padding:16px;}
+    nav ul{flex-wrap:wrap;justify-content:center;gap:16px;}
+    .gallery,.testimonials,.faq{padding-left:24px;padding-right:24px;}
+    .social-rail{display:none;}
+    .hero-left h1{font-size:2.2rem;}
+    .testimonial-grid{grid-template-columns:1fr;}
+    .footer-top div{text-align:center !important;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <span class="icon">&#10047;</span>
+    <span>Grill House</span>
+  </div>
+  <nav>
+    <ul>
+      <li><a href="#">Home</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Menu</a></li>
+      <li><a href="#">Gallery</a></li>
+      <li><a href="#">Events</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+  </nav>
+  <div class="bk-btn">
+    <a href="#" class="btn btn-tan">Order Online</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-logo">
+      <span class="icon">&#10047;</span>
+      <span>Grill House</span>
+    </div>
+    <h1>WELCOME</h1>
+    <p class="desc">A neighborhood grill &amp; bar serving fire-cooked classics, seasonal sides, and a warm room for every occasion.</p>
+    <a href="#" class="btn" style="margin-top:26px;">Read More</a>
+  </div>
+  <div class="hero-right">
+    <div class="social-rail">
+      <a href="#">&#120143;</a>
+      <a href="#">f</a>
+      <a href="#">&#9658;</a>
+      <a href="#">in</a>
+    </div>
+  </div>
+</section>
+
+<section class="about">
+  <div>
+    <h2>About Us</h2>
+    <p class="lead">A warm room for every occasion.</p>
+    <ul>
+      <li>You can enjoy an intimate dinner for two, meet friends for a light meal after a movie, celebrate a family birthday, or have a baby shower party. The Grill &amp; Bar is versatile enough to handle almost any dining occasion and is large enough so that one doesn't impact the other.</li>
+    </ul>
+    <a href="#" class="btn btn-tan">View All Menu</a>
+  </div>
+  <div class="about-img">
+    <div class="cap">
+      <span class="small">comfort on</span>
+      <span class="big">EVERY PLATE</span>
+    </div>
+  </div>
+</section>
+
+<section class="gallery">
+  <h2>Our Gallery</h2>
+  <div class="gallery-grid">
+    <div class="g-item"><img src="https://loremflickr.com/600/600/salmon,plate" alt="Gallery image"></div>
+    <div class="g-item"><img src="https://loremflickr.com/600/600/fish,plate" alt="Gallery image"></div>
+    <div class="g-item"><img src="https://loremflickr.com/600/600/steak,knife" alt="Gallery image"></div>
+    <div class="g-item"><img src="https://loremflickr.com/600/600/salad,steak" alt="Gallery image"></div>
+    <div class="g-item"><img src="https://loremflickr.com/600/600/bagels,salmon" alt="Gallery image"></div>
+    <div class="g-item"><img src="https://loremflickr.com/600/600/steak,herbs" alt="Gallery image"></div>
+  </div>
+</section>
+
+<section class="testimonials">
+  <h2>Testimonials</h2>
+  <div class="testimonial-grid">
+    <div class="t-card">
+      <div class="t-quote-mark">&ldquo;</div>
+      <div class="t-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <p class="quote">Went to visit this place for lunch and it completely changed how I think about a neighborhood grill. The steak was cooked exactly as asked and the service never once felt rushed.</p>
+      <div class="t-person">
+        <div class="t-avatar">MH</div>
+        <div>
+          <p class="name">Mike Hamell</p>
+          <p class="role">Verified Guest</p>
+        </div>
+      </div>
+    </div>
+    <div class="t-card">
+      <div class="t-quote-mark">&ldquo;</div>
+      <div class="t-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <p class="quote">Booked a table for a birthday dinner and the whole room felt warm without trying too hard. Loved the seasonal sides, we'll be back for the tasting menu next time.</p>
+      <div class="t-person">
+        <div class="t-avatar">MM</div>
+        <div>
+          <p class="name">Moana Michell</p>
+          <p class="role">Verified Guest</p>
+        </div>
+      </div>
+    </div>
+    <div class="t-card">
+      <div class="t-quote-mark">&ldquo;</div>
+      <div class="t-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <p class="quote">First time trying the grill and definitely not the last. Portions were generous, the bar staff knew their cocktails, and the whole night felt effortless.</p>
+      <div class="t-person">
+        <div class="t-avatar">TP</div>
+        <div>
+          <p class="name">Tony P.</p>
+          <p class="role">Verified Guest</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="faq">
+  <div class="faq-inner">
+  <h2>Frequently Asked Questions (FAQs)</h2>
+
+  <div class="faq-item" onclick="this.classList.toggle('open')">
+    Do offer Take out Orders? <span class="chev">&#8964;</span>
+  </div>
+  <div class="faq-answer">Yes, we offer take out for all menu items during business hours.</div>
+
+  <div class="faq-item" onclick="this.classList.toggle('open')">
+    What type of Cuisine do you offer? <span class="chev">&#8964;</span>
+  </div>
+  <div class="faq-answer">We serve a variety of Indian-inspired dishes alongside cafe favorites.</div>
+
+  <div class="faq-item" onclick="this.classList.toggle('open')">
+    What payment methods do you accept? <span class="chev">&#8964;</span>
+  </div>
+  <div class="faq-answer">We accept all major credit cards, debit cards, and cash.</div>
+
+  <div class="faq-item" onclick="this.classList.toggle('open')">
+    Do you offer Delivery orders at your restaurant? <span class="chev">&#8964;</span>
+  </div>
+  <div class="faq-answer">Yes, delivery is available through our website and partner apps.</div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-logo">
+    <span>Grill House</span>
+  </div>
+  <h2>Contact Us</h2>
+  <div class="footer-top">
+    <div>📍 2011 Eleventh Avenue South,<br>Birmingham, AL 35300</div>
+    <div style="text-align:center;">📞 442-325-3829</div>
+    <div style="text-align:right;">✉ criston@zingmyorder.com</div>
+  </div>
+  <div class="footer-links">
+    <a href="#">Home</a>
+    <a href="#">About Us</a>
+    <a href="#">Contact</a>
+    <a href="#">Menu</a>
+    <a href="#">Gallery</a>
+    <a href="#">Order Now</a>
+    <a href="#">Jobs</a>
+    <a href="#">Events</a>
+    <a href="#">Book Your Events</a>
+    <a href="#">Website Accessibility Statement</a>
+  </div>
+  <div class="footer-bottom">
+    Tuesday - Saturday &nbsp;|&nbsp; Dinner: 5:30 - 10:00 p.m. &nbsp;|&nbsp; Bar: 4:00 p.m. (5:00 p.m. Saturday)
+  </div>
+  <div class="footer-bottom" style="margin-top:8px;padding-top:0;border-top:none;">
+    <span>&copy; 2026 Grill House All Rights Reserved. Powered by Zingmyorder</span>
+  </div>
+</footer>
+
+</body>
+</html>

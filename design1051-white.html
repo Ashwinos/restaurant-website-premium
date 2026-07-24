@@ -12,19 +12,19 @@
     rel="stylesheet">
   <style>
     :root {
-      --char: #161310;
-      --char-white: #161310;
-      --char-2: #211b14;
-      --char-3: #2b241b;
-      --char-rgb: 22, 19, 16;
-      --ember: #E5761E;
-      --ember-2: #E5761E;
-      --brass: #62320b;
-      --brass-rgb: 198, 161, 101;
-      --bone: #efe6d8;
-      --bone-dim: #c9beac;
-      --bone-rgb: 239, 230, 216;
-      --smoke: #8f8676;
+      --char: #faf6ef;
+      --char-white: #faf6ef;
+      --char-2: #f1e7d6;
+      --char-3: #e8d9bf;
+      --char-rgb: 250, 246, 239;
+      --ember: #d9631a;
+      --ember-2: #d9631a;
+      --brass: #6b3a10;
+      --brass-rgb: 140, 95, 45;
+      --bone: #2b241b;
+      --bone-dim: #6b5f4e;
+      --bone-rgb: 43, 36, 26;
+      --smoke: #8a7d6a;
       --serif: 'Fraunces', Georgia, serif;
       --sans: 'Manrope', 'Segoe UI', Arial, sans-serif;
       --ease: cubic-bezier(.16, .84, .44, 1);
@@ -251,8 +251,11 @@
     nav ul li a {
       position: relative;
       padding-bottom: 6px;
-      color: var(--bone-dim);
+      color: var(--char-white);
       transition: color .3s ease;
+    }
+    .scrolled nav ul li a{
+        color: var(--bone);
     }
 
     nav ul li a::after {
@@ -661,7 +664,7 @@
       font-size: .72rem;
       letter-spacing: 3px;
       text-transform: uppercase;
-      color: var(--bone);
+      color: var(--char-white);
       margin-bottom: 22px;
     }
 
@@ -821,13 +824,13 @@
       border-radius: 20px;
       padding: 60px 26px 34px;
       text-align: center;
-      box-shadow: 0 20px 44px rgba(0, 0, 0, .4);
+      box-shadow: 0 20px 44px rgba(43, 36, 26, .16);
       transition: transform .4s var(--ease), box-shadow .4s ease, border-color .4s ease;
     }
 
     .sig-card:hover {
       transform: translateY(-8px);
-      box-shadow: 0 28px 60px rgba(0, 0, 0, .5);
+      box-shadow: 0 28px 60px rgba(43, 36, 26, .2);
       border-color: rgba(var(--brass-rgb), 0.3);
     }
 
@@ -841,7 +844,7 @@
       left: 50%;
       transform: translateX(-50%);
       border: 2px solid var(--ember);
-      box-shadow: 0 14px 30px rgba(0, 0, 0, .6), 0 0 0 1px rgba(var(--ember), 0.25);
+      box-shadow: 0 14px 30px rgba(43, 36, 26, .22), 0 0 0 1px rgba(var(--ember-2), 0.25);
       z-index: 2;
     }
 
@@ -1124,7 +1127,7 @@
       flex-shrink: 0;
       border: 2px solid transparent;
       transition: border-color .35s ease, transform .35s var(--ease), box-shadow .35s ease;
-      box-shadow: 0 14px 30px rgba(0, 0, 0, .45);
+      box-shadow: 0 14px 30px rgba(43, 36, 26, .18);
     }
 
     .cine-card img {
@@ -1149,7 +1152,7 @@
     .cine-card.active {
       border-color: var(--ember-2);
       transform: translateY(-10px);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, .55), 0 0 0 3px rgba(40, 136, 30, .18);
+      box-shadow: 0 20px 40px rgba(43, 36, 26, .22), 0 0 0 3px rgba(217, 99, 26, .18);
     }
 
     .cine-card.active img {
@@ -1599,7 +1602,7 @@
       border-radius: 18px;
       overflow: hidden;
       border: 1px solid rgba(var(--bone-rgb), 0.12);
-      box-shadow: 0 40px 90px rgba(0, 0, 0, .4);
+      box-shadow: 0 40px 90px rgba(43, 36, 26, .16);
     }
 
     .chat-header {
@@ -2224,7 +2227,7 @@
     }
 
     .cs-card {
-      background: #16131099;
+      background: rgba(241, 231, 214, 0.65);
       padding: 50px 46px;
       transition: background .4s ease;
     }
@@ -3708,7 +3711,7 @@
         ctx.lineTo(cx - outerHalfW, botY);
         ctx.lineTo(cx, neckY);
         ctx.closePath();
-        ctx.strokeStyle = 'rgba(239,230,216,0.4)';
+        ctx.strokeStyle = 'rgba(43,36,26,0.45)';
         ctx.lineWidth = 2;
         ctx.shadowBlur = 6;
         ctx.shadowColor = 'rgba(229,118,30,0.35)';

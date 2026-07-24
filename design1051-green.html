@@ -12,19 +12,21 @@
     rel="stylesheet">
   <style>
     :root {
-      --char: #faf6ef;
-      --char-white: #faf6ef;
-      --char-2: #f1e7d6;
-      --char-3: #e8d9bf;
-      --char-rgb: 250, 246, 239;
-      --ember: #d9631a;
-      --ember-2: #d9631a;
-      --brass: #6b3a10;
-      --brass-rgb: 140, 95, 45;
-      --bone: #2b241b;
-      --bone-dim: #6b5f4e;
-      --bone-rgb: 43, 36, 26;
-      --smoke: #8a7d6a;
+      --char: #161310;
+      --char-white: #161310;
+      --char-2: #211b14;
+      --char-3: #2b241b;
+      --char-rgb: 22, 19, 16;
+ --ember: #099f1a;
+      --ember-2: #1b850b;
+      --ember-rgb: #099f1a;
+      --ember-2-rgb:#1b850b;
+      --brass: #62320b;
+      --brass-rgb: 198, 161, 101;
+      --bone: #efe6d8;
+      --bone-dim: #c9beac;
+      --bone-rgb: 239, 230, 216;
+      --smoke: #8f8676;
       --serif: 'Fraunces', Georgia, serif;
       --sans: 'Manrope', 'Segoe UI', Arial, sans-serif;
       --ease: cubic-bezier(.16, .84, .44, 1);
@@ -253,6 +255,9 @@
       padding-bottom: 6px;
       color: var(--char-white);
       transition: color .3s ease;
+    }
+    .scrolled nav ul li a{
+        color: var(--bone);
     }
 
     nav ul li a::after {
@@ -535,7 +540,7 @@
       transform-box: fill-box;
       transform-origin: 50% 100%;
       animation: flameDance 2.6s ease-in-out infinite;
-      filter: drop-shadow(0 0 8px rgba(227, 122, 63, .5));
+      filter: drop-shadow(0 0 8px color-mix(in srgb, var(--ember) 50%, transparent));
     }
 
     .flame-shape:nth-child(2n) {
@@ -624,7 +629,7 @@
       stroke-dasharray: 1400;
       stroke-dashoffset: 1400;
       transition: stroke-dashoffset 1.6s var(--ease);
-      filter: drop-shadow(0 0 6px rgba(227, 122, 63, .55));
+      filter: drop-shadow(0 0 6px color-mix(in srgb, var(--ember) 55%, transparent));
     }
 
     .ember-divider.in-view path {
@@ -636,11 +641,11 @@
 
       0%,
       100% {
-        filter: drop-shadow(0 0 5px rgba(227, 122, 63, .45));
+        filter: drop-shadow(0 0 5px color-mix(in srgb, var(--ember) 45%, transparent));
       }
 
       50% {
-        filter: drop-shadow(0 0 15px rgba(227, 122, 63, .95));
+        filter: drop-shadow(0 0 15px color-mix(in srgb, var(--ember) 95%, transparent));
       }
     }
 
@@ -821,13 +826,13 @@
       border-radius: 20px;
       padding: 60px 26px 34px;
       text-align: center;
-      box-shadow: 0 20px 44px rgba(43, 36, 26, .16);
+      box-shadow: 0 20px 44px rgba(0, 0, 0, .4);
       transition: transform .4s var(--ease), box-shadow .4s ease, border-color .4s ease;
     }
 
     .sig-card:hover {
       transform: translateY(-8px);
-      box-shadow: 0 28px 60px rgba(43, 36, 26, .2);
+      box-shadow: 0 28px 60px rgba(0, 0, 0, .5);
       border-color: rgba(var(--brass-rgb), 0.3);
     }
 
@@ -841,7 +846,7 @@
       left: 50%;
       transform: translateX(-50%);
       border: 2px solid var(--ember);
-      box-shadow: 0 14px 30px rgba(43, 36, 26, .22), 0 0 0 1px rgba(var(--ember-2), 0.25);
+      box-shadow: 0 14px 30px rgba(0, 0, 0, .6), 0 0 0 1px rgba(var(--ember), 0.25);
       z-index: 2;
     }
 
@@ -1052,8 +1057,8 @@
       inset: 0;
       z-index: 2;
       background:
-        linear-gradient(90deg, rgba(var(--char-rgb), 0.55) 0%, rgba(var(--char-rgb), 0.3) 38%, rgba(var(--char-rgb), 0.08) 62%, rgba(var(--char-rgb), 0.3) 100%),
-        linear-gradient(0deg, rgba(var(--char-rgb), 0.6) 0%, rgba(var(--char-rgb), 0.08) 34%, rgba(var(--char-rgb), 0) 55%);
+        linear-gradient(90deg, rgba(var(--char-rgb), 0.92) 0%, rgba(var(--char-rgb), 0.55) 38%, rgba(var(--char-rgb), 0.15) 62%, rgba(var(--char-rgb), 0.55) 100%),
+        linear-gradient(0deg, rgba(var(--char-rgb), 0.96) 0%, rgba(var(--char-rgb), 0.15) 34%, rgba(var(--char-rgb), 0) 55%);
       pointer-events: none;
     }
 
@@ -1105,7 +1110,7 @@
 
     .cine-arrow:hover {
       border-color: var(--ember-2);
-      background: rgba(40, 136, 30, 0.18);
+      background: color-mix(in srgb, var(--ember) 18%, transparent);
       transform: translateY(-2px);
     }
 
@@ -1124,7 +1129,7 @@
       flex-shrink: 0;
       border: 2px solid transparent;
       transition: border-color .35s ease, transform .35s var(--ease), box-shadow .35s ease;
-      box-shadow: 0 14px 30px rgba(43, 36, 26, .18);
+      box-shadow: 0 14px 30px rgba(0, 0, 0, .45);
     }
 
     .cine-card img {
@@ -1139,7 +1144,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(0deg, rgba(var(--char-rgb), 0.45) 0%, rgba(var(--char-rgb), 0.02) 60%);
+      background: linear-gradient(0deg, rgba(var(--char-rgb), 0.85) 0%, rgba(var(--char-rgb), 0.05) 60%);
     }
 
     .cine-card:hover img {
@@ -1149,7 +1154,7 @@
     .cine-card.active {
       border-color: var(--ember-2);
       transform: translateY(-10px);
-      box-shadow: 0 20px 40px rgba(43, 36, 26, .22), 0 0 0 3px rgba(217, 99, 26, .18);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, .55), 0 0 0 3px color-mix(in srgb, var(--ember) 18%, transparent);
     }
 
     .cine-card.active img {
@@ -1237,7 +1242,7 @@
 
     .cine-play-toggle:hover {
       border-color: var(--ember-2);
-      background: rgba(40, 136, 30, 0.15);
+      background: color-mix(in srgb, var(--ember) 15%, transparent);
     }
 
     .cine-progress-track {
@@ -1257,7 +1262,7 @@
       width: 0%;
       border-radius: 2px;
       background: var(--ember-2);
-      box-shadow: 0 0 10px rgba(40, 136, 30, .7);
+      box-shadow: 0 0 10px color-mix(in srgb, var(--ember) 70%, transparent);
     }
 
     .cine-time {
@@ -1298,7 +1303,7 @@
 
     .cine-mute:hover {
       border-color: var(--ember-2);
-      background: rgba(40, 136, 30, 0.15);
+      background: color-mix(in srgb, var(--ember) 15%, transparent);
     }
 
     @media(max-width:900px) {
@@ -1317,7 +1322,7 @@
       }
 
       .cine-scrim {
-        background: linear-gradient(0deg, rgba(var(--char-rgb), 0.6) 0%, rgba(var(--char-rgb), 0.4) 55%, rgba(var(--char-rgb), 0.2) 100%);
+        background: linear-gradient(0deg, rgba(var(--char-rgb), 0.97) 0%, rgba(var(--char-rgb), 0.85) 55%, rgba(var(--char-rgb), 0.55) 100%);
       }
 
       .cine-content {
@@ -1599,7 +1604,7 @@
       border-radius: 18px;
       overflow: hidden;
       border: 1px solid rgba(var(--bone-rgb), 0.12);
-      box-shadow: 0 40px 90px rgba(43, 36, 26, .16);
+      box-shadow: 0 40px 90px rgba(0, 0, 0, .4);
     }
 
     .chat-header {
@@ -2047,7 +2052,7 @@
       transform: translate(-50%, -50%);
       border-radius: 50%;
       background: repeating-conic-gradient(from 0deg,
-          rgba(229, 118, 30, 0.05) 0deg 1.2deg,
+          color-mix(in srgb, var(--ember) 5%, transparent) 0deg 1.2deg,
           transparent 1.2deg 26deg);
       animation: hgRingSpin 160s linear infinite;
       pointer-events: none;
@@ -2131,7 +2136,7 @@
       position: absolute;
       inset: -60px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(229, 118, 30, 0.14), transparent 70%);
+      background: radial-gradient(circle, color-mix(in srgb, var(--ember) 14%, transparent), transparent 70%);
       z-index: 0;
     }
 
@@ -2224,7 +2229,7 @@
     }
 
     .cs-card {
-      background: rgba(241, 231, 214, 0.65);
+      background: #16131099;
       padding: 50px 46px;
       transition: background .4s ease;
     }
@@ -2253,7 +2258,7 @@
 
     .cs-card:hover .v-icon {
       border-color: var(--ember-2);
-      background: rgba(229, 118, 30, 0.08);
+      background: color-mix(in srgb, var(--ember) 8%, transparent);
     }
 
     .cs-card h3 {
@@ -2455,7 +2460,7 @@
       position: absolute;
       inset: 0;
       border-radius: 50%;
-      border: 1px solid rgba(229, 118, 30, 0.45);
+      border: 1px solid color-mix(in srgb, var(--ember) 45%, transparent);
       animation: pingRing 2.8s ease-out infinite;
       opacity: 0;
       z-index: 1;
@@ -2559,11 +2564,11 @@
 
       0%,
       100% {
-        box-shadow: 0 0 0 0 rgba(229, 118, 30, 0.35);
+        box-shadow: 0 0 0 0 color-mix(in srgb, var(--ember) 35%, transparent);
       }
 
       50% {
-        box-shadow: 0 0 0 9px rgba(229, 118, 30, 0);
+        box-shadow: 0 0 0 9px color-mix(in srgb, var(--ember) 0%, transparent);
       }
     }
 
@@ -2595,7 +2600,7 @@
 
     .follow-btn.following {
       background: var(--ember-2);
-      color: var(--char);
+      color: var(--bone);
       border-color: var(--ember-2);
       animation: none;
       box-shadow: none;
@@ -3446,6 +3451,32 @@
   </footer>
 
   <script>
+    // auto-derive --ember-rgb / --ember-2-rgb from --ember / --ember-2
+    // so changing only the hex color never leaves the RGB variants stale
+    // (this must run first, before anything else reads --ember-rgb)
+    (function () {
+      function hexToRgb(hex) {
+        hex = hex.trim().replace('#', '');
+        if (hex.length === 3) {
+          hex = hex.split('').map(function (c) { return c + c; }).join('');
+        }
+        var num = parseInt(hex, 16);
+        if (isNaN(num)) return null;
+        var r = (num >> 16) & 255;
+        var g = (num >> 8) & 255;
+        var b = num & 255;
+        return r + ', ' + g + ', ' + b;
+      }
+      var root = document.documentElement;
+      var styles = getComputedStyle(root);
+      var ember = styles.getPropertyValue('--ember').trim();
+      var ember2 = styles.getPropertyValue('--ember-2').trim();
+      var emberRgb = ember.startsWith('#') ? hexToRgb(ember) : null;
+      var ember2Rgb = ember2.startsWith('#') ? hexToRgb(ember2) : null;
+      if (emberRgb) root.style.setProperty('--ember-rgb', emberRgb);
+      if (ember2Rgb) root.style.setProperty('--ember-2-rgb', ember2Rgb);
+    })();
+
     // parallax background layers (menu section + contact-social section)
     (function () {
       var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -3641,6 +3672,10 @@
       var particles = [];
       var W, H;
 
+      var rootStyles = getComputedStyle(document.documentElement);
+      var emberHue = (rootStyles.getPropertyValue('--ember-rgb').trim()) || '229, 118, 30';
+      var ember2Hue = (rootStyles.getPropertyValue('--ember-2-rgb').trim()) || '196, 89, 15';
+
       function resize() {
         W = canvas.width = hero.offsetWidth;
         H = canvas.height = hero.offsetHeight;
@@ -3657,7 +3692,7 @@
           vx: (Math.random() - 0.5) * 0.4,
           life: 0,
           maxLife: Math.random() * 200 + 160,
-          hue: Math.random() > 0.5 ? '200,84,46' : '227,122,63'
+          hue: Math.random() > 0.5 ? emberHue : ember2Hue
         });
       }
 
@@ -3699,6 +3734,15 @@
 
       var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+      var rootStyles = getComputedStyle(document.documentElement);
+      function cssRGB(name, fallback) {
+        var v = rootStyles.getPropertyValue(name).trim();
+        return v || fallback;
+      }
+      var emberRGB = cssRGB('--ember-rgb', '229, 118, 30');
+      var brassRGB = cssRGB('--brass-rgb', '198, 161, 101');
+      var boneRGB = cssRGB('--bone-rgb', '239, 230, 216');
+
       function drawGlass() {
         ctx.beginPath();
         ctx.moveTo(cx - outerHalfW, topY);
@@ -3708,22 +3752,22 @@
         ctx.lineTo(cx - outerHalfW, botY);
         ctx.lineTo(cx, neckY);
         ctx.closePath();
-        ctx.strokeStyle = 'rgba(43,36,26,0.45)';
+        ctx.strokeStyle = 'rgba(' + boneRGB + ',0.4)';
         ctx.lineWidth = 2;
         ctx.shadowBlur = 6;
-        ctx.shadowColor = 'rgba(229,118,30,0.35)';
+        ctx.shadowColor = 'rgba(' + emberRGB + ',0.35)';
         ctx.stroke();
         ctx.shadowBlur = 0;
         // caps
-        ctx.fillStyle = 'rgba(198,161,101,0.6)';
+        ctx.fillStyle = 'rgba(' + brassRGB + ',0.6)';
         ctx.fillRect(cx - outerHalfW - 10, topY - 8, (outerHalfW + 10) * 2, 8);
         ctx.fillRect(cx - outerHalfW - 10, botY, (outerHalfW + 10) * 2, 8);
       }
 
       function sandGradient(y0, y1) {
         var g = ctx.createLinearGradient(0, y0, 0, y1);
-        g.addColorStop(0, 'rgba(229,118,30,0.92)');
-        g.addColorStop(1, 'rgba(198,161,101,0.92)');
+        g.addColorStop(0, 'rgba(' + emberRGB + ',0.92)');
+        g.addColorStop(1, 'rgba(' + brassRGB + ',0.92)');
         return g;
       }
 
@@ -3759,7 +3803,7 @@
 
       function drawStream(f, streamGrains) {
         if (f <= 0.02 || f >= 0.98) return;
-        ctx.fillStyle = 'rgba(229,118,30,0.85)';
+        ctx.fillStyle = 'rgba(' + emberRGB + ',0.85)';
         streamGrains.forEach(function (g) {
           ctx.beginPath();
           ctx.arc(g.x, g.y, g.r, 0, Math.PI * 2);

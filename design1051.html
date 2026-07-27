@@ -3460,7 +3460,14 @@
         layers.forEach(function (layer) {
           var section = layer.parentElement;
           var rect = section.getBoundingClientRect();
-          layer.style.transform = 'translateY(' + (rect.top * speed) + 'px)';
+          // the layer is 140% tall with top:-20%, so it only has a 20%-of-height
+          // overscan margin above/below to draw from — clamp to that margin so
+          // the shift never outruns the image and exposes a gap at scroll extremes
+          var maxOffset = rect.height * 0.2;
+          var offset = rect.top * speed;
+          if (offset > maxOffset) offset = maxOffset;
+          if (offset < -maxOffset) offset = -maxOffset;
+          layer.style.transform = 'translateY(' + offset + 'px)';
         });
         ticking = false;
       }

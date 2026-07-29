@@ -231,6 +231,124 @@
       }
     }
 
+    /* ---------- solid primary CTA: grill-grate button ---------- */
+    .btn-grill {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 19px 42px;
+      border-radius: 8px;
+      cursor: pointer;
+      overflow: hidden;
+      isolation: isolate;
+      background: linear-gradient(135deg, var(--ember), var(--ember-2));
+      border: 1px solid var(--ember-2);
+      transition: transform .2s ease, box-shadow .4s ease, filter .3s ease;
+    }
+
+    .btn-grill .grill-lines {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      overflow: visible;
+    }
+
+    .btn-grill .rail {
+      stroke: var(--char);
+      stroke-width: 3;
+      stroke-linecap: round;
+      opacity: .4;
+      transition: opacity .4s ease;
+    }
+
+    .btn-grill .bar {
+      stroke: var(--char);
+      stroke-width: 1;
+      opacity: .32;
+      transition: opacity .4s ease;
+    }
+
+    .btn-grill .glow {
+      stroke: var(--bone);
+      stroke-width: 1.6;
+      stroke-linecap: round;
+      opacity: 0;
+      filter: drop-shadow(0 0 6px var(--theme-glow));
+    }
+
+    .btn-grill .label {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--char);
+      font-weight: 700;
+      font-size: .76rem;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+    }
+
+    .btn-grill .flame {
+      width: 13px;
+      height: 13px;
+      color: var(--char);
+      opacity: .85;
+      transition: transform .4s ease;
+      flex-shrink: 0;
+    }
+
+    .btn-grill:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.06);
+      box-shadow: 0 14px 34px rgba(0, 0, 0, .45), 0 0 26px var(--theme-glow-strong);
+    }
+
+    .btn-grill:hover .rail,
+    .btn-grill:hover .bar {
+      opacity: .55;
+    }
+
+    .btn-grill:hover .glow {
+      opacity: 1;
+      animation: grillGlowSweep 1.8s ease-in-out infinite;
+    }
+
+    .btn-grill:hover .flame {
+      transform: scale(1.15) rotate(-4deg);
+    }
+
+    .btn-grill:active {
+      transform: scale(.97);
+    }
+
+    @keyframes grillGlowSweep {
+
+      0%,
+      100% {
+        opacity: .25;
+        filter: drop-shadow(0 0 3px var(--theme-glow));
+      }
+
+      50% {
+        opacity: 1;
+        filter: drop-shadow(0 0 12px var(--theme-glow-strong));
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+      .btn-grill,
+      .btn-grill * {
+        transition: none !important;
+        animation: none !important;
+      }
+    }
+
     header {
       display: flex;
       align-items: center;
@@ -547,12 +665,11 @@
     }
 
     .social-rail {
-      position: absolute;
-      right: 56px;
-      top: 130px;
-      z-index: 3;
-      display: flex;
-      flex-direction: column;
+position: absolute;
+    right: 36px;
+    bottom: 40px;
+    z-index: 3;
+    display: flex;
       gap: 16px;
     }
 
@@ -929,10 +1046,17 @@
       transition-delay: .66s;
     }
 
-    .about-copy.in-view .btn-reticle {
+    .about-copy.in-view .btn-reticle,
+    .about-copy.in-view .btn-grill {
       opacity: 1;
       transform: translateX(0);
       transition-delay: .94s;
+    }
+
+    .about-copy .btn-grill {
+      opacity: 0;
+      transform: translateX(-52px);
+      transition: opacity 1.5s var(--ease), transform 1.5s var(--ease), background .4s ease, box-shadow .4s ease;
     }
 
     .about-img.reveal {
@@ -950,10 +1074,11 @@
 
     @media (prefers-reduced-motion: reduce) {
 
-      .about-copy .about-tag,
+      .about-copy .about-tag, .about-tag-white,
       .about-copy h2,
       .about-copy p.body-copy,
       .about-copy .btn-reticle,
+      .about-copy .btn-grill,
       .about-img.reveal {
         opacity: 1 !important;
         transform: none !important;
@@ -972,12 +1097,27 @@
       margin-bottom: 22px;
     }
 
+        .about-tag-white {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-size: .72rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: black;
+      margin-bottom: 22px;
+    }
+
     .about-tag .line {
       width: 30px;
       height: 1px;
       background: var(--ember);
     }
-
+    .about-tag-white .line {
+      width: 30px;
+      height: 1px;
+      background: var(--ember);
+    }
     .about h2 {
       font-size: clamp(2.2rem, 3.4vw, 3rem);
       margin-bottom: 20px;
@@ -1003,7 +1143,7 @@
     /* ---------- about image: clipped frame + continuous slow zoom + grill corner accent ---------- */
     .about-img-frame {
       position: relative;
-      min-height: 400px;
+      min-height: 500px;
       border-radius: 6px;
       overflow: hidden;
       display: flex;
@@ -1236,6 +1376,21 @@
       margin-bottom: 64px;
     }
 
+     .specialities-white {
+      background: var(--bone);
+      padding: 130px 56px 140px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .specialities-white .section-head {
+      justify-content: center;
+      text-align: center;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 64px;
+    }
+
     /* ---------- specialities: background grill image (slow drift, like the about section image) ---------- */
     .spec-bg {
       position: absolute;
@@ -1261,6 +1416,13 @@
       position: absolute;
       inset: 0;
       background: rgba(33, 27, 20, 0.88);
+    }
+
+        .spec-bg-white::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(230, 228, 214, 0.88);
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -1400,6 +1562,21 @@
       animation: specGlowPulse 3.6s ease-in-out infinite;
     }
 
+    .spec-showcase-white {
+      position: relative;
+      background: var(--bone);
+      border-radius: 28px;
+      padding: 64px 64px 64px;
+      max-width: 1180px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 0.92fr 1.08fr;
+      gap: 48px;
+      align-items: start;
+      border: 1px solid color-mix(in srgb, var(--theme-color) 50%, transparent);
+      animation: specGlowPulse 3.6s ease-in-out infinite;
+    }
+
     /* ---------- spec-showcase: small ambient glow pulse on the border ---------- */
     @keyframes specGlowPulse {
 
@@ -1440,6 +1617,14 @@
       font-size: 14px;
       line-height: 1.65;
       color: var(--bone);
+      font-weight: 300;
+    }
+
+      .spec-copy-white {
+      font-family: var(--serif);
+      font-size: 14px;
+      line-height: 1.65;
+      color: black;
       font-weight: 300;
     }
 
@@ -2821,8 +3006,34 @@
       position: relative;
       overflow: hidden;
     }
+        .hourglass-section-white {
+      background: var(--bone);
+      padding: 50px 56px 50px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hourglass-section-white  .hourglass-grid{
+      color: black;
+    }
 
     .hourglass-section::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      right: 18%;
+      width: 900px;
+      height: 900px;
+      transform: translate(50%, -50%);
+      border-radius: 50%;
+      background: repeating-conic-gradient(from 0deg,
+          rgba(229, 118, 30, 0.05) 0deg 1.2deg,
+          transparent 1.2deg 26deg);
+      animation: hgRingSpin 160s linear infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .hourglass-section-white::before {
       content: '';
       position: absolute;
       top: 50%;
@@ -2877,6 +3088,28 @@
       color: var(--bone-dim);
     }
 
+    
+    .hourglass-copy-white .v-row .v-day {
+      color: black !important;
+    }
+
+    .hourglass-copy-white .v-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px 0;
+      border-bottom: 1px solid rgb(104, 104, 104);
+      font-size: .95rem;
+    }
+
+    .hourglass-copy-white  .v-row:last-of-type {
+      border-bottom: none;
+    }
+
+    .hourglass-copy-white  .v-row .v-day {
+      color: var(--bone-dim);
+    }
+
     .hourglass-copy .v-row .v-time {
       color: var(--bone);
       font-weight: 600;
@@ -2903,6 +3136,26 @@
       align-items: center;
       justify-content: center;
       min-height: 380px;
+    }
+
+    .hourglass-copy-white  .v-row .v-time {
+      color: rgb(71, 70, 70);
+      font-weight: 600;
+    }
+
+    .hourglass-copy-white  .v-row .v-time.closed {
+ color: rgb(71, 70, 70);
+      font-weight: 400;
+      font-style: italic;
+    }
+
+    .hourglass-copy-white  p.v-note {
+ color: rgb(71, 70, 70);
+      font-size: .9rem;
+      line-height: 1.7;
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px dashed rgba(var(--bone-rgb), 0.16);
     }
 
     .hourglass-visual .hg-frame {
@@ -3851,14 +4104,22 @@
         <li><a href="#contact">Contact</a></li>
       </ul>
     </nav>
-    <a href="#" class="btn-reticle">
-      <svg class="lines" width="220" height="70" viewBox="0 0 220 70" aria-hidden="true">
-        <line class="h1" x1="0" y1="18" x2="220" y2="18" />
-        <line class="h2" x1="0" y1="52" x2="220" y2="52" />
-        <line class="v" x1="46" y1="0" x2="46" y2="70" />
-        <line class="v" x1="174" y1="0" x2="174" y2="70" />
+    <a href="#" class="btn-grill">
+      <svg class="grill-lines" viewBox="0 0 260 76" preserveAspectRatio="none" aria-hidden="true">
+        <line class="rail" x1="0" y1="6" x2="260" y2="6" />
+        <line class="rail" x1="0" y1="70" x2="260" y2="70" />
+        <line class="bar" x1="0" y1="22" x2="260" y2="22" />
+        <line class="bar" x1="0" y1="38" x2="260" y2="38" />
+        <line class="bar" x1="0" y1="54" x2="260" y2="54" />
+        <line class="glow" x1="0" y1="38" x2="260" y2="38" />
       </svg>
-      <span class="label">Order Online</span>
+      <span class="label">
+        <svg class="flame" viewBox="0 0 64 64" fill="currentColor" aria-hidden="true">
+          <path
+            d="M32 6c6 8-2 12-2 19a8 8 0 0 0 16 0c0-3-1-5-1-5 6 4 9 11 9 17 0 12.7-10.3 21-22 21S10 49.7 10 37c0-9 4-16 10-21-1 4 0 7 3 9 0-9 3-13 9-19Z" />
+        </svg>
+        Order Online
+      </span>
     </a>
 
     <canvas class="nav-embers" id="navEmbers" aria-hidden="true"></canvas>
@@ -3946,14 +4207,22 @@
         products, exceptional food, or a welcoming environment. We are committed to offering only the finest selection,
         sourced with care to ensure that our guests enjoy freshness and quality in everything we offer. At Oviq, our
         dedication to service and passion for creating connections makes every visit special.</p>
-      <a href="#" class="btn-reticle">
-        <svg class="lines" width="220" height="70" viewBox="0 0 220 70" aria-hidden="true">
-          <line class="h1" x1="0" y1="18" x2="220" y2="18" />
-          <line class="h2" x1="0" y1="52" x2="220" y2="52" />
-          <line class="v" x1="46" y1="0" x2="46" y2="70" />
-          <line class="v" x1="174" y1="0" x2="174" y2="70" />
+      <a href="#" class="btn-grill">
+        <svg class="grill-lines" viewBox="0 0 260 76" preserveAspectRatio="none" aria-hidden="true">
+          <line class="rail" x1="0" y1="6" x2="260" y2="6" />
+          <line class="rail" x1="0" y1="70" x2="260" y2="70" />
+          <line class="bar" x1="0" y1="22" x2="260" y2="22" />
+          <line class="bar" x1="0" y1="38" x2="260" y2="38" />
+          <line class="bar" x1="0" y1="54" x2="260" y2="54" />
+          <line class="glow" x1="0" y1="38" x2="260" y2="38" />
         </svg>
-        <span class="label">View All Menu</span>
+        <span class="label">
+          <svg class="flame" viewBox="0 0 64 64" fill="currentColor" aria-hidden="true">
+            <path
+              d="M32 6c6 8-2 12-2 19a8 8 0 0 0 16 0c0-3-1-5-1-5 6 4 9 11 9 17 0 12.7-10.3 21-22 21S10 49.7 10 37c0-9 4-16 10-21-1 4 0 7 3 9 0-9 3-13 9-19Z" />
+          </svg>
+          View All Menu
+        </span>
       </a>
     </div>
     <div class="about-img reveal">
@@ -3985,22 +4254,21 @@
     </div>
   </section>
 
-  <section class="specialities" id="specialities">
-    <div class="spec-bg" aria-hidden="true">
-      <img
-        src="https://images.unsplash.com/photo-1544025162-d76694265947?w=1600&q=80"
-        alt="" loading="lazy">
+
+    <section class="specialities-white" id="specialities">
+    <div class="spec-bg-white" aria-hidden="true">
+  
     </div>
     <canvas class="spec-embers" id="specEmbers" aria-hidden="true"></canvas>
     <div class="section-head reveal">
       <div>
-        <div class="about-tag"><span class="line"></span>Our Specialities</div>
+        <div class="about-tag-white"><span class="line"></span>Our Specialities</div>
         <h2>What Sets Us Apart</h2>
       </div>
     </div>
-    <div class="spec-showcase reveal">
+    <div class="spec-showcase-white reveal">
       <div class="spec-text-col">
-        <p class="spec-copy">Every dish passes over an open flame first — our kitchen is built around wood and fire, not shortcuts. We source seasonally from trusted regional farms, cook with time-honored technique, and welcome every guest like family.</p>
+        <p class="spec-copy-white">Every dish passes over an open flame first — our kitchen is built around wood and fire, not shortcuts. We source seasonally from trusted regional farms, cook with time-honored technique, and welcome every guest like family.</p>
         <div class="spec-photo-wide spec-in-left">
           <img
             src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900&q=80"
@@ -4311,16 +4579,15 @@
   </section>
 
 
-
-  <section class="hourglass-section" id="hours">
+  <section class="hourglass-section-white" id="hours">
     <div class="section-head reveal">
       <div>
-        <div class="about-tag"><span class="line"></span>Visit Us</div>
+        <div class="about-tag-white"><span class="line"></span>Visit Us</div>
         <h2>Our Hours</h2>
       </div>
     </div>
     <div class="hourglass-grid">
-      <div class="hourglass-copy reveal">
+      <div class="hourglass-copy-white reveal">
         <div class="v-row">
           <span class="v-day">Monday</span>
           <span class="v-time closed">Closed</span>
@@ -4477,14 +4744,22 @@
           <span class="loc-photo-tag">Our Location</span>
           <h3>Grill House</h3>
           <p>2011 Eleventh Avenue South<br>Birmingham, AL 35300</p>
-          <a href="#contact-social" class="btn-reticle">
-            <svg class="lines" width="220" height="70" viewBox="0 0 220 70" aria-hidden="true">
-              <line class="h1" x1="0" y1="18" x2="220" y2="18" />
-              <line class="h2" x1="0" y1="52" x2="220" y2="52" />
-              <line class="v" x1="46" y1="0" x2="46" y2="70" />
-              <line class="v" x1="174" y1="0" x2="174" y2="70" />
+          <a href="#contact-social" class="btn-grill">
+            <svg class="grill-lines" viewBox="0 0 260 76" preserveAspectRatio="none" aria-hidden="true">
+              <line class="rail" x1="0" y1="6" x2="260" y2="6" />
+              <line class="rail" x1="0" y1="70" x2="260" y2="70" />
+              <line class="bar" x1="0" y1="22" x2="260" y2="22" />
+              <line class="bar" x1="0" y1="38" x2="260" y2="38" />
+              <line class="bar" x1="0" y1="54" x2="260" y2="54" />
+              <line class="glow" x1="0" y1="38" x2="260" y2="38" />
             </svg>
-            <span class="label">Booking Now</span>
+            <span class="label">
+              <svg class="flame" viewBox="0 0 64 64" fill="currentColor" aria-hidden="true">
+                <path
+                  d="M32 6c6 8-2 12-2 19a8 8 0 0 0 16 0c0-3-1-5-1-5 6 4 9 11 9 17 0 12.7-10.3 21-22 21S10 49.7 10 37c0-9 4-16 10-21-1 4 0 7 3 9 0-9 3-13 9-19Z" />
+              </svg>
+              Booking Now
+            </span>
           </a>
         </div>
       </div>

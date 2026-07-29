@@ -246,6 +246,56 @@
       background: linear-gradient(135deg, var(--ember), var(--ember-2));
       border: 1px solid var(--ember-2);
       transition: transform .2s ease, box-shadow .4s ease, filter .3s ease;
+      animation: btnIdlePulse 3.2s ease-in-out infinite;
+    }
+
+    @keyframes btnIdlePulse {
+
+      0%,
+      100% {
+        box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+      }
+
+      50% {
+        box-shadow: 0 0 22px var(--theme-glow);
+      }
+    }
+
+    .btn-grill::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -60%;
+      width: 40%;
+      height: 100%;
+      background: linear-gradient(115deg, transparent, rgba(255, 255, 255, .45), transparent);
+      transform: skewX(-20deg);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .btn-grill:hover::after {
+      animation: btnShine .9s ease forwards;
+    }
+
+    @keyframes btnShine {
+      from {
+        left: -60%;
+      }
+
+      to {
+        left: 130%;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .btn-grill {
+        animation: none !important;
+      }
+
+      .btn-grill:hover::after {
+        animation: none !important;
+      }
     }
 
     .btn-grill .grill-lines {
@@ -542,7 +592,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(180deg, rgba(var(--char-rgb), 0) 0%, rgba(var(--char-rgb), 0) 45%, rgba(var(--char-rgb), 0.55) 72%, rgba(var(--char-rgb), 0.98) 100%);
+      background: linear-gradient(180deg, rgba(var(--char-rgb), 0) 0%, rgba(var(--char-rgb), 0) 35%, rgba(var(--char-rgb), 0.62) 62%, rgba(var(--char-rgb), 0.95) 85%, rgba(var(--char-rgb), 1) 100%);
     }
 
     @keyframes heroDrift {
@@ -565,12 +615,29 @@
     .hero-logo {
       position: relative;
       z-index: 2;
-      width: 96px;
-      height: 96px;
+      width: 135px;
+      height: 135px;
       margin-bottom: 26px;
       opacity: 0;
-      animation: fadeUp .8s var(--ease) forwards;
-      animation-delay: .05s;
+      animation: fadeUp .8s var(--ease) .05s forwards, logoFloat 5s ease-in-out .9s infinite;
+    }
+
+    @keyframes logoFloat {
+
+      0%,
+      100% {
+        transform: translateY(0) rotate(0deg);
+      }
+
+      50% {
+        transform: translateY(-10px) rotate(-2deg);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hero-logo {
+        animation: none !important;
+      }
     }
 
     .hero-logo img {
@@ -613,7 +680,7 @@
     opacity: 0;
     animation: fadeUp .9s var(--ease) forwards;
     animation-delay: .3s;
-    max-width: 50%;
+    max-width: 40%;
     }
 
     .hero h1 i {
@@ -664,36 +731,112 @@
       }
     }
 
+    /* ---------- social rail: plain icons positioned over the orange corner triangle (drawn in .hero-slope svg) ---------- */
     .social-rail {
-position: absolute;
-    right: 36px;
-    bottom: 40px;
-    z-index: 3;
-    display: flex;
-      gap: 16px;
+      position: absolute;
+      right: 34px;
+      bottom: 22px;
+      z-index: 6;
+      display: flex;
+      gap: 12px;
     }
 
     .social-rail a {
+      position: relative;
       width: 40px;
       height: 40px;
-      border: 1px solid rgba(var(--bone-rgb), 0.25);
+      border: 1px solid rgba(var(--bone-rgb), 0.35);
       color: var(--bone);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
+      opacity: 0;
+      transform: translateY(16px) scale(.8);
+      animation: socialIn .6s var(--ease) forwards;
       transition: transform .3s var(--ease), background .3s ease, border-color .3s ease;
+    }
+
+    .social-rail a:nth-child(1) {
+      animation-delay: .9s;
+    }
+
+    .social-rail a:nth-child(2) {
+      animation-delay: 1.05s;
+    }
+
+    .social-rail a:nth-child(3) {
+      animation-delay: 1.2s;
+    }
+
+    @keyframes socialIn {
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .social-rail a::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 1px solid rgba(var(--bone-rgb), 0.5);
+      opacity: 0;
+      animation: socialPing 3s ease-out infinite;
+      pointer-events: none;
+    }
+
+    .social-rail a:nth-child(2)::before {
+      animation-delay: 1s;
+    }
+
+    .social-rail a:nth-child(3)::before {
+      animation-delay: 2s;
+    }
+
+    @keyframes socialPing {
+      0% {
+        opacity: .6;
+        transform: scale(1);
+      }
+
+      100% {
+        opacity: 0;
+        transform: scale(1.5);
+      }
     }
 
     .social-rail a svg {
       width: 15px;
       height: 15px;
+      position: relative;
+      z-index: 1;
+      transition: transform .3s var(--ease);
     }
 
     .social-rail a:hover {
-      transform: translateY(-4px);
-      background: var(--ember);
-      border-color: var(--ember);
+      transform: translateY(-4px) scale(1.08);
+      background: var(--bone);
+      border-color: var(--bone);
+      color: var(--ember);
+    }
+
+    .social-rail a:hover svg {
+      transform: rotate(-6deg);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+      .social-rail a {
+        opacity: 1 !important;
+        transform: none !important;
+        animation: none !important;
+      }
+
+      .social-rail a::before {
+        display: none;
+      }
     }
 
     .scroll-cue {
@@ -822,50 +965,72 @@ position: absolute;
       }
     }
 
-    /* ---------- hero bottom divider: thin + thick line pair with glow pulse + traveling shimmer ---------- */
-    .hero-line-divider {
+    /* ---------- hero bottom diagonal slope: solid black wedge + glowing accent line ---------- */
+    .hero-slope {
       position: absolute;
-      left: 0;
-      right: 0;
-      bottom: -13px;
-      height: 40px;
-      overflow: hidden;
+      inset: 0;
       z-index: 3;
       pointer-events: none;
     }
 
-    .hero-lines {
+    .hero-slope svg {
       width: 100%;
-      height: 100%;
+      height: 108%;
       display: block;
+      overflow: visible;
     }
 
-    .hero-lines .line-thick {
-      stroke: var(--brass);
-      stroke-width: 4;
-      stroke-linecap: round;
-      opacity: .85;
+    .hero-slope .slope-fill {
+      fill: var(--char);
     }
 
-    .hero-lines .line-thin {
-      stroke: var(--ember-2);
-      stroke-width: 1.4;
-      stroke-linecap: round;
-      opacity: .55;
-      animation: heroLineGlow 3.6s ease-in-out infinite;
+    .hero-slope .corner-triangle-fill {
+      fill: var(--ember);
+      transform-box: fill-box;
+      transform-origin: 100% 100%;
+      animation: triFillPulse 3.6s ease-in-out infinite;
     }
 
-    @keyframes heroLineGlow {
+    @keyframes triFillPulse {
 
       0%,
       100% {
-        opacity: .4;
-        filter: drop-shadow(0 0 2px var(--theme-glow));
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: .86;
+        transform: scale(1.03);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hero-slope .corner-triangle-fill {
+        animation: none !important;
+      }
+    }
+
+    .hero-slope .slope-line {
+      fill: none;
+      stroke: var(--ember-2);
+      stroke-width: 3;
+      vector-effect: non-scaling-stroke;
+      filter: drop-shadow(0 0 5px var(--theme-glow));
+      animation: heroSlopeGlow 3.6s ease-in-out infinite;
+    }
+
+    @keyframes heroSlopeGlow {
+
+      0%,
+      100% {
+        opacity: .8;
+        filter: drop-shadow(0 0 3px var(--theme-glow));
       }
 
       50% {
         opacity: 1;
-        filter: drop-shadow(0 0 14px var(--theme-glow-strong));
+        filter: drop-shadow(0 0 16px var(--theme-glow-strong));
       }
     }
 
@@ -883,40 +1048,38 @@ position: absolute;
     }
 
     @media (prefers-reduced-motion: reduce) {
-
-      .hero-lines .line-thick,
-      .hero-lines .line-thin {
+      .hero-slope .slope-line {
         animation: none !important;
       }
     }
 
     @media(max-width:520px) {
-      .hero-line-divider {
-        height: 28px;
+      .hero-slope .slope-fill {
+        /* on small screens keep more of the photo visible; steeper wedge on the right only */
       }
     }
 
-    /* ---------- kitchen smoke (canvas-based, real convection-style particles) ---------- */
-    .grill-smoke {
+    /* ---------- rising vapor (canvas-based, thin translucent heat-shimmer wisps) ---------- */
+    .hero-vapor {
       position: absolute;
       left: 0;
       right: 0;
       bottom: 0;
       width: 100%;
-      height: 260px;
+      height: 320px;
       z-index: 1;
       pointer-events: none;
     }
 
     @media(max-width:520px) {
-      .grill-smoke {
-        height: 180px;
+      .hero-vapor {
+        height: 220px;
       }
     }
 
     @media (prefers-reduced-motion: reduce) {
 
-      .grill-smoke {
+      .hero-vapor {
         animation: none !important;
         display: none;
       }
@@ -1260,17 +1423,20 @@ position: absolute;
       overflow: visible;
     }
 
-    .about-img-grate line {
-      stroke: var(--brass);
-      stroke-width: 1.5;
-      opacity: .7;
+    .about-img-grate .tri-fill {
+      fill: var(--ember);
+      transform-box: fill-box;
+      transform-origin: 100% 50%;
+      animation: triFillPulse 3.6s ease-in-out infinite;
     }
 
-    .about-img-grate .grate-glow {
+    .about-img-grate .tri-glow {
+      fill: none;
       stroke: var(--ember-2);
-      stroke-width: 1.1;
-      opacity: 0;
-      animation: grillBarGlow 4.6s ease-in-out infinite;
+      stroke-width: 2;
+      vector-effect: non-scaling-stroke;
+      filter: drop-shadow(0 0 5px var(--theme-glow));
+      animation: heroSlopeGlow 3.6s ease-in-out infinite;
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -1283,7 +1449,11 @@ position: absolute;
         animation: none !important;
       }
 
-      .about-img-grate .grate-glow {
+      .about-img-grate .tri-glow {
+        animation: none !important;
+      }
+
+      .about-img-grate .tri-fill {
         animation: none !important;
       }
     }
@@ -1315,17 +1485,20 @@ position: absolute;
       overflow: visible;
     }
 
-    .corner-grate line {
-      stroke: var(--brass);
-      stroke-width: 1.5;
-      opacity: .6;
+    .corner-grate .tri-fill {
+      fill: var(--ember);
+      transform-box: fill-box;
+      transform-origin: 100% 50%;
+      animation: triFillPulse 3.6s ease-in-out infinite;
     }
 
-    .corner-grate .grate-glow {
+    .corner-grate .tri-glow {
+      fill: none;
       stroke: var(--ember-2);
-      stroke-width: 1.1;
-      opacity: 0;
-      animation: grillBarGlow 4.6s ease-in-out infinite;
+      stroke-width: 2;
+      vector-effect: non-scaling-stroke;
+      filter: drop-shadow(0 0 5px var(--theme-glow));
+      animation: heroSlopeGlow 3.6s ease-in-out infinite;
     }
 
     .corner-grate.tr {
@@ -1339,7 +1512,11 @@ position: absolute;
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .corner-grate .grate-glow {
+      .corner-grate .tri-glow {
+        animation: none !important;
+      }
+
+      .corner-grate .tri-fill {
         animation: none !important;
       }
     }
@@ -4115,31 +4292,214 @@ position: absolute;
       padding: 0 4px 26px;
     }
 
+    /* ---------- footer v2: background image + animated embers + feature cards ---------- */
     footer {
       background: var(--char);
-      color: var(--bone);
-      padding: 110px 56px 30px;
+      padding: 0;
       position: relative;
-      border-top: 1px solid rgba(var(--brass-rgb), 0.14);
+      overflow: hidden;
+    }
+
+    .footer-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .footer-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      filter: grayscale(.3) contrast(1.05) brightness(.5);
+      transform: scale(1.08);
+      animation: aboutImgDrift 24s ease-in-out infinite alternate;
+    }
+
+    .footer-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(var(--char-rgb), 0.94) 0%, rgba(var(--char-rgb), 0.88) 40%, rgba(var(--char-rgb), 0.97) 100%);
+    }
+
+    .footer-embers {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .footer-bg img { animation: none !important; }
+      .footer-embers { display: none; }
+    }
+
+    footer > * { position: relative; z-index: 2; }
+
+    .footer-features {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: rgba(var(--bone-rgb), 0.1);
+      border-bottom: 1px solid rgba(var(--bone-rgb), 0.1);
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    .footer-feature {
+      background: rgba(22, 19, 16, 0.55);
+      padding: 44px 46px;
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      transition: background .4s ease;
+    }
+    .footer-feature:hover { background: var(--char-3); }
+
+    .footer-feature .f-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      border: 1px solid rgba(var(--brass-rgb), 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--ember-2);
+      flex-shrink: 0;
+      animation: iconFloat 3s ease-in-out infinite;
+    }
+    .footer-feature .f-icon svg { width: 22px; height: 22px; }
+
+    .footer-feature .f-copy .f-eyebrow {
+      font-size: .68rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--brass);
+      margin-bottom: 6px;
+      display: block;
+    }
+    .footer-feature .f-copy h4 {
+      font-family: var(--serif);
+      font-size: 1.3rem;
+      font-weight: 500;
+      color: var(--bone);
+      letter-spacing: -.2px;
+    }
+    .footer-feature .f-copy .f-sub {
+      font-size: .84rem;
+      color: var(--bone-dim);
+      margin-top: 4px;
+    }
+
+    .footer-subscribe-form {
+      display: flex;
+      margin-top: 14px;
+      border-bottom: 1px solid rgba(var(--bone-rgb), 0.25);
+      max-width: 260px;
+    }
+    .footer-subscribe-form input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: var(--bone);
+      font-family: var(--sans);
+      font-size: .85rem;
+      padding: 6px 0;
+      outline: none;
+    }
+    .footer-subscribe-form input::placeholder { color: var(--bone-dim); }
+    .footer-subscribe-form button {
+      background: none;
+      border: none;
+      color: var(--ember-2);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      padding: 0 4px;
+      transition: transform .3s var(--ease);
+    }
+    .footer-subscribe-form button:hover { transform: translateX(4px); }
+    .footer-subscribe-form button svg { width: 18px; height: 18px; }
+
+    @media(max-width:900px) {
+      .footer-features { grid-template-columns: 1fr; }
     }
 
     .footer-top {
       display: grid;
-      grid-template-columns: 1.4fr 1fr 1fr 1fr;
-      gap: 50px;
-      padding-bottom: 60px;
+      grid-template-columns: 1.3fr 1fr 1fr 1fr;
+      gap: 40px;
+      padding: 70px 56px 50px;
+      max-width: 1280px;
+      margin: 0 auto;
       border-bottom: 1px solid rgba(var(--bone-rgb), 0.1);
     }
 
-    .footer-brand .logo {
-      margin-bottom: 20px;
+    .footer-brand .logo-mark {
+      width: 46px;
+      height: 46px;
+      opacity: 1;
     }
 
-    .footer-brand p {
+    .footer-payment-icons {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .footer-payment-icons span {
+      background: rgba(var(--bone-rgb), 0.08);
+      border: 1px solid rgba(var(--bone-rgb), 0.14);
+      border-radius: 6px;
+      padding: 6px 10px;
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: .4px;
       color: var(--bone-dim);
-      line-height: 1.75;
-      font-size: .92rem;
-      max-width: 280px;
+    }
+
+    .footer-social-row {
+      display: flex;
+      gap: 12px;
+    }
+    .footer-social-row a {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 1px solid rgba(var(--bone-rgb), 0.22);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--bone);
+      transition: background .3s ease, border-color .3s ease, transform .3s var(--ease);
+    }
+    .footer-social-row a svg { width: 15px; height: 15px; }
+    .footer-social-row a:hover {
+      background: var(--ember);
+      border-color: var(--ember);
+      transform: translateY(-3px);
+    }
+
+    @media(max-width:900px) {
+      .footer-top { grid-template-columns: 1fr 1fr; padding: 50px 24px 40px; }
+    }
+    @media(max-width:520px) {
+      .footer-top { grid-template-columns: 1fr; }
+    }
+
+    .footer-bottom {
+      padding: 22px 56px 30px;
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: .78rem;
+      color: var(--smoke);
     }
 
     .footer-col h4 {
@@ -4163,68 +4523,44 @@ position: absolute;
       color: var(--ember-2);
     }
 
-    .footer-bottom {
-      margin-top: 30px;
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 12px;
-      font-size: .78rem;
-      color: var(--smoke);
+    .footer-brand p {
+      color: var(--bone-dim);
+      line-height: 1.75;
+      font-size: .92rem;
+      max-width: 280px;
     }
 
-    @media(max-width:900px) {
-
-      header,
-      .hero,
-      .about,
-      .gallery,
-      .testimonials,
-      .faq,
-      footer {
-        padding-left: 24px;
-        padding-right: 24px;
-      }
-
-      .about {
-        grid-template-columns: 1fr;
-      }
-
-      nav {
-        display: none;
-      }
-
-      .social-rail {
-        display: none;
-      }
-
-      .gallery-grid {
-        grid-template-columns: repeat(2, 1fr);
-        grid-auto-rows: 150px;
-      }
-
-      .g-item:nth-child(1),
-      .g-item:nth-child(2),
-      .g-item:nth-child(3),
-      .g-item:nth-child(4),
-      .g-item:nth-child(5),
-      .g-item:nth-child(6) {
-        grid-column: span 1;
-        grid-row: span 1;
-      }
-
-      .testimonial-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .footer-top {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .hero h1 {
-        font-size: clamp(3rem, 14vw, 5rem);
-      }
+    .footer-brand .logo {
+      margin-bottom: 20px;
     }
+
+    /* ---------- specialities-white: subtle grain + fine linen weave ---------- */
+.spec-bg-white {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    repeating-linear-gradient(135deg,
+      rgba(72, 32, 0, 0.035) 0px,
+      rgba(72, 32, 0, 0.035) 1px,
+      transparent 1px,
+      transparent 13px),
+    repeating-linear-gradient(45deg,
+      rgba(72, 32, 0, 0.025) 0px,
+      rgba(72, 32, 0, 0.025) 1px,
+      transparent 1px,
+      transparent 13px),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='paperN'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0.16  0 0 0 0 0.13  0 0 0 0 0.1  0 0 0 0.5 0'/></filter><rect width='100%25' height='100%25' filter='url(%23paperN)'/></svg>");
+  background-size: auto, auto, 200px 200px;
+}
+
+.spec-bg-white::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(230, 228, 214, 0.55);
+}
   </style>
 </head>
 
@@ -4329,12 +4665,13 @@ position: absolute;
       </div>
     </div>
 
-    <canvas class="grill-smoke" id="grillSmoke" aria-hidden="true"></canvas>
+    <canvas class="hero-vapor" id="heroVapor" aria-hidden="true"></canvas>
 
-    <div class="hero-line-divider" aria-hidden="true">
-      <svg class="hero-lines" viewBox="0 0 1440 40" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-        <line class="line-thick" x1="0" y1="14" x2="1440" y2="14" />
-        <line class="line-thin" x1="0" y1="27" x2="1440" y2="27" />
+    <div class="hero-slope" aria-hidden="true">
+      <svg viewBox="0 0 1000 1000" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <polygon class="slope-fill" points="0,1000 1000,1000 1000,700 700,918 0,918" />
+        <polyline class="slope-line" points="0,918 700,918 1000,700" />
+        <polygon class="corner-triangle-fill" points="715,940 1000,1000 1000,740" />
       </svg>
     </div>
   </section>
@@ -4381,18 +4718,8 @@ position: absolute;
       </div>
       <div class="about-img-grate" aria-hidden="true">
         <svg viewBox="0 0 150 120" xmlns="http://www.w3.org/2000/svg">
-          <line x1="0" y1="12" x2="150" y2="12" />
-          <line x1="0" y1="32" x2="150" y2="32" />
-          <line x1="0" y1="52" x2="150" y2="52" />
-          <line x1="0" y1="72" x2="150" y2="72" />
-          <line x1="0" y1="92" x2="150" y2="92" />
-          <line x1="0" y1="112" x2="150" y2="112" />
-          <line x1="18" y1="0" x2="18" y2="120" />
-          <line x1="140" y1="0" x2="140" y2="120" />
-          <line class="grate-glow" x1="0" y1="12" x2="150" y2="12" style="animation-delay:0s" />
-          <line class="grate-glow" x1="0" y1="52" x2="150" y2="52" style="animation-delay:1.5s" />
-          <line class="grate-glow" x1="0" y1="92" x2="150" y2="92" style="animation-delay:3s" />
-          <line class="grate-glow" x1="18" y1="0" x2="18" y2="120" style="animation-delay:.8s" />
+          <polygon class="tri-fill" points="150,120 150,10 30,120" />
+          <polyline class="tri-glow" points="150,10 30,120" />
         </svg>
       </div>
     </div>
@@ -4419,18 +4746,8 @@ position: absolute;
             alt="Warm dining room at Grill House" loading="lazy">
           <div class="corner-grate br" aria-hidden="true">
             <svg viewBox="0 0 120 96" xmlns="http://www.w3.org/2000/svg">
-              <line x1="0" y1="10" x2="120" y2="10" />
-              <line x1="0" y1="26" x2="120" y2="26" />
-              <line x1="0" y1="42" x2="120" y2="42" />
-              <line x1="0" y1="58" x2="120" y2="58" />
-              <line x1="0" y1="74" x2="120" y2="74" />
-              <line x1="0" y1="90" x2="120" y2="90" />
-              <line x1="14" y1="0" x2="14" y2="96" />
-              <line x1="106" y1="0" x2="106" y2="96" />
-              <line class="grate-glow" x1="0" y1="10" x2="120" y2="10" style="animation-delay:0s" />
-              <line class="grate-glow" x1="0" y1="42" x2="120" y2="42" style="animation-delay:1.5s" />
-              <line class="grate-glow" x1="0" y1="74" x2="120" y2="74" style="animation-delay:3s" />
-              <line class="grate-glow" x1="14" y1="0" x2="14" y2="96" style="animation-delay:.8s" />
+              <polygon class="tri-fill" points="120,96 120,8 24,96" />
+              <polyline class="tri-glow" points="120,8 24,96" />
             </svg>
           </div>
         </div>
@@ -4442,18 +4759,8 @@ position: absolute;
             alt="Wood-fired grilling over open flame" loading="lazy">
           <div class="corner-grate br" aria-hidden="true">
             <svg viewBox="0 0 120 96" xmlns="http://www.w3.org/2000/svg">
-              <line x1="0" y1="10" x2="120" y2="10" />
-              <line x1="0" y1="26" x2="120" y2="26" />
-              <line x1="0" y1="42" x2="120" y2="42" />
-              <line x1="0" y1="58" x2="120" y2="58" />
-              <line x1="0" y1="74" x2="120" y2="74" />
-              <line x1="0" y1="90" x2="120" y2="90" />
-              <line x1="14" y1="0" x2="14" y2="96" />
-              <line x1="106" y1="0" x2="106" y2="96" />
-              <line class="grate-glow" x1="0" y1="26" x2="120" y2="26" style="animation-delay:.5s" />
-              <line class="grate-glow" x1="0" y1="58" x2="120" y2="58" style="animation-delay:2s" />
-              <line class="grate-glow" x1="0" y1="90" x2="120" y2="90" style="animation-delay:3.5s" />
-              <line class="grate-glow" x1="106" y1="0" x2="106" y2="96" style="animation-delay:1.2s" />
+              <polygon class="tri-fill" points="120,96 120,8 24,96" />
+              <polyline class="tri-glow" points="120,8 24,96" />
             </svg>
           </div>
         </div>
@@ -4941,19 +5248,9 @@ position: absolute;
           loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Grill House location map"></iframe>
         <div class="corner-grate br" aria-hidden="true">
           <svg viewBox="0 0 120 96" xmlns="http://www.w3.org/2000/svg">
-            <line x1="0" y1="10" x2="120" y2="10" />
-            <line x1="0" y1="26" x2="120" y2="26" />
-            <line x1="0" y1="42" x2="120" y2="42" />
-            <line x1="0" y1="58" x2="120" y2="58" />
-            <line x1="0" y1="74" x2="120" y2="74" />
-            <line x1="0" y1="90" x2="120" y2="90" />
-            <line x1="14" y1="0" x2="14" y2="96" />
-            <line x1="106" y1="0" x2="106" y2="96" />
-            <line class="grate-glow" x1="0" y1="10" x2="120" y2="10" style="animation-delay:0s" />
-            <line class="grate-glow" x1="0" y1="42" x2="120" y2="42" style="animation-delay:1.5s" />
-            <line class="grate-glow" x1="0" y1="74" x2="120" y2="74" style="animation-delay:3s" />
-            <line class="grate-glow" x1="14" y1="0" x2="14" y2="96" style="animation-delay:.8s" />
-          </svg>
+              <polygon class="tri-fill" points="120,96 120,8 24,96" />
+              <polyline class="tri-glow" points="120,8 24,96" />
+            </svg>
         </div>
       </div>
       <div class="loc-photo-card reveal">
@@ -4961,19 +5258,9 @@ position: absolute;
           alt="Grill House storefront" loading="lazy">
         <div class="corner-grate tr" aria-hidden="true">
           <svg viewBox="0 0 120 96" xmlns="http://www.w3.org/2000/svg">
-            <line x1="0" y1="10" x2="120" y2="10" />
-            <line x1="0" y1="26" x2="120" y2="26" />
-            <line x1="0" y1="42" x2="120" y2="42" />
-            <line x1="0" y1="58" x2="120" y2="58" />
-            <line x1="0" y1="74" x2="120" y2="74" />
-            <line x1="0" y1="90" x2="120" y2="90" />
-            <line x1="14" y1="0" x2="14" y2="96" />
-            <line x1="106" y1="0" x2="106" y2="96" />
-            <line class="grate-glow" x1="0" y1="26" x2="120" y2="26" style="animation-delay:.5s" />
-            <line class="grate-glow" x1="0" y1="58" x2="120" y2="58" style="animation-delay:2s" />
-            <line class="grate-glow" x1="0" y1="90" x2="120" y2="90" style="animation-delay:3.5s" />
-            <line class="grate-glow" x1="106" y1="0" x2="106" y2="96" style="animation-delay:1.2s" />
-          </svg>
+              <polygon class="tri-fill" points="120,96 120,8 24,96" />
+              <polyline class="tri-glow" points="120,8 24,96" />
+            </svg>
         </div>
         <div class="loc-photo-overlay">
           <span class="loc-photo-tag">Our Location</span>
@@ -5041,48 +5328,59 @@ position: absolute;
   </section>
 
   <footer id="contact">
+    <div class="footer-bg" aria-hidden="true">
+      <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=1920&q=80" alt="">
+    </div>
+    <canvas class="footer-embers" id="footerEmbers" aria-hidden="true"></canvas>
+
+    
+
     <div class="footer-top">
       <div class="footer-brand">
         <div class="logo">
           <span class="logo-mark">
-            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M32 6c6 8-2 12-2 19a8 8 0 0 0 16 0c0-3-1-5-1-5 6 4 9 11 9 17 0 12.7-10.3 21-22 21S10 49.7 10 37c0-9 4-16 10-21-1 4 0 7 3 9 0-9 3-13 9-19Z"
-                fill="var(--ember-2)" fill-opacity="0.16" stroke="var(--ember-2)" stroke-width="2.4"
-                stroke-linejoin="round" />
-              <path
-                d="M24 40c0 5.5 3.6 9 8 9s8-3.5 8-9c0-2.6-1.4-4.4-2.6-6.2-.5 2-1.8 3.2-3.4 3.2 0-3.4-1.5-5.6-4-8-.3 3-1.6 4.8-3.4 6.6C25.3 36.8 24 38.1 24 40Z"
-                fill="var(--ember-2)" />
-            </svg>
+            <img
+              src="https://d1ph6a2qqb4pcd.cloudfront.net/fit-in/filters:format(webp):/uploads/website/website/2026/02/01/083621498/logo/MIy3LJQAGWmXbjUwkHAHt0mEWNpGLccEaADW6xdW.png"
+              alt="Oviq African Market and Foods logo">
           </span>
           <em>Grill</em>House
         </div>
         <p>A neighborhood grill &amp; bar serving fire-cooked classics, seasonal sides, and a warm room for every
           occasion.</p>
+        <div class="footer-social-row" style="margin-top:22px;">
+          <a href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-7.6 8.7L23 22h-6.8l-5.3-6.9L4.7 22H1.6l8.1-9.3L1 2h6.9l4.8 6.3L18.9 2Zm-1.2 18h1.9L7.4 4H5.3l12.4 16Z"/></svg></a>
+          <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 22v-8.5H16l.5-3.5h-3V7.8c0-1 .3-1.7 1.8-1.7H16.6V3.1C16 3 15 2.9 13.9 2.9c-2.5 0-4.2 1.5-4.2 4.3V10H7v3.5h2.7V22h3.8Z"/></svg></a>
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1"/></svg></a>
+        </div>
       </div>
+
       <div class="footer-col">
         <h4>Visit</h4>
-        <div> 2011 Eleventh Avenue South</div>
+        <div>2011 Eleventh Avenue South</div>
         <div>Birmingham, AL 35300</div>
+        <div style="margin-top:14px;">Tue–Fri 5:30–10 PM</div>
+        <div>Sat 5–10:30 PM · Sun 5–9 PM</div>
       </div>
-      <div class="footer-col">
-        <h4>Contact</h4>
-        <a href="tel:4423253829"> 442-325-3829</a>
-        <a href="mailto:criston@zingmyorder.com">✉ criston@zingmyorder.com</a>
-      </div>
+
       <div class="footer-col">
         <h4>Explore</h4>
         <a href="#">Home</a>
-        <a href="#">About Us</a>
-        <a href="#">Menu</a>
+        <a href="#about">About Us</a>
+        <a href="#menu">Menu</a>
         <a href="#gallery">Gallery</a>
-        <a href="#">Order Now</a>
-        <a href="#">Jobs</a>
         <a href="#">Events</a>
-        <a href="#">Book Your Events</a>
-        <a href="#">Website Accessibility Statement</a>
+      </div>
+
+     
+
+      <div class="footer-col">
+        
+        <h4 style="margin-top:6px;">Contact</h4>
+        <a href="tel:4423253829">442-325-3829</a>
+        <a href="mailto:criston@zingmyorder.com">criston@zingmyorder.com</a>
       </div>
     </div>
+
     <div class="footer-bottom">
       <span>&copy; 2026 Grill House. All Rights Reserved. Powered by Zingmyorder</span>
       <span>Tuesday – Saturday · Dinner 5:30–10:00 PM · Bar 4:00 PM (5:00 PM Sat)</span>
@@ -5384,7 +5682,7 @@ position: absolute;
 
     (function () {
       var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      var canvas = document.getElementById('grillSmoke');
+      var canvas = document.getElementById('heroVapor');
       if (!canvas || reduced) return;
       var ctx = canvas.getContext('2d');
       var W, H, DPR = Math.min(window.devicePixelRatio || 1, 2);
@@ -5403,21 +5701,21 @@ position: absolute;
       resize();
       window.addEventListener('resize', resize);
 
-      var spriteSize = 220;
+      var spriteSize = 180;
       var sprite = document.createElement('canvas');
       sprite.width = sprite.height = spriteSize;
       var sctx = sprite.getContext('2d');
-      sctx.filter = 'blur(14px)';
+      sctx.filter = 'blur(12px)';
       [
-        { x: 0.5, y: 0.55, r: 0.34 },
-        { x: 0.34, y: 0.62, r: 0.24 },
-        { x: 0.66, y: 0.60, r: 0.26 },
-        { x: 0.5, y: 0.40, r: 0.22 }
+        { x: 0.5, y: 0.55, r: 0.32 },
+        { x: 0.36, y: 0.6, r: 0.22 },
+        { x: 0.64, y: 0.58, r: 0.24 },
+        { x: 0.5, y: 0.42, r: 0.2 }
       ].forEach(function (b) {
         var cx = b.x * spriteSize, cy = b.y * spriteSize, r = b.r * spriteSize;
         var g = sctx.createRadialGradient(cx, cy, 0, cx, cy, r);
-        g.addColorStop(0, 'rgba(239,230,216,0.85)');
-        g.addColorStop(0.55, 'rgba(239,230,216,0.35)');
+        g.addColorStop(0, 'rgba(239,230,216,0.55)');
+        g.addColorStop(0.55, 'rgba(239,230,216,0.22)');
         g.addColorStop(1, 'rgba(239,230,216,0)');
         sctx.fillStyle = g;
         sctx.beginPath();
@@ -5425,27 +5723,24 @@ position: absolute;
         sctx.fill();
       });
 
-      var spawnPoints = [0.10, 0.22, 0.35, 0.48, 0.60, 0.72, 0.85, 0.93];
-      var particles = [];
+      var spawnPoints = [0.10, 0.24, 0.38, 0.52, 0.66, 0.80, 0.92];
+      var puffs = [];
 
       function spawn() {
         var baseX = spawnPoints[Math.floor(Math.random() * spawnPoints.length)] * W;
-        particles.push({
-          x0: baseX + random(-14, 14),
+        puffs.push({
+          x0: baseX + random(-12, 12),
           age: 0,
-          life: random(5200, 8600),
-          size: random(46, 78),
-          maxSize: random(150, 240),
+          life: random(4200, 6800),
+          size: random(34, 56),
+          maxSize: random(100, 160),
           rot: random(0, Math.PI * 2),
-          rotSpeed: random(-0.15, 0.15),
-          driftAmp1: random(14, 30),
-          driftFreq1: random(0.0006, 0.0011),
-          driftPhase1: random(0, Math.PI * 2),
-          driftAmp2: random(6, 16),
-          driftFreq2: random(0.0018, 0.0028),
-          driftPhase2: random(0, Math.PI * 2),
-          rise: random(90, 150),
-          peak: random(0.32, 0.5)
+          rotSpeed: random(-0.08, 0.08),
+          driftAmp: random(10, 22),
+          driftFreq: random(0.0006, 0.001),
+          driftPhase: random(0, Math.PI * 2),
+          rise: random(70, 120),
+          peak: random(0.3, 0.45)
         });
       }
 
@@ -5457,7 +5752,7 @@ position: absolute;
         var dt = ts - lastTime;
         lastTime = ts;
 
-        if (ts - lastSpawn > random(320, 620) && particles.length < 22) {
+        if (ts - lastSpawn > random(500, 900) && puffs.length < 12) {
           spawn();
           lastSpawn = ts;
         }
@@ -5465,20 +5760,19 @@ position: absolute;
         ctx.clearRect(0, 0, W, H);
         ctx.globalCompositeOperation = 'screen';
 
-        for (var i = particles.length - 1; i >= 0; i--) {
-          var p = particles[i];
+        for (var i = puffs.length - 1; i >= 0; i--) {
+          var p = puffs[i];
           p.age += dt;
           var t = p.age / p.life;
-          if (t >= 1) { particles.splice(i, 1); continue; }
+          if (t >= 1) { puffs.splice(i, 1); continue; }
 
-          var drift = Math.sin(p.age * p.driftFreq1 + p.driftPhase1) * p.driftAmp1
-            + Math.sin(p.age * p.driftFreq2 + p.driftPhase2) * p.driftAmp2;
-          var x = p.x0 + drift * t * 2.2;
-          var y = (H + 14) - t * (H * 0.85 + p.rise * 0.35);
+          var drift = Math.sin(p.age * p.driftFreq + p.driftPhase) * p.driftAmp;
+          var x = p.x0 + drift * t;
+          var y = (H + 12) - t * (H * 0.75 + p.rise * 0.3);
           var scale = (p.size + (p.maxSize - p.size) * t) / spriteSize;
           var alpha = t < p.peak ? (t / p.peak) : (1 - (t - p.peak) / (1 - p.peak));
           if (alpha < 0) alpha = 0;
-          alpha *= 0.5;
+          alpha *= 0.3;
 
           p.rot += p.rotSpeed * (dt / 1000);
 
@@ -5486,7 +5780,7 @@ position: absolute;
           ctx.globalAlpha = alpha;
           ctx.translate(x, y);
           ctx.rotate(p.rot);
-          ctx.scale(scale, scale * 1.15);
+          ctx.scale(scale, scale * 1.1);
           ctx.drawImage(sprite, -spriteSize / 2, -spriteSize / 2);
           ctx.restore();
         }
@@ -5595,21 +5889,21 @@ position: absolute;
       resize();
       window.addEventListener('resize', resize);
 
-      var spriteSize = 200;
+      var spriteSize = 180;
       var sprite = document.createElement('canvas');
       sprite.width = sprite.height = spriteSize;
       var sctx = sprite.getContext('2d');
-      sctx.filter = 'blur(13px)';
+      sctx.filter = 'blur(12px)';
       [
-        { x: 0.5, y: 0.55, r: 0.34 },
-        { x: 0.34, y: 0.62, r: 0.22 },
-        { x: 0.66, y: 0.6, r: 0.24 },
-        { x: 0.5, y: 0.4, r: 0.2 }
+        { x: 0.5, y: 0.55, r: 0.32 },
+        { x: 0.36, y: 0.6, r: 0.22 },
+        { x: 0.64, y: 0.58, r: 0.24 },
+        { x: 0.5, y: 0.42, r: 0.2 }
       ].forEach(function (b) {
         var cx = b.x * spriteSize, cy = b.y * spriteSize, r = b.r * spriteSize;
         var g = sctx.createRadialGradient(cx, cy, 0, cx, cy, r);
-        g.addColorStop(0, 'rgba(239,230,216,0.75)');
-        g.addColorStop(0.55, 'rgba(239,230,216,0.3)');
+        g.addColorStop(0, 'rgba(239,230,216,0.55)');
+        g.addColorStop(0.55, 'rgba(239,230,216,0.22)');
         g.addColorStop(1, 'rgba(239,230,216,0)');
         sctx.fillStyle = g;
         sctx.beginPath();
@@ -5617,21 +5911,22 @@ position: absolute;
         sctx.fill();
       });
 
-      var particles = [];
+      var puffs = [];
 
       function spawn() {
-        particles.push({
+        puffs.push({
           x0: random(W * 0.08, W * 0.92),
           age: 0,
-          life: random(6000, 9500),
-          size: random(30, 52),
-          maxSize: random(110, 175),
+          life: random(4200, 6800),
+          size: random(34, 56),
+          maxSize: random(100, 160),
           rot: random(0, Math.PI * 2),
-          rotSpeed: random(-0.12, 0.12),
-          driftAmp: random(10, 24),
-          driftFreq: random(0.0006, 0.0011),
+          rotSpeed: random(-0.08, 0.08),
+          driftAmp: random(10, 22),
+          driftFreq: random(0.0006, 0.001),
           driftPhase: random(0, Math.PI * 2),
-          peak: random(0.3, 0.48)
+          rise: random(70, 120),
+          peak: random(0.3, 0.45)
         });
       }
 
@@ -5644,7 +5939,7 @@ position: absolute;
         lastTime = ts;
 
         if (active) {
-          if (ts - lastSpawn > random(900, 1700) && particles.length < 12) {
+          if (ts - lastSpawn > random(500, 900) && puffs.length < 12) {
             spawn();
             lastSpawn = ts;
           }
@@ -5652,19 +5947,19 @@ position: absolute;
           ctx.clearRect(0, 0, W, H);
           ctx.globalCompositeOperation = 'screen';
 
-          for (var i = particles.length - 1; i >= 0; i--) {
-            var p = particles[i];
+          for (var i = puffs.length - 1; i >= 0; i--) {
+            var p = puffs[i];
             p.age += dt;
             var t = p.age / p.life;
-            if (t >= 1) { particles.splice(i, 1); continue; }
+            if (t >= 1) { puffs.splice(i, 1); continue; }
 
             var drift = Math.sin(p.age * p.driftFreq + p.driftPhase) * p.driftAmp;
-            var x = p.x0 + drift * t * 1.6;
-            var y = (H + 20) - t * (H * 0.7);
+            var x = p.x0 + drift * t;
+            var y = (H + 12) - t * (H * 0.75 + p.rise * 0.3);
             var scale = (p.size + (p.maxSize - p.size) * t) / spriteSize;
             var alpha = t < p.peak ? (t / p.peak) : (1 - (t - p.peak) / (1 - p.peak));
             if (alpha < 0) alpha = 0;
-            alpha *= 0.4;
+            alpha *= 0.3;
 
             p.rot += p.rotSpeed * (dt / 1000);
 
@@ -5672,15 +5967,15 @@ position: absolute;
             ctx.globalAlpha = alpha;
             ctx.translate(x, y);
             ctx.rotate(p.rot);
-            ctx.scale(scale, scale * 1.12);
+            ctx.scale(scale, scale * 1.1);
             ctx.drawImage(sprite, -spriteSize / 2, -spriteSize / 2);
             ctx.restore();
           }
 
           ctx.globalCompositeOperation = 'source-over';
-        } else if (particles.length) {
+        } else if (puffs.length) {
           ctx.clearRect(0, 0, W, H);
-          particles = [];
+          puffs = [];
         }
 
         requestAnimationFrame(tick);
@@ -5786,6 +6081,81 @@ position: absolute;
           });
         }, { threshold: 0.05 });
         specEmberObserver.observe(section);
+      } else {
+        active = true;
+      }
+
+      tick();
+    })();
+
+    (function () {
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var canvas = document.getElementById('footerEmbers');
+      var section = document.querySelector('footer');
+      if (!canvas || !section || reduced) return;
+      var ctx = canvas.getContext('2d');
+      var particles = [];
+      var W, H, DPR = Math.min(window.devicePixelRatio || 1, 2);
+      var active = false;
+
+      function resize() {
+        W = section.offsetWidth;
+        H = section.offsetHeight;
+        canvas.width = W * DPR;
+        canvas.height = H * DPR;
+        canvas.style.width = W + 'px';
+        canvas.style.height = H + 'px';
+        ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      function spawn() {
+        particles.push({
+          x: Math.random() * W,
+          y: H + 10,
+          r: Math.random() * 1.8 + 0.5,
+          vy: Math.random() * 0.42 + 0.24,
+          vx: (Math.random() - 0.5) * 0.35,
+          life: 0,
+          maxLife: Math.random() * 260 + 200,
+          hue: Math.random() > 0.5 ? '200,84,46' : '229,118,30'
+        });
+      }
+
+      function tick() {
+        if (active) {
+          ctx.clearRect(0, 0, W, H);
+          if (particles.length < 30 && Math.random() > 0.62) spawn();
+          particles.forEach(function (p, i) {
+            p.life++;
+            p.y -= p.vy;
+            p.x += p.vx + Math.sin(p.life * 0.02) * 0.3;
+            var t = p.life / p.maxLife;
+            var alpha = t < 0.15 ? t / 0.15 : 1 - (t - 0.15) / 0.85;
+            if (alpha < 0) alpha = 0;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(' + p.hue + ',' + (alpha * 0.7) + ')';
+            ctx.shadowBlur = 5;
+            ctx.shadowColor = 'rgba(' + p.hue + ',0.7)';
+            ctx.fill();
+            if (p.life >= p.maxLife || p.y < -10) particles.splice(i, 1);
+          });
+        } else if (particles.length) {
+          ctx.clearRect(0, 0, W, H);
+          particles = [];
+        }
+        requestAnimationFrame(tick);
+      }
+
+      if ('IntersectionObserver' in window) {
+        var footerEmberObserver = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            active = entry.isIntersecting;
+          });
+        }, { threshold: 0.05 });
+        footerEmberObserver.observe(section);
       } else {
         active = true;
       }

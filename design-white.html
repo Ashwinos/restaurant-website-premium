@@ -17,13 +17,13 @@
       --char-2: #211b14;
       --char-3: #2b241b;
       --char-rgb: 22, 19, 16;
-    --theme-color: #E5761E;
-    --theme-color-dark: #b15509;
-    --theme-glow: color-mix(in srgb, var(--theme-color) 60%, transparent);
-    --theme-glow-strong: color-mix(in srgb, var(--theme-color) 90%, transparent);
+      --theme-color: #E5761E;
+      --theme-color-dark: #b15509;
+      --theme-glow: color-mix(in srgb, var(--theme-color) 60%, transparent);
+      --theme-glow-strong: color-mix(in srgb, var(--theme-color) 90%, transparent);
 
-    --ember: var(--theme-color);
-    --ember-2: var(--theme-color-dark);
+      --ember: var(--theme-color);
+      --ember-2: var(--theme-color-dark);
       --brass: #482000;
       --brass-rgb: 198, 161, 101;
       --bone: #efe6d8;
@@ -33,6 +33,8 @@
       --serif: 'Fraunces', Georgia, serif;
       --sans: 'Manrope', 'Segoe UI', Arial, sans-serif;
       --ease: cubic-bezier(.16, .84, .44, 1);
+
+      --border-radius: 22px;
     }
 
     * {
@@ -672,15 +674,15 @@
 
     .hero h1 {
       position: relative;
-    z-index: 2;
-    font-size: 56px;
-    line-height: 1.1;
-    color: var(--bone);
-    letter-spacing: -2px;
-    opacity: 0;
-    animation: fadeUp .9s var(--ease) forwards;
-    animation-delay: .3s;
-    max-width: 40%;
+      z-index: 2;
+      font-size: 56px;
+      line-height: 1.1;
+      color: var(--bone);
+      letter-spacing: -2px;
+      opacity: 0;
+      animation: fadeUp .9s var(--ease) forwards;
+      animation-delay: .3s;
+      max-width: 40%;
     }
 
     .hero h1 i {
@@ -1064,7 +1066,7 @@
       position: absolute;
       left: 0;
       right: 0;
-      bottom: 0;
+    bottom: 347px;
       width: 100%;
       height: 320px;
       z-index: 1;
@@ -1237,7 +1239,8 @@
 
     @media (prefers-reduced-motion: reduce) {
 
-      .about-copy .about-tag, .about-tag-white,
+      .about-copy .about-tag,
+      .about-tag-white,
       .about-copy h2,
       .about-copy p.body-copy,
       .about-copy .btn-reticle,
@@ -1260,7 +1263,7 @@
       margin-bottom: 22px;
     }
 
-        .about-tag-white {
+    .about-tag-white {
       display: inline-flex;
       align-items: center;
       gap: 12px;
@@ -1276,11 +1279,13 @@
       height: 1px;
       background: var(--ember);
     }
+
     .about-tag-white .line {
       width: 30px;
       height: 1px;
       background: var(--ember);
     }
+
     .about h2 {
       font-size: clamp(2.2rem, 3.4vw, 3rem);
       margin-bottom: 20px;
@@ -1322,9 +1327,12 @@
     }
 
     @keyframes aboutFrameSway {
-      0%, 100% {
+
+      0%,
+      100% {
         transform: rotate(-1.1deg);
       }
+
       50% {
         transform: rotate(1.1deg);
       }
@@ -1553,7 +1561,7 @@
       margin-bottom: 64px;
     }
 
-     .specialities-white {
+    .specialities-white {
       background: var(--bone);
       padding: 130px 56px 140px;
       position: relative;
@@ -1595,7 +1603,7 @@
       background: rgba(33, 27, 20, 0.88);
     }
 
-        .spec-bg-white::after {
+    .spec-bg-white::after {
       content: '';
       position: absolute;
       inset: 0;
@@ -1742,7 +1750,7 @@
     .spec-showcase-white {
       position: relative;
       background: var(--bone);
-      border-radius: 28px;
+      border-radius: var(--border-radius);
       padding: 64px 64px 64px;
       max-width: 1180px;
       margin: 0 auto;
@@ -1763,10 +1771,10 @@
         box-shadow: 0 0 0 rgba(229, 118, 30, 0);
       }
 
-50% {
-    border-color: color-mix(in srgb, var(--theme-color) 50%, transparent);
-    box-shadow: 0 0 18px color-mix(in srgb, var(--theme-color) 28%, transparent);
-}
+      50% {
+        border-color: color-mix(in srgb, var(--theme-color) 50%, transparent);
+        box-shadow: 0 0 18px color-mix(in srgb, var(--theme-color) 28%, transparent);
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -1777,7 +1785,9 @@
     }
 
     @media(max-width:900px) {
-      .spec-showcase {
+
+      .spec-showcase,
+      .spec-showcase-white {
         border-radius: 20px;
       }
     }
@@ -1797,7 +1807,7 @@
       font-weight: 300;
     }
 
-      .spec-copy-white {
+    .spec-copy-white {
       font-family: var(--serif);
       font-size: 14px;
       line-height: 1.65;
@@ -1844,11 +1854,35 @@
 
     .spec-badge-card {
       position: relative;
-      background: linear-gradient(135deg, var(--ember), var(--brass));
+      z-index: 1;
+      background:
+        repeating-linear-gradient(0deg,
+          rgba(22, 19, 16, 0) 0px,
+          rgba(22, 19, 16, 0) 5px,
+          rgba(22, 19, 16, 0.45) 5px,
+          rgba(22, 19, 16, 0.45) 7px),
+        linear-gradient(135deg, var(--ember), var(--brass));
       border-radius: 16px;
       padding: 28px 30px;
       color: var(--bone);
       overflow: hidden;
+    }
+
+
+
+    @media (prefers-reduced-motion: reduce) {
+      .spec-badge-card::after {
+        animation: none !important;
+        opacity: 0 !important;
+      }
+    }
+
+    /* keep the triangle proportioned for the smaller badge card, same theme as the photo corners */
+    .spec-badge-card .corner-grate.br {
+      width: 100px;
+      height: 80px;
+      bottom: -16px;
+      right: -16px;
     }
 
     .spec-badge-card .eyebrow {
@@ -1892,7 +1926,9 @@
     }
 
     @media(max-width:900px) {
-      .spec-showcase {
+
+      .spec-showcase,
+      .spec-showcase-white {
         grid-template-columns: 1fr;
         padding: 40px 28px;
         gap: 30px;
@@ -1904,12 +1940,15 @@
     }
 
     @media(max-width:520px) {
-      .spec-showcase {
+
+      .spec-showcase,
+      .spec-showcase-white {
         padding: 32px 20px;
         border-radius: 20px;
       }
 
-      .spec-copy {
+      .spec-copy,
+      .spec-copy-white {
         font-size: 1.12rem;
       }
 
@@ -1918,7 +1957,7 @@
       }
     }
 
-     .menu-section {
+    .menu-section {
       background: var(--char);
       padding: 56px 56px 150px;
       position: relative;
@@ -1971,7 +2010,7 @@
 
     .ms-item {
       position: relative;
-      border-radius: 22px;
+      border-radius: var(--border-radius);
       overflow: hidden;
       min-height: 250px;
     }
@@ -2064,7 +2103,7 @@
       background: var(--char);
       color: var(--bone);
       border-radius: 999px;
-      padding: 8px 16px;
+      padding: 7px 12px;
       font-size: .72rem;
       font-weight: 700;
       letter-spacing: .4px;
@@ -2617,7 +2656,7 @@
 
       .cine-content {
         position: relative;
-        top: auto;
+        top: -80px;
         left: auto;
         max-width: 100%;
         order: 1;
@@ -2631,7 +2670,7 @@
       .cine-cards-wrap {
         position: relative;
         right: auto;
-        bottom: auto;
+        bottom: -68px;
         order: 2;
         margin-bottom: 24px;
         width: 100%;
@@ -2672,11 +2711,12 @@
         position: relative;
         left: auto;
         right: auto;
-        bottom: auto;
+        bottom: -26px;
         order: 3;
         width: 100%;
         flex-wrap: wrap;
         gap: 12px;
+        z-index: 100;
       }
 
       .cine-time {
@@ -2730,6 +2770,7 @@
       }
 
       .cine-footer {
+        display: none;
         justify-content: center;
       }
 
@@ -2805,6 +2846,12 @@
       gap: 1px;
       background: rgba(var(--bone-rgb), 0.1);
       border: 1px solid rgba(var(--bone-rgb), 0.1);
+    }
+
+    @media(max-width:900px) {
+      .testimonial-grid {
+        grid-template-columns: 1fr;
+      }
     }
 
     .t-card {
@@ -2889,7 +2936,7 @@
     .chat-window {
       max-width: 999px;
       margin: 0 auto;
-      border-radius: 18px;
+      border-radius: var(--border-radius);
       overflow: hidden;
       border: 1px solid rgba(var(--bone-rgb), 0.12);
       box-shadow: 0 40px 90px rgba(0, 0, 0, .4);
@@ -3327,14 +3374,15 @@
       position: relative;
       overflow: hidden;
     }
-        .hourglass-section-white {
+
+    .hourglass-section-white {
       background: var(--bone);
       padding: 50px 56px 50px;
       position: relative;
       overflow: hidden;
     }
 
-    .hourglass-section-white  .hourglass-grid{
+    .hourglass-section-white .hourglass-grid {
       color: black;
     }
 
@@ -3354,6 +3402,7 @@
       pointer-events: none;
       z-index: 0;
     }
+
     .hourglass-section-white::before {
       content: '';
       position: absolute;
@@ -3409,7 +3458,7 @@
       color: var(--bone-dim);
     }
 
-    
+
     .hourglass-copy-white .v-row .v-day {
       color: black !important;
     }
@@ -3423,11 +3472,11 @@
       font-size: .95rem;
     }
 
-    .hourglass-copy-white  .v-row:last-of-type {
+    .hourglass-copy-white .v-row:last-of-type {
       border-bottom: none;
     }
 
-    .hourglass-copy-white  .v-row .v-day {
+    .hourglass-copy-white .v-row .v-day {
       color: var(--bone-dim);
     }
 
@@ -3459,19 +3508,19 @@
       min-height: 380px;
     }
 
-    .hourglass-copy-white  .v-row .v-time {
+    .hourglass-copy-white .v-row .v-time {
       color: rgb(71, 70, 70);
       font-weight: 600;
     }
 
-    .hourglass-copy-white  .v-row .v-time.closed {
- color: rgb(71, 70, 70);
+    .hourglass-copy-white .v-row .v-time.closed {
+      color: rgb(71, 70, 70);
       font-weight: 400;
       font-style: italic;
     }
 
-    .hourglass-copy-white  p.v-note {
- color: rgb(71, 70, 70);
+    .hourglass-copy-white p.v-note {
+      color: rgb(71, 70, 70);
       font-size: .9rem;
       line-height: 1.7;
       margin-top: 24px;
@@ -3544,6 +3593,14 @@
       }
     }
 
+    @media(max-width:520px) {
+
+      .hourglass-section,
+      .hourglass-section-white {
+        padding: 40px 22px 40px;
+      }
+    }
+
     .contact-social {
       background: var(--char);
       padding: 130px 56px 140px;
@@ -3580,9 +3637,7 @@
     .cs-grid {
       display: grid;
       grid-template-columns: 1.15fr .85fr;
-      gap: 1px;
-      background: rgba(var(--bone-rgb), 0.1);
-      border: 1px solid rgba(var(--bone-rgb), 0.1);
+      gap: 10px;
       max-width: 1180px;
       margin: 0 auto;
     }
@@ -3591,6 +3646,7 @@
       background: #16131099;
       padding: 50px 46px;
       transition: background .4s ease;
+      border-radius: var(--border-radius);
     }
 
     .cs-card:hover {
@@ -3723,15 +3779,7 @@
       }
     }
 
-    .cs-contact::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      right: 0;
-      width: 0;
-      border-right: 1px dashed rgba(var(--bone-rgb), 0.16);
-    }
+
 
     .cs-contact a.v-link {
       display: flex;
@@ -4054,10 +4102,16 @@
       }
     }
 
+    @media(max-width:520px) {
+      .cs-card {
+        padding: 34px 24px;
+      }
+    }
+
     /* ---------- location + map ---------- */
     .location-map {
       background: var(--char-2);
-      padding: 130px 56px 140px;
+      padding: 10px 56px 140px;
     }
 
     .location-map .section-head {
@@ -4079,7 +4133,7 @@
     .loc-map-card {
       position: relative;
       z-index: 1;
-      border-radius: 20px;
+      border-radius: var(--border-radius);
       min-height: 460px;
       border: 1px solid rgba(var(--bone-rgb), 0.1);
       box-shadow: 0 30px 60px rgba(0, 0, 0, .4);
@@ -4095,12 +4149,12 @@
       filter: invert(92%) hue-rotate(180deg) saturate(140%) contrast(.92) brightness(.92);
     }
 
-   
+
 
     .loc-photo-card {
       position: relative;
       z-index: 1;
-      border-radius: 20px;
+      border-radius: var(--border-radius);
       min-height: 460px;
       display: flex;
       align-items: flex-end;
@@ -4292,6 +4346,18 @@
       padding: 0 4px 26px;
     }
 
+    @media(max-width:520px) {
+      .faq {
+        padding: 40px 20px 90px;
+      }
+
+      .faq-item {
+        font-size: .98rem;
+        padding: 20px 2px;
+        gap: 12px;
+      }
+    }
+
     /* ---------- footer v2: background image + animated embers + feature cards ---------- */
     footer {
       background: var(--char);
@@ -4333,11 +4399,19 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .footer-bg img { animation: none !important; }
-      .footer-embers { display: none; }
+      .footer-bg img {
+        animation: none !important;
+      }
+
+      .footer-embers {
+        display: none;
+      }
     }
 
-    footer > * { position: relative; z-index: 2; }
+    footer>* {
+      position: relative;
+      z-index: 2;
+    }
 
     .footer-features {
       display: grid;
@@ -4357,7 +4431,10 @@
       gap: 22px;
       transition: background .4s ease;
     }
-    .footer-feature:hover { background: var(--char-3); }
+
+    .footer-feature:hover {
+      background: var(--char-3);
+    }
 
     .footer-feature .f-icon {
       width: 56px;
@@ -4371,7 +4448,11 @@
       flex-shrink: 0;
       animation: iconFloat 3s ease-in-out infinite;
     }
-    .footer-feature .f-icon svg { width: 22px; height: 22px; }
+
+    .footer-feature .f-icon svg {
+      width: 22px;
+      height: 22px;
+    }
 
     .footer-feature .f-copy .f-eyebrow {
       font-size: .68rem;
@@ -4381,6 +4462,7 @@
       margin-bottom: 6px;
       display: block;
     }
+
     .footer-feature .f-copy h4 {
       font-family: var(--serif);
       font-size: 1.3rem;
@@ -4388,6 +4470,7 @@
       color: var(--bone);
       letter-spacing: -.2px;
     }
+
     .footer-feature .f-copy .f-sub {
       font-size: .84rem;
       color: var(--bone-dim);
@@ -4400,6 +4483,7 @@
       border-bottom: 1px solid rgba(var(--bone-rgb), 0.25);
       max-width: 260px;
     }
+
     .footer-subscribe-form input {
       flex: 1;
       background: transparent;
@@ -4410,7 +4494,11 @@
       padding: 6px 0;
       outline: none;
     }
-    .footer-subscribe-form input::placeholder { color: var(--bone-dim); }
+
+    .footer-subscribe-form input::placeholder {
+      color: var(--bone-dim);
+    }
+
     .footer-subscribe-form button {
       background: none;
       border: none;
@@ -4421,11 +4509,36 @@
       padding: 0 4px;
       transition: transform .3s var(--ease);
     }
-    .footer-subscribe-form button:hover { transform: translateX(4px); }
-    .footer-subscribe-form button svg { width: 18px; height: 18px; }
+
+    .footer-subscribe-form button:hover {
+      transform: translateX(4px);
+    }
+
+    .footer-subscribe-form button svg {
+      width: 18px;
+      height: 18px;
+    }
 
     @media(max-width:900px) {
-      .footer-features { grid-template-columns: 1fr; }
+      .footer-features {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media(max-width:520px) {
+      .footer-feature {
+        padding: 30px 26px;
+        gap: 16px;
+      }
+
+      .footer-feature .f-icon {
+        width: 46px;
+        height: 46px;
+      }
+
+      .footer-feature .f-copy h4 {
+        font-size: 1.1rem;
+      }
     }
 
     .footer-top {
@@ -4450,6 +4563,7 @@
       flex-wrap: wrap;
       margin-bottom: 20px;
     }
+
     .footer-payment-icons span {
       background: rgba(var(--bone-rgb), 0.08);
       border: 1px solid rgba(var(--bone-rgb), 0.14);
@@ -4465,6 +4579,7 @@
       display: flex;
       gap: 12px;
     }
+
     .footer-social-row a {
       width: 38px;
       height: 38px;
@@ -4476,7 +4591,12 @@
       color: var(--bone);
       transition: background .3s ease, border-color .3s ease, transform .3s var(--ease);
     }
-    .footer-social-row a svg { width: 15px; height: 15px; }
+
+    .footer-social-row a svg {
+      width: 15px;
+      height: 15px;
+    }
+
     .footer-social-row a:hover {
       background: var(--ember);
       border-color: var(--ember);
@@ -4484,10 +4604,18 @@
     }
 
     @media(max-width:900px) {
-      .footer-top { grid-template-columns: 1fr 1fr; padding: 50px 24px 40px; }
+      .footer-top {
+        grid-template-columns: 1fr 1fr;
+        padding: 50px 24px 40px;
+      }
     }
+
     @media(max-width:520px) {
-      .footer-top { grid-template-columns: 1fr; }
+      .footer-top {
+        grid-template-columns: 1fr;
+        padding: 40px 22px 30px;
+        gap: 30px;
+      }
     }
 
     .footer-bottom {
@@ -4500,6 +4628,14 @@
       gap: 12px;
       font-size: .78rem;
       color: var(--smoke);
+    }
+
+    @media(max-width:520px) {
+      .footer-bottom {
+        padding: 18px 22px 26px;
+        justify-content: center;
+        text-align: center;
+      }
     }
 
     .footer-col h4 {
@@ -4535,32 +4671,518 @@
     }
 
     /* ---------- specialities-white: subtle grain + fine linen weave ---------- */
-.spec-bg-white {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background-image:
-    repeating-linear-gradient(135deg,
-      rgba(72, 32, 0, 0.035) 0px,
-      rgba(72, 32, 0, 0.035) 1px,
-      transparent 1px,
-      transparent 13px),
-    repeating-linear-gradient(45deg,
-      rgba(72, 32, 0, 0.025) 0px,
-      rgba(72, 32, 0, 0.025) 1px,
-      transparent 1px,
-      transparent 13px),
-    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='paperN'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0.16  0 0 0 0 0.13  0 0 0 0 0.1  0 0 0 0.5 0'/></filter><rect width='100%25' height='100%25' filter='url(%23paperN)'/></svg>");
-  background-size: auto, auto, 200px 200px;
-}
+    .spec-bg-white {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background-image:
+        repeating-linear-gradient(135deg,
+          rgba(72, 32, 0, 0.035) 0px,
+          rgba(72, 32, 0, 0.035) 1px,
+          transparent 1px,
+          transparent 13px),
+        repeating-linear-gradient(45deg,
+          rgba(72, 32, 0, 0.025) 0px,
+          rgba(72, 32, 0, 0.025) 1px,
+          transparent 1px,
+          transparent 13px),
+        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='paperN'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0.16  0 0 0 0 0.13  0 0 0 0 0.1  0 0 0 0.5 0'/></filter><rect width='100%25' height='100%25' filter='url(%23paperN)'/></svg>");
+      background-size: auto, auto, 200px 200px;
+    }
 
-.spec-bg-white::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: rgba(230, 228, 214, 0.55);
-}
+    .spec-bg-white::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(230, 228, 214, 0.55);
+    }
+
+    .location-map-white {
+      background: var(--bone);
+    }
+
+    .loc-bg-white {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background-image:
+        repeating-linear-gradient(135deg,
+          rgba(72, 32, 0, 0.035) 0px,
+          rgba(72, 32, 0, 0.035) 1px,
+          transparent 1px,
+          transparent 13px),
+        repeating-linear-gradient(45deg,
+          rgba(72, 32, 0, 0.025) 0px,
+          rgba(72, 32, 0, 0.025) 1px,
+          transparent 1px,
+          transparent 13px),
+        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='paperN2'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0.16  0 0 0 0 0.13  0 0 0 0 0.1  0 0 0 0.5 0'/></filter><rect width='100%25' height='100%25' filter='url(%23paperN2)'/></svg>");
+      background-size: auto, auto, 200px 200px;
+    }
+
+    .loc-bg-white::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(230, 228, 214, 0.55);
+    }
+
+    /* location-map is position:relative by default via padding rule already, but ensure stacking */
+    .location-map {
+      position: relative;
+    }
+
+    .location-map-white .loc-map-frame {
+      filter: grayscale(.15) contrast(1.02) brightness(1.02);
+    }
+
+    .ms-chip {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      align-self: flex-start;
+      margin-top: 24px;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      overflow: hidden;
+      isolation: isolate;
+      background: linear-gradient(135deg, var(--ember), var(--ember-2));
+      border: 1px solid var(--ember-2);
+      transition: transform .2s ease, box-shadow .4s ease, filter .3s ease;
+      animation: btnIdlePulse 3.2s ease-in-out infinite;
+    }
+
+    .ms-chip::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -60%;
+      width: 40%;
+      height: 100%;
+      background: linear-gradient(115deg, transparent, rgba(255, 255, 255, .45), transparent);
+      transform: skewX(-20deg);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .ms-chip:hover::after {
+      animation: btnShine .9s ease forwards;
+    }
+
+    .ms-chip:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.06);
+      box-shadow: 0 14px 34px rgba(0, 0, 0, .45), 0 0 26px var(--theme-glow-strong);
+    }
+
+    .ms-chip .grill-lines {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      overflow: visible;
+    }
+
+    .ms-chip .rail {
+      stroke: var(--char);
+      stroke-width: 3;
+      stroke-linecap: round;
+      opacity: .4;
+      transition: opacity .4s ease;
+    }
+
+    .ms-chip .bar {
+      stroke: var(--char);
+      stroke-width: 1;
+      opacity: .32;
+      transition: opacity .4s ease;
+    }
+
+    .ms-chip .glow {
+      stroke: var(--bone);
+      stroke-width: 1.6;
+      stroke-linecap: round;
+      opacity: 0;
+      filter: drop-shadow(0 0 6px var(--theme-glow));
+    }
+
+    .ms-chip:hover .rail,
+    .ms-chip:hover .bar {
+      opacity: .55;
+    }
+
+    .ms-chip:hover .glow {
+      opacity: 1;
+      animation: grillGlowSweep 1.8s ease-in-out infinite;
+    }
+
+    .ms-chip .label {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--char);
+      font-weight: 700;
+      font-size: .68rem;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+    }
+
+    .ms-chip .flame {
+      width: 12px;
+      height: 12px;
+      color: var(--char);
+      opacity: .85;
+      transition: transform .4s ease;
+      flex-shrink: 0;
+    }
+
+    .ms-chip:hover .flame {
+      transform: scale(1.15) rotate(-4deg);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+      .ms-chip,
+      .ms-chip * {
+        transition: none !important;
+        animation: none !important;
+      }
+    }
+
+    /* ---------- grill lines clipped inside the triangle accents, matching the Order Online button identity ---------- */
+    .about-img-grate .grate-rail,
+    .corner-grate .grate-rail,
+    .hero-slope .grate-rail {
+      stroke: var(--char);
+      stroke-width: 3;
+      stroke-linecap: round;
+      opacity: .45;
+    }
+
+    .about-img-grate .grate-bar,
+    .corner-grate .grate-bar,
+    .hero-slope .grate-bar {
+      stroke: var(--char);
+      stroke-width: 1;
+      stroke-linecap: round;
+      opacity: .35;
+    }
+
+    .about-img-grate .grate-glow,
+    .corner-grate .grate-glow,
+    .hero-slope .grate-glow {
+      stroke: var(--bone);
+      stroke-width: 1.6;
+      stroke-linecap: round;
+      opacity: .7;
+      filter: drop-shadow(0 0 6px var(--theme-glow));
+      animation: grillGlowSweep 1.8s ease-in-out infinite;
+    }
+
+    /* =========================================================
+       RESPONSIVE / MOBILE NAV
+       ========================================================= */
+
+    .nav-toggle {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 1px solid rgba(var(--bone-rgb), 0.3);
+      background: transparent;
+      color: var(--bone);
+      cursor: pointer;
+      position: relative;
+      z-index: 210;
+      flex-shrink: 0;
+      transition: border-color .3s ease, background .3s ease;
+    }
+
+    .nav-toggle:hover {
+      border-color: var(--ember-2);
+    }
+
+    .nav-toggle .bar-icon {
+      position: relative;
+      width: 20px;
+      height: 14px;
+    }
+
+    .nav-toggle .bar-icon span {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      border-radius: 2px;
+      background: var(--bone);
+      transition: transform .35s var(--ease), opacity .25s ease, top .35s var(--ease);
+    }
+
+    .nav-toggle .bar-icon span:nth-child(1) {
+      top: 0;
+    }
+
+    .nav-toggle .bar-icon span:nth-child(2) {
+      top: 6px;
+    }
+
+    .nav-toggle .bar-icon span:nth-child(3) {
+      top: 12px;
+    }
+
+    body.nav-open .nav-toggle .bar-icon span:nth-child(1) {
+      top: 6px;
+      transform: rotate(45deg);
+    }
+
+    body.nav-open .nav-toggle .bar-icon span:nth-child(2) {
+      opacity: 0;
+      transform: translateX(-6px);
+    }
+
+    body.nav-open .nav-toggle .bar-icon span:nth-child(3) {
+      top: 6px;
+      transform: rotate(-45deg);
+    }
+
+    body.nav-open {
+      overflow: hidden;
+    }
+
+    @media(max-width:900px) {
+
+      header,
+      header.scrolled {
+        padding: 16px 20px;
+      }
+
+      nav {
+        position: fixed;
+        top: 0;
+        right: 0;
+        height: 100vh;
+        width: min(320px, 82vw);
+        background: rgba(var(--char-rgb), 0.98);
+        backdrop-filter: blur(14px) saturate(140%);
+        border-left: 1px solid rgba(var(--bone-rgb), 0.12);
+        box-shadow: -20px 0 60px rgba(0, 0, 0, .5);
+        display: flex;
+        align-items: flex-start;
+        padding: 100px 34px 40px;
+        transform: translateX(100%);
+        transition: transform .45s var(--ease);
+        z-index: 205;
+      }
+
+      body.nav-open nav {
+        transform: translateX(0);
+      }
+
+      nav ul {
+        flex-direction: column;
+        gap: 22px;
+        font-size: 13.5px;
+        width: 100%;
+      }
+
+      nav ul li {
+        width: 100%;
+        border-bottom: 1px solid rgba(var(--bone-rgb), 0.1);
+        padding-bottom: 14px;
+      }
+
+      .nav-toggle {
+        display: flex;
+      }
+
+      .nav-scrim {
+        content: '';
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.55);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity .4s ease;
+        z-index: 204;
+      }
+
+      body.nav-open .nav-scrim {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      header .btn-grill.header-order-btn {
+        display: none;
+      }
+
+      nav .nav-order-btn {
+        display: inline-flex;
+        margin-top: 30px;
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+    @media(min-width:901px) {
+      .nav-scrim {
+        display: none;
+      }
+
+      nav .nav-order-btn {
+        display: none;
+      }
+    }
+
+    @media(max-width:900px) {
+      .hero {
+        padding: 0 24px 70px;
+        min-height: 92vh;
+      }
+
+      .hero h1 {
+        font-size: clamp(2.1rem, 7vw, 2.9rem);
+        max-width: 100%;
+        letter-spacing: -1px;
+      }
+
+      .hero-row {
+        gap: 26px;
+      }
+
+      .hero-row .desc {
+        max-width: 100%;
+        font-size: .92rem;
+      }
+
+      .hero-logo {
+        width: 96px;
+        height: 96px;
+      }
+
+      .social-rail {
+        left: 14px;
+        bottom: 16px;
+      }
+
+      .social-rail a {
+        width: 34px;
+        height: 34px;
+      }
+
+      .about {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        padding: 40px 24px 90px;
+      }
+
+      .about-img {
+        order: -1;
+      }
+
+      .about-img-frame {
+        min-height: 320px;
+      }
+
+      .specialities,
+      .specialities-white {
+        padding: 90px 24px 90px;
+      }
+
+      .menu-section {
+        padding: 40px 24px 100px;
+      }
+
+      .testimonials {
+        padding: 90px 24px 90px;
+      }
+
+      .contact-social {
+        padding: 90px 24px 90px;
+      }
+
+      .likes-section {
+        padding: 70px 24px 90px;
+      }
+
+      .location-map {
+        padding: 10px 24px 90px;
+      }
+
+      .section-head h2 {
+        font-size: clamp(1.8rem, 6vw, 2.4rem);
+      }
+    }
+
+    @media(max-width:520px) {
+      header,
+      header.scrolled {
+        padding: 14px 16px;
+      }
+
+      .logo {
+        font-size: 1.05rem;
+        gap: 8px;
+      }
+
+      .logo-mark,
+      header.scrolled .logo-mark {
+        width: 32px;
+        height: 32px;
+      }
+
+      .logo-mark svg,
+      .logo-mark img {
+        width: 32px;
+        height: 32px;
+      }
+
+      .hero {
+        padding: 0 18px 56px;
+      }
+
+      .hero-eyebrow {
+        font-size: .68rem;
+        gap: 10px;
+        margin-bottom: 18px;
+      }
+
+      .hero-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+      }
+
+      .about h2 {
+        font-size: 1.7rem;
+      }
+
+      .about p.body-copy {
+        font-size: 13px;
+      }
+
+      .btn-grill {
+        padding: 15px 28px;
+      }
+
+      .btn-grill .label {
+        font-size: .68rem;
+      }
+
+      nav {
+        width: 100%;
+        padding: 90px 24px 30px;
+      }
+    }
   </style>
 </head>
 
@@ -4574,7 +5196,19 @@
           alt="Oviq African Market and Foods logo">
       </span>
     </a>
-    <nav>
+
+    <button class="nav-toggle" id="navToggle" type="button" aria-label="Toggle navigation menu" aria-expanded="false"
+      aria-controls="siteNav">
+      <span class="bar-icon">
+        <span></span>
+        <span></span>
+        <span></span>
+      </span>
+    </button>
+
+    <div class="nav-scrim" id="navScrim"></div>
+
+    <nav id="siteNav">
       <ul>
         <li><a href="#">Home</a></li>
         <li><a href="#about">About</a></li>
@@ -4582,9 +5216,28 @@
         <li><a href="#gallery">Gallery</a></li>
         <li><a href="#">Events</a></li>
         <li><a href="#contact">Contact</a></li>
+        <a href="#" class="btn-grill nav-order-btn">
+        <svg class="grill-lines" viewBox="0 0 260 76" preserveAspectRatio="none" aria-hidden="true">
+          <line class="rail" x1="0" y1="6" x2="260" y2="6" />
+          <line class="rail" x1="0" y1="70" x2="260" y2="70" />
+          <line class="bar" x1="0" y1="22" x2="260" y2="22" />
+          <line class="bar" x1="0" y1="38" x2="260" y2="38" />
+          <line class="bar" x1="0" y1="54" x2="260" y2="54" />
+          <line class="glow" x1="0" y1="38" x2="260" y2="38" />
+        </svg>
+        <span class="label">
+          <svg class="flame" viewBox="0 0 64 64" fill="currentColor" aria-hidden="true">
+            <path
+              d="M32 6c6 8-2 12-2 19a8 8 0 0 0 16 0c0-3-1-5-1-5 6 4 9 11 9 17 0 12.7-10.3 21-22 21S10 49.7 10 37c0-9 4-16 10-21-1 4 0 7 3 9 0-9 3-13 9-19Z" />
+          </svg>
+          Order Online
+        </span>
+      </a>
       </ul>
+      
     </nav>
-    <a href="#" class="btn-grill">
+
+    <a href="#" class="btn-grill header-order-btn">
       <svg class="grill-lines" viewBox="0 0 260 76" preserveAspectRatio="none" aria-hidden="true">
         <line class="rail" x1="0" y1="6" x2="260" y2="6" />
         <line class="rail" x1="0" y1="70" x2="260" y2="70" />
@@ -4661,7 +5314,7 @@
       <div class="hero-row">
         <p class="desc">A neighborhood grill &amp; bar serving fire-cooked classics, seasonal sides, and a warm room for
           every occasion.</p>
-        
+
       </div>
     </div>
 
@@ -4669,9 +5322,21 @@
 
     <div class="hero-slope" aria-hidden="true">
       <svg viewBox="0 0 1000 1000" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <clipPath id="heroTriClip">
+            <polygon points="715,940 1000,1000 1000,740" />
+          </clipPath>
+        </defs>
         <polygon class="slope-fill" points="0,1000 1000,1000 1000,700 700,918 0,918" />
         <polyline class="slope-line" points="0,918 700,918 1000,700" />
         <polygon class="corner-triangle-fill" points="715,940 1000,1000 1000,740" />
+        <g clip-path="url(#heroTriClip)">
+          <line class="grate-rail" x1="650" y1="770" x2="1000" y2="770" />
+          <line class="grate-rail" x1="650" y1="970" x2="1000" y2="970" />
+          <line class="grate-bar" x1="650" y1="830" x2="1000" y2="830" />
+          <line class="grate-bar" x1="650" y1="890" x2="1000" y2="890" />
+          <line class="grate-bar" x1="650" y1="930" x2="1000" y2="930" />
+        </g>
       </svg>
     </div>
   </section>
@@ -4709,7 +5374,7 @@
     <div class="about-img reveal">
       <div class="about-img-frame">
         <img
-          src="https://d1ph6a2qqb4pcd.cloudfront.net/uploads/website/website/2026/06/29/072530588/specialities_image/fsZskL2WMxlrv2WJ3Fbk0n0KRgNzHaIjugtTHypZ.webp"
+          src="https://clubmahindra.gumlet.io/blog/images/Telangana--Biryani-resized.jpg?w=376&dpr=2.6"
           alt="Comfort food plated at Grill House" loading="lazy">
         <div class="cap">
           <span class="small">comfort on</span>
@@ -4718,17 +5383,111 @@
       </div>
       <div class="about-img-grate" aria-hidden="true">
         <svg viewBox="0 0 150 120" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <clipPath id="aboutTriClip">
+              <polygon points="150,120 150,10 30,120" />
+            </clipPath>
+          </defs>
           <polygon class="tri-fill" points="150,120 150,10 30,120" />
+          <g clip-path="url(#aboutTriClip)">
+            <line class="grate-rail" x1="30" y1="30" x2="150" y2="30" />
+            <line class="grate-rail" x1="30" y1="100" x2="150" y2="100" />
+            <line class="grate-bar" x1="30" y1="50" x2="150" y2="50" />
+            <line class="grate-bar" x1="30" y1="65" x2="150" y2="65" />
+            <line class="grate-bar" x1="30" y1="80" x2="150" y2="80" />
+            <line class="grate-glow" x1="30" y1="65" x2="150" y2="65" />
+          </g>
           <polyline class="tri-glow" points="150,10 30,120" />
         </svg>
       </div>
     </div>
   </section>
+  <section class="contact-social" id="contact-social">
+    <div class="parallax-layer" aria-hidden="true"></div>
+    <div class="parallax-overlay" aria-hidden="true"></div>
+    <div class="section-head reveal">
+      <div>
+        <div class="about-tag"><span class="line"></span>Get In Touch</div>
+        <h2>Contact &amp; Social</h2>
+      </div>
+    </div>
+    <div class="cs-grid">
+      <div class="cs-card cs-contact reveal">
+        <div class="v-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+            <path
+              d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.7a2 2 0 0 1-.4 2.1L8 9.9a16 16 0 0 0 6 6l1.4-1.4a2 2 0 0 1 2.1-.4c.9.3 1.8.5 2.7.6a2 2 0 0 1 1.8 2Z" />
+          </svg>
+        </div>
+        <h3>Contact</h3>
+        <div class="cs-sub">Reach us by phone, email, or in person</div>
+        <a class="v-link" href="tel:4423253829">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+            <path
+              d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.7a2 2 0 0 1-.4 2.1L8 9.9a16 16 0 0 0 6 6l1.4-1.4a2 2 0 0 1 2.1-.4c.9.3 1.8.5 2.7.6a2 2 0 0 1 1.8 2Z" />
+          </svg>
+          442-325-3829
+        </a>
+        <a class="v-link" href="mailto:criston@zingmyorder.com">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+            <rect x="2" y="4" width="20" height="16" rx="2" />
+            <path d="m2 6 10 7L22 6" />
+          </svg>
+          criston@zingmyorder.com
+        </a>
+        <a class="v-link" href="#" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+            <path d="M21 10c0 6-9 12-9 12S3 16 3 10a9 9 0 0 1 18 0Z" />
+            <circle cx="12" cy="10" r="3" />
+          </svg>
+          2011 Eleventh Avenue South, Birmingham, AL
+        </a>
+      </div>
+
+      <div class="cs-card cs-social reveal">
+        <div class="v-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+            <circle cx="12" cy="12" r="9" />
+            <path d="M8 15s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01" />
+          </svg>
+        </div>
+        <h3>Follow Us</h3>
+        <div class="cs-sub">Behind-the-scenes fire &amp; weekend events</div>
+        <div class="cs-social-row">
+          <a href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M18.9 2H22l-7.6 8.7L23 22h-6.8l-5.3-6.9L4.7 22H1.6l8.1-9.3L1 2h6.9l4.8 6.3L18.9 2Zm-1.2 18h1.9L7.4 4H5.3l12.4 16Z" />
+            </svg></a>
+          <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M13.5 22v-8.5H16l.5-3.5h-3V7.8c0-1 .3-1.7 1.8-1.7H16.6V3.1C16 3 15 2.9 13.9 2.9c-2.5 0-4.2 1.5-4.2 4.3V10H7v3.5h2.7V22h3.8Z" />
+            </svg></a>
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="1.6">
+              <rect x="3" y="3" width="18" height="18" rx="5" />
+              <circle cx="12" cy="12" r="4" />
+              <circle cx="17.2" cy="6.8" r="1" />
+            </svg></a>
+        </div>
+        <button class="follow-btn" id="followBtn" type="button" aria-pressed="false">
+          <span class="follow-btn-icon" aria-hidden="true">
+            <svg class="icon-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <path d="M12 5v14M5 12h14" />
+            </svg>
+            <svg class="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <path d="M5 13l4 4L19 7" />
+            </svg>
+          </span>
+          <span class="follow-btn-label">Follow</span>
+        </button>
+      </div>
+    </div>
+  </section>
 
 
-    <section class="specialities-white" id="specialities">
+  <section class="specialities-white" id="specialities">
     <div class="spec-bg-white" aria-hidden="true">
-  
+
     </div>
     <canvas class="spec-embers" id="specEmbers" aria-hidden="true"></canvas>
     <div class="section-head reveal">
@@ -4739,14 +5498,28 @@
     </div>
     <div class="spec-showcase-white reveal">
       <div class="spec-text-col">
-        <p class="spec-copy-white">Every dish passes over an open flame first — our kitchen is built around wood and fire, not shortcuts. We source seasonally from trusted regional farms, cook with time-honored technique, and welcome every guest like family.</p>
+        <p class="spec-copy-white">Every dish passes over an open flame first — our kitchen is built around wood and
+          fire, not shortcuts. We source seasonally from trusted regional farms, cook with time-honored technique, and
+          welcome every guest like family.</p>
         <div class="spec-photo-wide spec-in-left">
-          <img
-            src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900&q=80"
+          <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900&q=80"
             alt="Warm dining room at Grill House" loading="lazy">
           <div class="corner-grate br" aria-hidden="true">
             <svg viewBox="0 0 120 96" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <clipPath id="specWideTriClip">
+                  <polygon points="120,96 120,8 24,96" />
+                </clipPath>
+              </defs>
               <polygon class="tri-fill" points="120,96 120,8 24,96" />
+              <g clip-path="url(#specWideTriClip)">
+                <line class="grate-rail" x1="24" y1="20" x2="120" y2="20" />
+                <line class="grate-rail" x1="24" y1="84" x2="120" y2="84" />
+                <line class="grate-bar" x1="24" y1="36" x2="120" y2="36" />
+                <line class="grate-bar" x1="24" y1="52" x2="120" y2="52" />
+                <line class="grate-bar" x1="24" y1="68" x2="120" y2="68" />
+                <line class="grate-glow" x1="24" y1="52" x2="120" y2="52" />
+              </g>
               <polyline class="tri-glow" points="120,8 24,96" />
             </svg>
           </div>
@@ -4754,18 +5527,32 @@
       </div>
       <div class="spec-media-col">
         <div class="spec-photo-tall spec-in-right">
-          <img
-            src="https://images.unsplash.com/photo-1544025162-d76694265947?w=900&q=80"
+          <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=900&q=80"
             alt="Wood-fired grilling over open flame" loading="lazy">
           <div class="corner-grate br" aria-hidden="true">
             <svg viewBox="0 0 120 96" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <clipPath id="specTallTriClip">
+                  <polygon points="120,96 120,8 24,96" />
+                </clipPath>
+              </defs>
               <polygon class="tri-fill" points="120,96 120,8 24,96" />
+              <g clip-path="url(#specTallTriClip)">
+                <line class="grate-rail" x1="24" y1="20" x2="120" y2="20" />
+                <line class="grate-rail" x1="24" y1="84" x2="120" y2="84" />
+                <line class="grate-bar" x1="24" y1="36" x2="120" y2="36" />
+                <line class="grate-bar" x1="24" y1="52" x2="120" y2="52" />
+                <line class="grate-bar" x1="24" y1="68" x2="120" y2="68" />
+                <line class="grate-glow" x1="24" y1="52" x2="120" y2="52" />
+              </g>
               <polyline class="tri-glow" points="120,8 24,96" />
             </svg>
           </div>
         </div>
         <div class="spec-badge-card spec-in-bottom">
-          <svg class="spec-badge-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          
+          <svg class="spec-badge-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true">
             <path
               d="M32 6c6 8-2 12-2 19a8 8 0 0 0 16 0c0-3-1-5-1-5 6 4 9 11 9 17 0 12.7-10.3 21-22 21S10 49.7 10 37c0-9 4-16 10-21-1 4 0 7 3 9 0-9 3-13 9-19Z"
               fill="currentColor" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" />
@@ -4808,10 +5595,21 @@
           <p>Slow-smoked on cedar, citrus glaze, charred asparagus, served with a bright lemon crème.</p>
         </div>
         <span class="ms-chip">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <path d="M12 2 2 7v10l10 5 10-5V7z" />
+          <svg class="grill-lines" viewBox="0 0 260 76" preserveAspectRatio="none" aria-hidden="true">
+            <line class="rail" x1="0" y1="6" x2="260" y2="6" />
+            <line class="rail" x1="0" y1="70" x2="260" y2="70" />
+            <line class="bar" x1="0" y1="22" x2="260" y2="22" />
+            <line class="bar" x1="0" y1="38" x2="260" y2="38" />
+            <line class="bar" x1="0" y1="54" x2="260" y2="54" />
+            <line class="glow" x1="0" y1="38" x2="260" y2="38" />
           </svg>
-          Signature Dish
+          <span class="label">
+            <svg class="flame" viewBox="0 0 64 64" fill="currentColor" aria-hidden="true">
+              <path
+                d="M32 6c6 8-2 12-2 19a8 8 0 0 0 16 0c0-3-1-5-1-5 6 4 9 11 9 17 0 12.7-10.3 21-22 21S10 49.7 10 37c0-9 4-16 10-21-1 4 0 7 3 9 0-9 3-13 9-19Z" />
+            </svg>
+            View More
+          </span>
         </span>
       </div>
 
@@ -4827,10 +5625,21 @@
           <p>Hand-cut pasta, sage brown butter, wild mushroom, and aged parmesan.</p>
         </div>
         <span class="ms-chip">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+          <svg class="grill-lines" viewBox="0 0 260 76" preserveAspectRatio="none" aria-hidden="true">
+            <line class="rail" x1="0" y1="6" x2="260" y2="6" />
+            <line class="rail" x1="0" y1="70" x2="260" y2="70" />
+            <line class="bar" x1="0" y1="22" x2="260" y2="22" />
+            <line class="bar" x1="0" y1="38" x2="260" y2="38" />
+            <line class="bar" x1="0" y1="54" x2="260" y2="54" />
+            <line class="glow" x1="0" y1="38" x2="260" y2="38" />
           </svg>
-          4.9 Rating
+          <span class="label">
+            <svg class="flame" viewBox="0 0 64 64" fill="currentColor" aria-hidden="true">
+              <path
+                d="M32 6c6 8-2 12-2 19a8 8 0 0 0 16 0c0-3-1-5-1-5 6 4 9 11 9 17 0 12.7-10.3 21-22 21S10 49.7 10 37c0-9 4-16 10-21-1 4 0 7 3 9 0-9 3-13 9-19Z" />
+            </svg>
+            View More
+          </span>
         </span>
       </div>
 
@@ -4840,7 +5649,8 @@
       </div>
 
     </div>
-        <div class="ms-strip" id="dishGrid">
+
+    <div class="ms-strip" id="dishGrid">
 
       <div class="ms-item ms-photo reveal">
         <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&h=760&fit=crop&q=80"
@@ -4860,10 +5670,21 @@
           <p>Slow-smoked on cedar, citrus glaze, charred asparagus, served with a bright lemon crème.</p>
         </div>
         <span class="ms-chip">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <path d="M12 2 2 7v10l10 5 10-5V7z" />
+          <svg class="grill-lines" viewBox="0 0 260 76" preserveAspectRatio="none" aria-hidden="true">
+            <line class="rail" x1="0" y1="6" x2="260" y2="6" />
+            <line class="rail" x1="0" y1="70" x2="260" y2="70" />
+            <line class="bar" x1="0" y1="22" x2="260" y2="22" />
+            <line class="bar" x1="0" y1="38" x2="260" y2="38" />
+            <line class="bar" x1="0" y1="54" x2="260" y2="54" />
+            <line class="glow" x1="0" y1="38" x2="260" y2="38" />
           </svg>
-          Signature Dish
+          <span class="label">
+            <svg class="flame" viewBox="0 0 64 64" fill="currentColor" aria-hidden="true">
+              <path
+                d="M32 6c6 8-2 12-2 19a8 8 0 0 0 16 0c0-3-1-5-1-5 6 4 9 11 9 17 0 12.7-10.3 21-22 21S10 49.7 10 37c0-9 4-16 10-21-1 4 0 7 3 9 0-9 3-13 9-19Z" />
+            </svg>
+            View More
+          </span>
         </span>
       </div>
 
@@ -4879,10 +5700,21 @@
           <p>Hand-cut pasta, sage brown butter, wild mushroom, and aged parmesan.</p>
         </div>
         <span class="ms-chip">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+          <svg class="grill-lines" viewBox="0 0 260 76" preserveAspectRatio="none" aria-hidden="true">
+            <line class="rail" x1="0" y1="6" x2="260" y2="6" />
+            <line class="rail" x1="0" y1="70" x2="260" y2="70" />
+            <line class="bar" x1="0" y1="22" x2="260" y2="22" />
+            <line class="bar" x1="0" y1="38" x2="260" y2="38" />
+            <line class="bar" x1="0" y1="54" x2="260" y2="54" />
+            <line class="glow" x1="0" y1="38" x2="260" y2="38" />
           </svg>
-          4.9 Rating
+          <span class="label">
+            <svg class="flame" viewBox="0 0 64 64" fill="currentColor" aria-hidden="true">
+              <path
+                d="M32 6c6 8-2 12-2 19a8 8 0 0 0 16 0c0-3-1-5-1-5 6 4 9 11 9 17 0 12.7-10.3 21-22 21S10 49.7 10 37c0-9 4-16 10-21-1 4 0 7 3 9 0-9 3-13 9-19Z" />
+            </svg>
+            View More
+          </span>
         </span>
       </div>
 
@@ -4892,7 +5724,7 @@
       </div>
 
     </div>
-        <div class="ms-strip" id="dishGrid">
+       <div class="ms-strip" id="dishGrid">
 
       <div class="ms-item ms-photo reveal">
         <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&h=760&fit=crop&q=80"
@@ -4912,10 +5744,21 @@
           <p>Slow-smoked on cedar, citrus glaze, charred asparagus, served with a bright lemon crème.</p>
         </div>
         <span class="ms-chip">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <path d="M12 2 2 7v10l10 5 10-5V7z" />
+          <svg class="grill-lines" viewBox="0 0 260 76" preserveAspectRatio="none" aria-hidden="true">
+            <line class="rail" x1="0" y1="6" x2="260" y2="6" />
+            <line class="rail" x1="0" y1="70" x2="260" y2="70" />
+            <line class="bar" x1="0" y1="22" x2="260" y2="22" />
+            <line class="bar" x1="0" y1="38" x2="260" y2="38" />
+            <line class="bar" x1="0" y1="54" x2="260" y2="54" />
+            <line class="glow" x1="0" y1="38" x2="260" y2="38" />
           </svg>
-          Signature Dish
+          <span class="label">
+            <svg class="flame" viewBox="0 0 64 64" fill="currentColor" aria-hidden="true">
+              <path
+                d="M32 6c6 8-2 12-2 19a8 8 0 0 0 16 0c0-3-1-5-1-5 6 4 9 11 9 17 0 12.7-10.3 21-22 21S10 49.7 10 37c0-9 4-16 10-21-1 4 0 7 3 9 0-9 3-13 9-19Z" />
+            </svg>
+            View More
+          </span>
         </span>
       </div>
 
@@ -4931,10 +5774,21 @@
           <p>Hand-cut pasta, sage brown butter, wild mushroom, and aged parmesan.</p>
         </div>
         <span class="ms-chip">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+          <svg class="grill-lines" viewBox="0 0 260 76" preserveAspectRatio="none" aria-hidden="true">
+            <line class="rail" x1="0" y1="6" x2="260" y2="6" />
+            <line class="rail" x1="0" y1="70" x2="260" y2="70" />
+            <line class="bar" x1="0" y1="22" x2="260" y2="22" />
+            <line class="bar" x1="0" y1="38" x2="260" y2="38" />
+            <line class="bar" x1="0" y1="54" x2="260" y2="54" />
+            <line class="glow" x1="0" y1="38" x2="260" y2="38" />
           </svg>
-          4.9 Rating
+          <span class="label">
+            <svg class="flame" viewBox="0 0 64 64" fill="currentColor" aria-hidden="true">
+              <path
+                d="M32 6c6 8-2 12-2 19a8 8 0 0 0 16 0c0-3-1-5-1-5 6 4 9 11 9 17 0 12.7-10.3 21-22 21S10 49.7 10 37c0-9 4-16 10-21-1 4 0 7 3 9 0-9 3-13 9-19Z" />
+            </svg>
+            View More
+          </span>
         </span>
       </div>
 
@@ -5151,142 +6005,9 @@
     </div>
   </section>
 
-  <section class="contact-social" id="contact-social">
-    <div class="parallax-layer" aria-hidden="true"></div>
-    <div class="parallax-overlay" aria-hidden="true"></div>
-    <div class="section-head reveal">
-      <div>
-        <div class="about-tag"><span class="line"></span>Get In Touch</div>
-        <h2>Contact &amp; Social</h2>
-      </div>
-    </div>
-    <div class="cs-grid">
-      <div class="cs-card cs-contact reveal">
-        <div class="v-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-            <path
-              d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.7a2 2 0 0 1-.4 2.1L8 9.9a16 16 0 0 0 6 6l1.4-1.4a2 2 0 0 1 2.1-.4c.9.3 1.8.5 2.7.6a2 2 0 0 1 1.8 2Z" />
-          </svg>
-        </div>
-        <h3>Contact</h3>
-        <div class="cs-sub">Reach us by phone, email, or in person</div>
-        <a class="v-link" href="tel:4423253829">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-            <path
-              d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.7a2 2 0 0 1-.4 2.1L8 9.9a16 16 0 0 0 6 6l1.4-1.4a2 2 0 0 1 2.1-.4c.9.3 1.8.5 2.7.6a2 2 0 0 1 1.8 2Z" />
-          </svg>
-          442-325-3829
-        </a>
-        <a class="v-link" href="mailto:criston@zingmyorder.com">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-            <rect x="2" y="4" width="20" height="16" rx="2" />
-            <path d="m2 6 10 7L22 6" />
-          </svg>
-          criston@zingmyorder.com
-        </a>
-        <a class="v-link" href="#" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-            <path d="M21 10c0 6-9 12-9 12S3 16 3 10a9 9 0 0 1 18 0Z" />
-            <circle cx="12" cy="10" r="3" />
-          </svg>
-          2011 Eleventh Avenue South, Birmingham, AL
-        </a>
-      </div>
 
-      <div class="cs-card cs-social reveal">
-        <div class="v-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-            <circle cx="12" cy="12" r="9" />
-            <path d="M8 15s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01" />
-          </svg>
-        </div>
-        <h3>Follow Us</h3>
-        <div class="cs-sub">Behind-the-scenes fire &amp; weekend events</div>
-        <div class="cs-social-row">
-          <a href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor">
-              <path
-                d="M18.9 2H22l-7.6 8.7L23 22h-6.8l-5.3-6.9L4.7 22H1.6l8.1-9.3L1 2h6.9l4.8 6.3L18.9 2Zm-1.2 18h1.9L7.4 4H5.3l12.4 16Z" />
-            </svg></a>
-          <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor">
-              <path
-                d="M13.5 22v-8.5H16l.5-3.5h-3V7.8c0-1 .3-1.7 1.8-1.7H16.6V3.1C16 3 15 2.9 13.9 2.9c-2.5 0-4.2 1.5-4.2 4.3V10H7v3.5h2.7V22h3.8Z" />
-            </svg></a>
-          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-              stroke-width="1.6">
-              <rect x="3" y="3" width="18" height="18" rx="5" />
-              <circle cx="12" cy="12" r="4" />
-              <circle cx="17.2" cy="6.8" r="1" />
-            </svg></a>
-        </div>
-        <button class="follow-btn" id="followBtn" type="button" aria-pressed="false">
-          <span class="follow-btn-icon" aria-hidden="true">
-            <svg class="icon-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-              <path d="M12 5v14M5 12h14" />
-            </svg>
-            <svg class="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-              <path d="M5 13l4 4L19 7" />
-            </svg>
-          </span>
-          <span class="follow-btn-label">Follow</span>
-        </button>
-      </div>
-    </div>
-  </section>
 
-  <section class="location-map" id="location">
-    <div class="section-head reveal">
-      <div>
-        <div class="about-tag"><span class="line"></span>Find Us</div>
-        <h2>Our Location</h2>
-      </div>
-    </div>
-    <div class="loc-grid">
-      <div class="loc-map-card reveal">
 
-        <iframe class="loc-map-frame"
-          src="https://www.google.com/maps?q=2011+Eleventh+Avenue+South,+Birmingham,+AL+35300&output=embed"
-          loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Grill House location map"></iframe>
-        <div class="corner-grate br" aria-hidden="true">
-          <svg viewBox="0 0 120 96" xmlns="http://www.w3.org/2000/svg">
-              <polygon class="tri-fill" points="120,96 120,8 24,96" />
-              <polyline class="tri-glow" points="120,8 24,96" />
-            </svg>
-        </div>
-      </div>
-      <div class="loc-photo-card reveal">
-        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900&q=80"
-          alt="Grill House storefront" loading="lazy">
-        <div class="corner-grate tr" aria-hidden="true">
-          <svg viewBox="0 0 120 96" xmlns="http://www.w3.org/2000/svg">
-              <polygon class="tri-fill" points="120,96 120,8 24,96" />
-              <polyline class="tri-glow" points="120,8 24,96" />
-            </svg>
-        </div>
-        <div class="loc-photo-overlay">
-          <span class="loc-photo-tag">Our Location</span>
-          <h3>Grill House</h3>
-          <p>2011 Eleventh Avenue South<br>Birmingham, AL 35300</p>
-          <a href="#contact-social" class="btn-grill">
-            <svg class="grill-lines" viewBox="0 0 260 76" preserveAspectRatio="none" aria-hidden="true">
-              <line class="rail" x1="0" y1="6" x2="260" y2="6" />
-              <line class="rail" x1="0" y1="70" x2="260" y2="70" />
-              <line class="bar" x1="0" y1="22" x2="260" y2="22" />
-              <line class="bar" x1="0" y1="38" x2="260" y2="38" />
-              <line class="bar" x1="0" y1="54" x2="260" y2="54" />
-              <line class="glow" x1="0" y1="38" x2="260" y2="38" />
-            </svg>
-            <span class="label">
-              <svg class="flame" viewBox="0 0 64 64" fill="currentColor" aria-hidden="true">
-                <path
-                  d="M32 6c6 8-2 12-2 19a8 8 0 0 0 16 0c0-3-1-5-1-5 6 4 9 11 9 17 0 12.7-10.3 21-22 21S10 49.7 10 37c0-9 4-16 10-21-1 4 0 7 3 9 0-9 3-13 9-19Z" />
-              </svg>
-              Booking Now
-            </span>
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <section class="faq">
     <div class="faq-inner">
@@ -5327,13 +6048,59 @@
     </div>
   </section>
 
+
+  <section class="location-map" id="location">
+    <div class="section-head reveal">
+      <div>
+        <div class="about-tag"><span class="line"></span>Find Us</div>
+        <h2>Our Location</h2>
+      </div>
+    </div>
+    <div class="loc-grid">
+      <div class="loc-map-card reveal">
+
+        <iframe class="loc-map-frame"
+          src="https://www.google.com/maps?q=2011+Eleventh+Avenue+South,+Birmingham,+AL+35300&output=embed"
+          loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Grill House location map"></iframe>
+        
+      </div>
+      <div class="loc-photo-card reveal">
+        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900&q=80" alt="Grill House storefront"
+          loading="lazy">
+        
+        <div class="loc-photo-overlay">
+          <span class="loc-photo-tag">Our Location</span>
+          <h3>Grill House</h3>
+          <p>2011 Eleventh Avenue South<br>Birmingham, AL 35300</p>
+          <a href="#contact-social" class="btn-grill">
+            <svg class="grill-lines" viewBox="0 0 260 76" preserveAspectRatio="none" aria-hidden="true">
+              <line class="rail" x1="0" y1="6" x2="260" y2="6" />
+              <line class="rail" x1="0" y1="70" x2="260" y2="70" />
+              <line class="bar" x1="0" y1="22" x2="260" y2="22" />
+              <line class="bar" x1="0" y1="38" x2="260" y2="38" />
+              <line class="bar" x1="0" y1="54" x2="260" y2="54" />
+              <line class="glow" x1="0" y1="38" x2="260" y2="38" />
+            </svg>
+            <span class="label">
+              <svg class="flame" viewBox="0 0 64 64" fill="currentColor" aria-hidden="true">
+                <path
+                  d="M32 6c6 8-2 12-2 19a8 8 0 0 0 16 0c0-3-1-5-1-5 6 4 9 11 9 17 0 12.7-10.3 21-22 21S10 49.7 10 37c0-9 4-16 10-21-1 4 0 7 3 9 0-9 3-13 9-19Z" />
+              </svg>
+              Booking Now
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <footer id="contact">
     <div class="footer-bg" aria-hidden="true">
       <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=1920&q=80" alt="">
     </div>
     <canvas class="footer-embers" id="footerEmbers" aria-hidden="true"></canvas>
 
-    
+
 
     <div class="footer-top">
       <div class="footer-brand">
@@ -5348,9 +6115,20 @@
         <p>A neighborhood grill &amp; bar serving fire-cooked classics, seasonal sides, and a warm room for every
           occasion.</p>
         <div class="footer-social-row" style="margin-top:22px;">
-          <a href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-7.6 8.7L23 22h-6.8l-5.3-6.9L4.7 22H1.6l8.1-9.3L1 2h6.9l4.8 6.3L18.9 2Zm-1.2 18h1.9L7.4 4H5.3l12.4 16Z"/></svg></a>
-          <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 22v-8.5H16l.5-3.5h-3V7.8c0-1 .3-1.7 1.8-1.7H16.6V3.1C16 3 15 2.9 13.9 2.9c-2.5 0-4.2 1.5-4.2 4.3V10H7v3.5h2.7V22h3.8Z"/></svg></a>
-          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1"/></svg></a>
+          <a href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M18.9 2H22l-7.6 8.7L23 22h-6.8l-5.3-6.9L4.7 22H1.6l8.1-9.3L1 2h6.9l4.8 6.3L18.9 2Zm-1.2 18h1.9L7.4 4H5.3l12.4 16Z" />
+            </svg></a>
+          <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M13.5 22v-8.5H16l.5-3.5h-3V7.8c0-1 .3-1.7 1.8-1.7H16.6V3.1C16 3 15 2.9 13.9 2.9c-2.5 0-4.2 1.5-4.2 4.3V10H7v3.5h2.7V22h3.8Z" />
+            </svg></a>
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="1.6">
+              <rect x="3" y="3" width="18" height="18" rx="5" />
+              <circle cx="12" cy="12" r="4" />
+              <circle cx="17.2" cy="6.8" r="1" />
+            </svg></a>
         </div>
       </div>
 
@@ -5371,10 +6149,10 @@
         <a href="#">Events</a>
       </div>
 
-     
+
 
       <div class="footer-col">
-        
+
         <h4 style="margin-top:6px;">Contact</h4>
         <a href="tel:4423253829">442-325-3829</a>
         <a href="mailto:criston@zingmyorder.com">criston@zingmyorder.com</a>
@@ -5420,6 +6198,48 @@
       update();
       window.addEventListener('scroll', onScroll, { passive: true });
       window.addEventListener('resize', update);
+    })();
+
+    (function () {
+      var header = document.getElementById('siteHeader');
+      var toggle = document.getElementById('navToggle');
+      var nav = document.getElementById('siteNav');
+      var scrim = document.getElementById('navScrim');
+      if (!toggle || !nav) return;
+
+      function closeNav() {
+        document.body.classList.remove('nav-open');
+        toggle.setAttribute('aria-expanded', 'false');
+      }
+
+      function openNav() {
+        document.body.classList.add('nav-open');
+        toggle.setAttribute('aria-expanded', 'true');
+      }
+
+      toggle.addEventListener('click', function () {
+        if (document.body.classList.contains('nav-open')) {
+          closeNav();
+        } else {
+          openNav();
+        }
+      });
+
+      if (scrim) {
+        scrim.addEventListener('click', closeNav);
+      }
+
+      nav.querySelectorAll('a').forEach(function (link) {
+        link.addEventListener('click', closeNav);
+      });
+
+      window.addEventListener('resize', function () {
+        if (window.innerWidth > 900) closeNav();
+      });
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closeNav();
+      });
     })();
 
     (function () {
@@ -6161,6 +6981,115 @@
       }
 
       tick();
+    })();
+
+    (function () {
+      var stage = document.getElementById('cineStage');
+      if (!stage) return;
+      var slides = Array.from(document.querySelectorAll('.cine-slide'));
+      var cards = Array.from(document.querySelectorAll('.cine-card'));
+      var prevBtn = document.getElementById('cinePrev');
+      var nextBtn = document.getElementById('cineNext');
+      var playToggle = document.getElementById('cinePlayToggle');
+      var progressTrack = document.getElementById('cineProgressTrack');
+      var progressFill = document.getElementById('cineProgressFill');
+      var timeEl = document.getElementById('cineTime');
+      var counterEl = document.getElementById('cineCounter');
+      var muteBtn = document.getElementById('cineMute');
+
+      if (!slides.length || !cards.length) return;
+
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var total = slides.length;
+      var current = 0;
+      var duration = 6000; // ms per slide (matches the "0:06" label)
+      var elapsed = 0;
+      var playing = !reduced;
+      var lastTs = null;
+      var rafId = null;
+
+      function pad(n) { return n < 10 ? '0' + n : '' + n; }
+      function formatTime(ms) { return '0:' + pad(Math.floor(ms / 1000)); }
+
+      function updateTimeDisplay() {
+        if (timeEl) timeEl.textContent = formatTime(elapsed) + ' / 0:' + pad(Math.floor(duration / 1000));
+      }
+
+      function goTo(index, resetElapsed) {
+        current = ((index % total) + total) % total;
+        slides.forEach(function (s, i) { s.classList.toggle('active', i === current); });
+        cards.forEach(function (c, i) { c.classList.toggle('active', i === current); });
+        if (counterEl) counterEl.textContent = pad(current + 1);
+        if (resetElapsed !== false) elapsed = 0;
+        updateTimeDisplay();
+        if (progressFill) progressFill.style.width = (elapsed / duration * 100) + '%';
+      }
+
+      function next() { goTo(current + 1); }
+      function prev() { goTo(current - 1); }
+
+      if (prevBtn) prevBtn.addEventListener('click', function () { prev(); });
+      if (nextBtn) nextBtn.addEventListener('click', function () { next(); });
+
+      cards.forEach(function (card, i) {
+        card.addEventListener('click', function () { goTo(i); });
+      });
+
+      if (progressTrack) {
+        progressTrack.addEventListener('click', function (e) {
+          var rect = progressTrack.getBoundingClientRect();
+          var pct = Math.min(Math.max((e.clientX - rect.left) / rect.width, 0), 1);
+          elapsed = pct * duration;
+          updateTimeDisplay();
+          if (progressFill) progressFill.style.width = (pct * 100) + '%';
+        });
+      }
+
+      var iconPause, iconPlay;
+      if (playToggle) {
+        iconPause = playToggle.querySelector('.icon-pause');
+        iconPlay = playToggle.querySelector('.icon-play');
+        playToggle.addEventListener('click', function () {
+          playing = !playing;
+          updatePlayIcon();
+          if (playing) { lastTs = null; rafId = requestAnimationFrame(tick); }
+        });
+      }
+
+      function updatePlayIcon() {
+        if (!playToggle) return;
+        playToggle.setAttribute('aria-label', playing ? 'Pause' : 'Play');
+        if (iconPause) iconPause.style.display = playing ? '' : 'none';
+        if (iconPlay) iconPlay.style.display = playing ? 'none' : '';
+      }
+
+      var muted = false;
+      if (muteBtn) {
+        muteBtn.addEventListener('click', function () {
+          muted = !muted;
+          muteBtn.setAttribute('aria-label', muted ? 'Unmute' : 'Mute');
+          muteBtn.classList.toggle('is-muted', muted);
+        });
+      }
+
+      function tick(ts) {
+        if (!playing) { rafId = null; return; }
+        if (lastTs === null) lastTs = ts;
+        var dt = ts - lastTs;
+        lastTs = ts;
+        elapsed += dt;
+        if (elapsed >= duration) {
+          next();
+        } else {
+          updateTimeDisplay();
+          if (progressFill) progressFill.style.width = (elapsed / duration * 100) + '%';
+        }
+        rafId = requestAnimationFrame(tick);
+      }
+
+      goTo(0);
+      updatePlayIcon();
+      if (playing) rafId = requestAnimationFrame(tick);
     })();
 
   </script>

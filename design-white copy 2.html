@@ -1048,21 +1048,21 @@
       }
     }
 
-    /* ---------- rising vapor (canvas-based, thin translucent heat-shimmer wisps) ---------- */
+    /* ---------- rising vapor (canvas-based, dense billowing steam column) ---------- */
     .hero-vapor {
       position: absolute;
       left: 0;
       right: 0;
-      bottom: 347px;
+    bottom: 300px;
       width: 100%;
-      height: 320px;
+      height: 380px;
       z-index: 1;
       pointer-events: none;
     }
 
     @media(max-width:520px) {
       .hero-vapor {
-        height: 220px;
+        height: 260px;
       }
     }
 
@@ -6503,50 +6503,51 @@
       resize();
       window.addEventListener('resize', resize);
 
-      // Steam sprite: four overlapping soft blobs baked into one blurred
-      // texture so each puff reads as a rounded wisp rather than a flat haze.
-      var spriteSize = 180;
+      // Soft blurred blob sprite — several overlapping circles baked into one
+      // texture so each puff reads as a light, thin wisp of steam rather than
+      // a dense billowing column.
+      var spriteSize = 220;
       var sprite = document.createElement('canvas');
       sprite.width = sprite.height = spriteSize;
       var sctx = sprite.getContext('2d');
-      sctx.filter = 'blur(12px)';
+      sctx.filter = 'blur(16px)';
       [
-        { x: 0.5, y: 0.55, r: 0.32 },
-        { x: 0.36, y: 0.6, r: 0.22 },
-        { x: 0.64, y: 0.58, r: 0.24 },
-        { x: 0.5, y: 0.42, r: 0.2 }
+        { x: 0.5, y: 0.55, r: 0.34 },
+        { x: 0.36, y: 0.6, r: 0.24 },
+        { x: 0.64, y: 0.58, r: 0.25 },
+        { x: 0.5, y: 0.4, r: 0.2 }
       ].forEach(function (b) {
         var cx = b.x * spriteSize, cy = b.y * spriteSize, r = b.r * spriteSize;
         var g = sctx.createRadialGradient(cx, cy, 0, cx, cy, r);
-        g.addColorStop(0, 'rgba(239,230,216,0.55)');
-        g.addColorStop(0.55, 'rgba(239,230,216,0.22)');
-        g.addColorStop(1, 'rgba(239,230,216,0)');
+        g.addColorStop(0, 'rgba(232,230,224,0.7)');
+        g.addColorStop(0.5, 'rgba(232,230,224,0.32)');
+        g.addColorStop(1, 'rgba(232,230,224,0)');
         sctx.fillStyle = g;
         sctx.beginPath();
         sctx.arc(cx, cy, r, 0, Math.PI * 2);
         sctx.fill();
       });
 
-      // Fixed emitters spread across the banner width, so steam lifts evenly
-      // along the whole hero instead of from one central column.
-      var spawnPoints = [0.10, 0.24, 0.38, 0.52, 0.66, 0.80, 0.92];
+      // Lite steam: a thin, sparse wisp rising from a narrow column
+      // (like off a single plate) — fewer puffs, smaller, softer, and
+      // much lower opacity than a full billowing column.
       var puffs = [];
 
       function spawn() {
-        var baseX = spawnPoints[Math.floor(Math.random() * spawnPoints.length)] * W;
+        var centerX = W * 0.5;
         puffs.push({
-          x0: baseX + random(-12, 12),
+          x0: centerX + random(-W * 0.035, W * 0.035),
           age: 0,
-          life: random(4200, 6800),
-          size: random(34, 56),
-          maxSize: random(100, 160),
+          life: random(5200, 7600),
+          size: random(26, 36),
+          maxSize: random(90, 140),
           rot: random(0, Math.PI * 2),
-          rotSpeed: random(-0.08, 0.08),
-          driftAmp: random(10, 22),
-          driftFreq: random(0.0006, 0.001),
+          rotSpeed: random(-0.04, 0.04),
+          driftAmp: random(14, 28),
+          driftFreq: random(0.0004, 0.0008),
           driftPhase: random(0, Math.PI * 2),
-          rise: random(70, 120),
-          peak: random(0.3, 0.45)
+          rise: random(80, 130),
+          peak: random(0.32, 0.46)
         });
       }
 
@@ -6558,7 +6559,7 @@
         var dt = ts - lastTime;
         lastTime = ts;
 
-        if (ts - lastSpawn > random(500, 900) && puffs.length < 12) {
+        if (ts - lastSpawn > random(750, 1150) && puffs.length < 9) {
           spawn();
           lastSpawn = ts;
         }
@@ -6572,13 +6573,15 @@
           var t = p.age / p.life;
           if (t >= 1) { puffs.splice(i, 1); continue; }
 
-          var drift = Math.sin(p.age * p.driftFreq + p.driftPhase) * p.driftAmp;
-          var x = p.x0 + drift * t;
-          var y = (H + 12) - t * (H * 0.75 + p.rise * 0.3);
+          // Drift widens gently as the wisp climbs.
+          var fan = 0.2 + t * 1.1;
+          var drift = Math.sin(p.age * p.driftFreq + p.driftPhase) * p.driftAmp * fan;
+          var x = p.x0 + drift;
+          var y = (H + 12) - t * (H * 0.82 + p.rise * 0.3);
           var scale = (p.size + (p.maxSize - p.size) * t) / spriteSize;
           var alpha = t < p.peak ? (t / p.peak) : (1 - (t - p.peak) / (1 - p.peak));
           if (alpha < 0) alpha = 0;
-          alpha *= 0.3;
+          alpha *= 0.16;
 
           p.rot += p.rotSpeed * (dt / 1000);
 
@@ -6586,12 +6589,24 @@
           ctx.globalAlpha = alpha;
           ctx.translate(x, y);
           ctx.rotate(p.rot);
-          ctx.scale(scale, scale * 1.1);
+          ctx.scale(scale, scale * 1.15);
           ctx.drawImage(sprite, -spriteSize / 2, -spriteSize / 2);
           ctx.restore();
         }
 
         ctx.globalCompositeOperation = 'source-over';
+
+        // Blend the canvas' bottom edge into transparent so the steam
+        // fades out smoothly instead of cutting off along a visible line.
+        var fadeH = H * 0.22;
+        var fadeGrad = ctx.createLinearGradient(0, H - fadeH, 0, H);
+        fadeGrad.addColorStop(0, 'rgba(0,0,0,1)');
+        fadeGrad.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.globalCompositeOperation = 'destination-in';
+        ctx.fillStyle = fadeGrad;
+        ctx.fillRect(0, H - fadeH, W, fadeH);
+        ctx.globalCompositeOperation = 'source-over';
+
         requestAnimationFrame(tick);
       }
       requestAnimationFrame(tick);

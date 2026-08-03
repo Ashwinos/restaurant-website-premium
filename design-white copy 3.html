@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coffee</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<style>
+  * {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    background-color: #465C96;
+    width: 100%;
+    height: 100vh;
+    position: relative;
+}
+
+
+.lid {
+    background-color: #fff;
+    height: 20px;
+    border-radius: 50%;
+    border: 8px solid #ddd;
+    z-index: 9;
+    position: relative;
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 51%);
+}
+
+.cup {
+    margin: -18px auto 0;
+    background-color: #fff;
+    height: 300px;
+    width: 100%;
+    max-width: 240px;
+    /* border-bottom-left-radius: 30%;
+    border-bottom-right-radius: 30%; */
+    clip-path: polygon(50% 250%, 0 0, 100% 0);
+}
+
+.logo {
+    max-width: 100px;
+    position: absolute;
+    top: 35%;
+    left: 28%;
+}
+
+.bottom {
+    background-color: #fff;
+    height: 20px;
+    border-radius: 50%;
+    z-index: 9;
+    position: relative;
+    width: 144px;
+    margin: -10px auto 0;
+}
+
+.vapour {
+    position: relative;
+    display: flex;
+    z-index: 1;
+    padding: 0 20px;
+    justify-content: center;
+}
+
+.vapour span {
+    position: relative;
+    bottom: 50px;
+    display: block;
+    margin: 0 2px 50px;
+    min-width: 8px;
+    height: 120px;
+    background: #fff;
+    border-radius: 50%;
+    animation: animate 5s linear infinite;
+    opacity: 0;
+    filter: blur(10px);
+    animation-delay: calc(var(--v) * -0.5s);
+}
+
+@keyframes animate {
+    0% {
+        transform: translateY(0) scaleX(1);
+        opacity: 0;
+    }
+    15% {
+        opacity: 1;
+    }
+    50% {
+        transform: translateY(-150px) scaleX(5);
+    }
+    95% {
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(-300px) scaleX(10);
+    }
+}
+</style>
+<body>
+            <div class="vapour">
+                <span style="--v:1;"></span>
+                <span style="--v:2;"></span>
+                <span style="--v:5;"></span>
+                <span style="--v:4;"></span>
+                <span style="--v:6;"></span>
+                <span style="--v:19;"></span>
+                <span style="--v:7;"></span>
+                <span style="--v:8;"></span>
+                <span style="--v:9;"></span>
+                <span style="--v:10;"></span>
+                <span style="--v:11;"></span>
+                <span style="--v:18;"></span>
+            </div>
+        
+</body>
+</html>

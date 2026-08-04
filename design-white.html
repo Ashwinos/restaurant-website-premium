@@ -2387,7 +2387,6 @@
     }
 
     .cine-scrim {
-      position: absolute;
       inset: 0;
       z-index: 2;
       background:
@@ -2654,7 +2653,8 @@
       }
 
       .cine-scrim {
-        background: linear-gradient(0deg, rgba(var(--char-rgb), 0.97) 0%, rgba(var(--char-rgb), 0.8) 40%, rgba(var(--char-rgb), 0.3) 100%);
+                background: linear-gradient(0deg, rgba(var(--char-rgb), 0.97) 0%, rgba(var(--char-rgb), 0.8) -1%, rgba(var(--char-rgb), 0.3) -14%);
+    }
       }
 
       .cine-content {
@@ -2689,6 +2689,7 @@
         scroll-snap-type: x mandatory;
         -webkit-overflow-scrolling: touch;
         padding-bottom: 4px;
+        padding-top: 14px;
         flex: 1;
         scrollbar-width: none;
       }
@@ -2711,7 +2712,7 @@
         position: absolute;
         left: 24px;
         right: 24px;
-        bottom: 24px;
+        bottom: -34px;
         flex-wrap: wrap;
         gap: 12px;
         z-index: 100;

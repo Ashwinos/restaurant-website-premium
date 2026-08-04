@@ -2642,12 +2642,10 @@
 
     @media(max-width:900px) {
       .cine-stage {
-        height: auto;
+        height: 640px;
         min-height: 0;
         max-height: none;
-        display: flex;
-        flex-direction: column;
-        padding: 100px 24px 32px;
+        padding: 0;
       }
 
       .cine-slides {
@@ -2656,16 +2654,15 @@
       }
 
       .cine-scrim {
-        background: linear-gradient(0deg, rgba(var(--char-rgb), 0.97) 0%, rgba(var(--char-rgb), 0.85) 55%, rgba(var(--char-rgb), 0.55) 100%);
+        background: linear-gradient(0deg, rgba(var(--char-rgb), 0.97) 0%, rgba(var(--char-rgb), 0.8) 40%, rgba(var(--char-rgb), 0.3) 100%);
       }
 
       .cine-content {
-        position: relative;
-        top: -80px;
-        left: auto;
+        position: absolute;
+        top: 96px;
+        left: 24px;
+        right: 24px;
         max-width: 100%;
-        order: 1;
-        margin-bottom: 28px;
       }
 
       .cine-title {
@@ -2673,12 +2670,10 @@
       }
 
       .cine-cards-wrap {
-        position: relative;
-        right: auto;
-        bottom: -68px;
-        order: 2;
-        margin-bottom: 24px;
-        width: 100%;
+        position: absolute;
+        left: 24px;
+        right: 24px;
+        bottom: 104px;
         gap: 8px;
       }
 
@@ -2713,19 +2708,16 @@
       }
 
       .cine-footer {
-        position: relative;
-        left: auto;
-        right: auto;
-        bottom: -26px;
-        order: 3;
-        width: 100%;
+        position: absolute;
+        left: 24px;
+        right: 24px;
+        bottom: 24px;
         flex-wrap: wrap;
         gap: 12px;
         z-index: 100;
       }
 
       .cine-time {
-        order: 4;
         flex-basis: 100%;
         text-align: center;
       }
@@ -2733,11 +2725,23 @@
 
     @media(max-width:520px) {
       .cine-stage {
-        padding: 96px 18px 28px;
+        height: 560px;
+      }
+
+      .cine-content {
+        top: 18px;
+        left: 18px;
+        right: 18px;
       }
 
       .cine-title {
         font-size: 1.6rem;
+      }
+
+      .cine-cards-wrap {
+        left: 18px;
+        right: 18px;
+        bottom: 28px;
       }
 
       .cine-card {
@@ -4581,8 +4585,8 @@
     }
 
     .footer-brand .logo-mark {
-      width: 46px;
-      height: 46px;
+      width: 80px;
+      height: 80px;
       opacity: 1;
     }
 
@@ -4640,10 +4644,19 @@
     }
 
     @media(max-width:520px) {
+      .footer-brand .logo{
+        display: flex;
+        justify-content: center;
+      }
       .footer-top {
         grid-template-columns: 1fr;
         padding: 40px 22px 30px;
         gap: 30px;
+        text-align: center;
+      }
+
+      .footer-social-row{
+        justify-content: center;
       }
     }
 
@@ -4692,7 +4705,7 @@
       color: var(--bone-dim);
       line-height: 1.75;
       font-size: .92rem;
-      max-width: 280px;
+      
     }
 
     .footer-brand .logo {
@@ -5171,8 +5184,8 @@
 
       .logo-mark svg,
       .logo-mark img {
-        width: 32px;
-        height: 32px;
+        width: 100%;
+        height: 100%;
       }
 
       .hero {
@@ -5430,7 +5443,6 @@
 
   <section class="about" id="about">
     <canvas class="about-embers" id="aboutEmbers" aria-hidden="true"></canvas>
-    <canvas class="about-smoke" id="aboutSmoke" aria-hidden="true"></canvas>
     <div class="about-copy reveal" id="aboutCopy">
       <div class="about-tag"><span class="line"></span>About Us</div>
       <h2> Welcome to Oviq African Market and Foods</h2>
@@ -6231,7 +6243,7 @@
               src="https://d1ph6a2qqb4pcd.cloudfront.net/fit-in/filters:format(webp):/uploads/website/website/2026/02/01/083621498/logo/MIy3LJQAGWmXbjUwkHAHt0mEWNpGLccEaADW6xdW.png"
               alt="Oviq African Market and Foods logo">
           </span>
-          <em>Grill</em>House
+          
         </div>
         <p>A neighborhood grill &amp; bar serving fire-cooked classics, seasonal sides, and a warm room for every
           occasion.</p>
@@ -6543,10 +6555,13 @@
     });
 
     (function () {
+      try {
       var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (reduced) return;
       var canvas = document.getElementById('embers');
-      var ctx = canvas.getContext('2d');
+      if (!canvas) return;
+      var ctx = canvas.getContext && canvas.getContext('2d');
+      if (!ctx) return;
       var hero = document.querySelector('.hero');
       var particles = [];
       var W, H;
@@ -6592,15 +6607,19 @@
         requestAnimationFrame(tick);
       }
       tick();
+      } catch (e) { /* animation init failed, skip silently */ }
     })();
 
     (function () {
+      try {
       var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (reduced) return;
       var canvas = document.getElementById('navEmbers');
       if (!canvas) return;
-      var ctx = canvas.getContext('2d');
+      var ctx = canvas.getContext && canvas.getContext('2d');
+      if (!ctx) return;
       var header = document.getElementById('siteHeader');
+      if (!header) return;
       var particles = [];
       var W, H, DPR = Math.min(window.devicePixelRatio || 1, 2);
 
@@ -6650,13 +6669,16 @@
         requestAnimationFrame(tick);
       }
       tick();
+      } catch (e) { /* animation init failed, skip silently */ }
     })();
 
     (function () {
+      try {
       var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       var canvas = document.getElementById('heroVapor');
       if (!canvas || reduced) return;
-      var ctx = canvas.getContext('2d');
+      var ctx = canvas.getContext && canvas.getContext('2d');
+      if (!ctx) return;
       var W, H, DPR = Math.min(window.devicePixelRatio || 1, 2);
 
       function random(min, max) { return min + Math.random() * (max - min); }
@@ -6765,14 +6787,17 @@
         requestAnimationFrame(tick);
       }
       requestAnimationFrame(tick);
+      } catch (e) { /* animation init failed, skip silently */ }
     })();
 
     (function () {
+      try {
       var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       var canvas = document.getElementById('aboutEmbers');
       var section = document.querySelector('.about');
       if (!canvas || !section || reduced) return;
-      var ctx = canvas.getContext('2d');
+      var ctx = canvas.getContext && canvas.getContext('2d');
+      if (!ctx) return;
       var particles = [];
       var W, H, DPR = Math.min(window.devicePixelRatio || 1, 2);
       var active = false;
@@ -6840,14 +6865,17 @@
       }
 
       tick();
+      } catch (e) { /* animation init failed, skip silently */ }
     })();
 
     (function () {
+      try {
       var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       var canvas = document.getElementById('aboutSmoke');
       var section = document.querySelector('.about');
       if (!canvas || !section || reduced) return;
-      var ctx = canvas.getContext('2d');
+      var ctx = canvas.getContext && canvas.getContext('2d');
+      if (!ctx) return;
       var W, H, DPR = Math.min(window.devicePixelRatio || 1, 2);
       var active = false;
 
@@ -6969,9 +6997,11 @@
       }
 
       requestAnimationFrame(tick);
+      } catch (e) { /* animation init failed, skip silently */ }
     })();
 
     (function () {
+      try {
       var items = document.querySelectorAll('.spec-in-left, .spec-in-right, .spec-in-bottom');
       if (!items.length) return;
       if (!('IntersectionObserver' in window)) {
@@ -6987,14 +7017,17 @@
         });
       }, { threshold: 0.2 });
       items.forEach(function (el) { observer.observe(el); });
+      } catch (e) { /* animation init failed, skip silently */ }
     })();
 
     (function () {
+      try {
       var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       var canvas = document.getElementById('specEmbers');
-      var section = document.querySelector('.specialities');
+      var section = document.getElementById('specialities');
       if (!canvas || !section || reduced) return;
-      var ctx = canvas.getContext('2d');
+      var ctx = canvas.getContext && canvas.getContext('2d');
+      if (!ctx) return;
       var particles = [];
       var W, H, DPR = Math.min(window.devicePixelRatio || 1, 2);
       var active = false;
@@ -7062,14 +7095,17 @@
       }
 
       tick();
+      } catch (e) { /* animation init failed, skip silently */ }
     })();
 
     (function () {
+      try {
       var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       var canvas = document.getElementById('footerEmbers');
       var section = document.querySelector('footer');
       if (!canvas || !section || reduced) return;
-      var ctx = canvas.getContext('2d');
+      var ctx = canvas.getContext && canvas.getContext('2d');
+      if (!ctx) return;
       var particles = [];
       var W, H, DPR = Math.min(window.devicePixelRatio || 1, 2);
       var active = false;
@@ -7137,9 +7173,11 @@
       }
 
       tick();
+      } catch (e) { /* animation init failed, skip silently */ }
     })();
 
     (function () {
+      try {
       var stage = document.getElementById('cineStage');
       if (!stage) return;
       var slides = Array.from(document.querySelectorAll('.cine-slide'));
@@ -7246,6 +7284,7 @@
       goTo(0);
       updatePlayIcon();
       if (playing) rafId = requestAnimationFrame(tick);
+      } catch (e) { /* gallery init failed, skip silently */ }
     })();
 
   </script>

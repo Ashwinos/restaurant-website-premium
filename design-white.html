@@ -1053,11 +1053,17 @@
       position: absolute;
       left: 0;
       right: 0;
-      bottom: 160px;
+      bottom: 290px;
       width: 100%;
       height: 320px;
       z-index: 1;
       pointer-events: none;
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .hero-vapor .vapour {
+      flex: 1;
     }
 
     @media(max-width:520px) {
@@ -2354,6 +2360,7 @@
     .cine-gallery {
       background: var(--char);
       padding: 0;
+      position: relative;
     }
 
     .cine-stage {
@@ -2647,6 +2654,11 @@
         padding: 0;
       }
 
+      
+      .hero-slope svg{
+        width: 115%;
+      }
+
       .cine-slides {
         position: absolute;
         inset: 0;
@@ -2654,7 +2666,6 @@
 
       .cine-scrim {
                 background: linear-gradient(0deg, rgba(var(--char-rgb), 0.97) 0%, rgba(var(--char-rgb), 0.8) -1%, rgba(var(--char-rgb), 0.3) -14%);
-    }
       }
 
       .cine-content {
@@ -2670,10 +2681,8 @@
       }
 
       .cine-cards-wrap {
-        position: absolute;
-        left: 24px;
-        right: 24px;
-        bottom: 104px;
+        position: static;
+        margin: 16px 24px 0;
         gap: 8px;
       }
 
@@ -2726,7 +2735,7 @@
 
     @media(max-width:520px) {
       .cine-stage {
-        height: 560px;
+        height: 350px;
       }
 
       .cine-content {
@@ -2735,14 +2744,16 @@
         right: 18px;
       }
 
+      .hero-slope svg{
+        width: 115%;
+      }
+
       .cine-title {
         font-size: 1.6rem;
       }
 
       .cine-cards-wrap {
-        left: 18px;
-        right: 18px;
-        bottom: 28px;
+        margin: 12px 18px 0;
       }
 
       .cine-card {
@@ -2780,8 +2791,13 @@
       }
 
       .cine-footer {
-        display: none;
         justify-content: center;
+      }
+
+       .cine-mute {
+
+        display: none;
+
       }
 
       .cine-counter {
@@ -3956,7 +3972,7 @@
       width: 48px;
       height: 48px;
       border-radius: 50%;
-      border: 1.5px solid var(--ember-2);
+      border: none;
       background: transparent;
       color: var(--ember-2);
       display: flex;
@@ -4017,9 +4033,9 @@
     }
 
     .like-icon-btn.following {
-      background: var(--ember-2);
-      color: var(--char);
-      border-color: var(--ember-2);
+      background: transparent;
+      color: var(--ember-2);
+      border-color: transparent;
       animation: none;
       box-shadow: none;
     }
@@ -5268,6 +5284,64 @@
         transform: translateY(-300px) scaleX(10);
     }
 }
+
+/* ---------- steam wisp behind the hero logo, reusing the .vapour banner technique at a smaller scale ---------- */
+.hero-logo-stack {
+  position: relative;
+  width: 135px;
+  margin-bottom: 26px;
+}
+
+.hero-logo-stack .hero-logo {
+  margin-bottom: 0;
+}
+
+.logo-vapour {
+  position: absolute;
+  left: 50%;
+  bottom: 100%;
+  transform: translateX(-50%);
+  width: 150px;
+  height: 160px;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, .9) 12%, rgba(0, 0, 0, .9) 82%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, .9) 12%, rgba(0, 0, 0, .9) 82%, transparent 100%);
+}
+
+.logo-vapour .vapour {
+  height: 100%;
+  padding: 0 6px;
+  align-items: flex-end;
+}
+
+.logo-vapour .vapour span {
+  height: 46px;
+  min-width: 3px;
+  margin: 0 1px 20px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo-vapour {
+    display: none;
+  }
+}
+
+@media(max-width:900px) {
+  .hero-logo-stack {
+    width: 96px;
+  }
+
+  .logo-vapour {
+    width: 110px;
+    height: 96px;
+  }
+
+  .logo-vapour .vapour span {
+    height: 34px;
+  }
+}
   </style>
 </head>
 
@@ -5390,10 +5464,21 @@
         </svg></a>
     </div>
     <div style="width:100%;">
-      <div class="hero-logo">
-        <img
-          src="https://d1ph6a2qqb4pcd.cloudfront.net/fit-in/filters:format(webp):/uploads/website/website/2026/02/01/083621498/logo/MIy3LJQAGWmXbjUwkHAHt0mEWNpGLccEaADW6xdW.png"
-          alt="Oviq African Market and Foods logo">
+      <div class="hero-logo-stack">
+        <div class="logo-vapour" aria-hidden="true">
+          <div class="vapour">
+            <span style="--v:1;"></span>
+            <span style="--v:2;"></span>
+            <span style="--v:5;"></span>
+            <span style="--v:4;"></span>
+            <span style="--v:6;"></span>
+          </div>
+        </div>
+        <div class="hero-logo">
+          <img
+            src="https://d1ph6a2qqb4pcd.cloudfront.net/fit-in/filters:format(webp):/uploads/website/website/2026/02/01/083621498/logo/MIy3LJQAGWmXbjUwkHAHt0mEWNpGLccEaADW6xdW.png"
+            alt="Oviq African Market and Foods logo">
+        </div>
       </div>
       <h1>Oviq African Market and Foods</h1>
       <div class="hero-row">
@@ -5404,6 +5489,15 @@
     </div>
 
     <div class="hero-vapor" id="heroVapor" aria-hidden="true">
+      <div class="vapour">
+                <span style="--v:3;"></span>
+                <span style="--v:12;"></span>
+                <span style="--v:14;"></span>
+                <span style="--v:16;"></span>
+                <span style="--v:17;"></span>
+                <span style="--v:13;"></span>
+                <span style="--v:15;"></span>
+            </div>
       <div class="vapour">
                 <span style="--v:1;"></span>
                 <span style="--v:2;"></span>
@@ -5417,6 +5511,15 @@
                 <span style="--v:10;"></span>
                 <span style="--v:11;"></span>
                 <span style="--v:18;"></span>
+            </div>
+      <div class="vapour">
+                <span style="--v:20;"></span>
+                <span style="--v:21;"></span>
+                <span style="--v:22;"></span>
+                <span style="--v:23;"></span>
+                <span style="--v:24;"></span>
+                <span style="--v:25;"></span>
+                <span style="--v:26;"></span>
             </div>
     </div>
     
@@ -5445,8 +5548,10 @@
   <section class="about" id="about">
     <canvas class="about-embers" id="aboutEmbers" aria-hidden="true"></canvas>
     <div class="about-copy reveal" id="aboutCopy">
-      <div class="about-tag"><span class="line"></span>About Us</div>
+     
       <h2> Welcome to Oviq African Market and Foods</h2>
+        <div class="about-tag"><span class="line"></span></div>
+
       <p class="body-copy">At Oviq African Market and Foods, we are more than just a place to shop and dine we are a
         vibrant community hub where cultures, traditions, and flavors come together. Our mission is to provide an
         authentic experience that brings the richness of diverse cultures to life, whether you're seeking quality
@@ -5504,8 +5609,10 @@
     <div class="parallax-overlay" aria-hidden="true"></div>
     <div class="section-head reveal">
       <div>
-        <div class="about-tag"><span class="line"></span>Get In Touch</div>
+        
         <h2>Contact &amp; Social</h2>
+        <div class="about-tag"><span class="line"></span></div>
+
       </div>
     </div>
     <div class="cs-grid">
@@ -5595,8 +5702,9 @@
     <canvas class="spec-embers" id="specEmbers" aria-hidden="true"></canvas>
     <div class="section-head reveal">
       <div>
-        <div class="about-tag-white"><span class="line"></span>Our Specialities</div>
         <h2>What Sets Us Apart</h2>
+        <div class="about-tag"><span class="line"></span></div>
+
       </div>
     </div>
     <div class="spec-showcase-white reveal">
@@ -5673,8 +5781,10 @@
     <div class="parallax-overlay" aria-hidden="true"></div>
     <div class="section-head reveal">
       <div>
-        <div class="about-tag"><span class="line"></span>Restaurant Menu</div>
+        
         <h2>Enjoy Delicious Dishes</h2>
+        <div class="about-tag"><span class="line"></span></div>
+
       </div>
     </div>
 
@@ -5956,59 +6066,10 @@
       <div class="cine-scrim"></div>
 
       <div class="cine-content">
-        <div class="about-tag"><span class="line"></span>Gallery</div>
         <h2 class="cine-title">Our Gallery</h2>
-      </div>
+        <div class="about-tag"><span class="line"></span></div>
 
-      <div class="cine-cards-wrap">
-        <button class="cine-arrow prev" id="cinePrev" aria-label="Previous">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M15 18l-6-6 6-6" />
-          </svg>
-        </button>
-
-        <div class="cine-cards" id="cineCards">
-          <div class="cine-card active" data-index="0">
-            <img src="https://t3.ftcdn.net/jpg/01/56/33/54/360_F_156335406_a865b1B2DhtwrMup69BcB32uCUMp8cOY.jpg"
-              alt="Plated & Fired">
-            <span class="cine-play"><svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M8 5v14l11-7Z" />
-              </svg></span>
-
-          </div>
-          <div class="cine-card" data-index="1">
-            <img src="https://cdn.pixabay.com/photo/2021/07/19/16/04/pizza-6478478_1280.jpg" alt="Cedar Plank Salmon">
-            <span class="cine-play"><svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M8 5v14l11-7Z" />
-              </svg></span>
-
-          </div>
-          <div class="cine-card" data-index="2">
-            <img src="https://t3.ftcdn.net/jpg/20/61/35/70/360_F_2061357093_CtbOOUbTSMDLBvanqh2XMMbhlM3XuvwC.jpg"
-              alt="Char &amp; Sear">
-            <span class="cine-play"><svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M8 5v14l11-7Z" />
-              </svg></span>
-
-          </div>
-          <div class="cine-card" data-index="3">
-            <img
-              src="https://img.magnific.com/premium-photo/assorted-traditional-african-dishes-with-jollof-rice-collard-greens-barbecued-meat-served_996993-8679.jpg"
-              alt="Garden Fresh">
-            <span class="cine-play"><svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M8 5v14l11-7Z" />
-              </svg></span>
-
-          </div>
-
-
-        </div>
-
-        <button class="cine-arrow next" id="cineNext" aria-label="Next">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M9 18l6-6-6-6" />
-          </svg>
-        </button>
+        
       </div>
 
       <div class="cine-footer">
@@ -6034,13 +6095,65 @@
       </div>
 
     </div>
+
+    <div class="cine-cards-wrap">
+      <button class="cine-arrow prev" id="cinePrev" aria-label="Previous">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M15 18l-6-6 6-6" />
+        </svg>
+      </button>
+
+      <div class="cine-cards" id="cineCards">
+        <div class="cine-card active" data-index="0">
+          <img src="https://t3.ftcdn.net/jpg/01/56/33/54/360_F_156335406_a865b1B2DhtwrMup69BcB32uCUMp8cOY.jpg"
+            alt="Plated & Fired">
+          <span class="cine-play"><svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M8 5v14l11-7Z" />
+            </svg></span>
+
+        </div>
+        <div class="cine-card" data-index="1">
+          <img src="https://cdn.pixabay.com/photo/2021/07/19/16/04/pizza-6478478_1280.jpg" alt="Cedar Plank Salmon">
+          <span class="cine-play"><svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M8 5v14l11-7Z" />
+            </svg></span>
+
+        </div>
+        <div class="cine-card" data-index="2">
+          <img src="https://t3.ftcdn.net/jpg/20/61/35/70/360_F_2061357093_CtbOOUbTSMDLBvanqh2XMMbhlM3XuvwC.jpg"
+            alt="Char &amp; Sear">
+          <span class="cine-play"><svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M8 5v14l11-7Z" />
+            </svg></span>
+
+        </div>
+        <div class="cine-card" data-index="3">
+          <img
+            src="https://img.magnific.com/premium-photo/assorted-traditional-african-dishes-with-jollof-rice-collard-greens-barbecued-meat-served_996993-8679.jpg"
+            alt="Garden Fresh">
+          <span class="cine-play"><svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M8 5v14l11-7Z" />
+            </svg></span>
+
+        </div>
+
+
+      </div>
+
+      <button class="cine-arrow next" id="cineNext" aria-label="Next">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 18l6-6-6-6" />
+        </svg>
+      </button>
+    </div>
   </section>
 
   <section class="chat-section" id="testimonials">
     <div class="section-head reveal">
       <div>
-        <div class="about-tag"><span class="line"></span>Testimonials</div>
         <h2>What Guests Say</h2>
+        <div class="about-tag"><span class="line"></span></div>
+
       </div>
     </div>
 
@@ -6112,8 +6225,9 @@
   <section class="hourglass-section-white" id="hours">
     <div class="section-head reveal">
       <div>
-        <div class="about-tag-white"><span class="line"></span>Visit Us</div>
         <h2>Our Hours</h2>
+        <div class="about-tag-white"><span class="line"></span></div>
+
       </div>
     </div>
     <div class="hourglass-grid">
@@ -6147,8 +6261,9 @@
     <div class="faq-inner">
       <div class="section-head reveal">
         <div>
-          <div class="about-tag"><span class="line"></span>FAQs</div>
           <h2>Frequently Asked Questions</h2>
+          <div class="about-tag"><span class="line"></span></div>
+
         </div>
       </div>
 
@@ -6186,8 +6301,9 @@
   <section class="location-map" id="location">
     <div class="section-head reveal">
       <div>
-        <div class="about-tag"><span class="line"></span>Find Us</div>
         <h2>Our Location</h2>
+        <div class="about-tag"><span class="line"></span></div>
+
       </div>
     </div>
     <div class="loc-grid">

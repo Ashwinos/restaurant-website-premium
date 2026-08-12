@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Waffle house</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Denk+One&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bar-dark:#2A2A28;
+    --nav-black:#171716;
+    --gold:#C9A227;
+    --paper:#FFFFFF;
+    --ink:#1C1C1A;
+    --wedge-red:#E01B10;
+    --gal-gap:6px;
+    --gal-row:18.6vw;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:'Work Sans', sans-serif; color:var(--ink);}
+  a{color:inherit; text-decoration:none;}
+
+  /* ---- Shared outline button ---- */
+  .btn-outline{
+    display:inline-block;
+    font-family:'Work Sans', sans-serif;
+    font-size:0.9rem; font-weight:600;
+    letter-spacing:0.14em; text-transform:uppercase;
+    color:var(--ink); background:transparent;
+    border:1px solid var(--ink);
+    padding:16px 42px; cursor:pointer;
+    transition:background .18s ease, color .18s ease;
+  }
+  .btn-outline:hover,
+  .btn-outline:focus-visible{background:var(--ink); color:#fff;}
+
+  /* light variant for use over photography */
+  .btn-outline.on-dark{
+    color:#fff; border-color:#fff;
+    font-family:'Denk One', sans-serif; font-weight:400;
+    letter-spacing:0.1em; font-size:1.05rem;
+    padding:18px 46px;
+  }
+  .btn-outline.on-dark:hover,
+  .btn-outline.on-dark:focus-visible{background:#fff; color:var(--ink);}
+
+
+  /* ---- Logo row ---- */
+  .logo-row{
+    display:flex; align-items:center; justify-content:center;
+    padding:22px 20px;
+    background:var(--paper);
+  }
+  .logo-row .mark{
+    display:flex; align-items:center; gap:12px;
+  }
+  .logo-row .fruit{
+    width:34px; height:34px; border-radius:50% 50% 50% 4px;
+    background:radial-gradient(circle at 35% 30%, #E8A23A, #B85A1E 75%);
+    position:relative; flex-shrink:0;
+  }
+  .logo-row .fruit::after{
+    content:""; position:absolute; top:-8px; left:14px;
+    width:3px; height:12px; background:#5A6E3B; border-radius:2px;
+    transform:rotate(20deg);
+  }
+  .logo-row h1{
+    font-family:'Denk One', sans-serif; font-weight:400; letter-spacing:0.04em;
+    font-size:2rem; color:#1C1C1A; text-transform:uppercase;
+  }
+  .logo-row h1 .thin{font-weight:400; opacity:0.85;}
+
+  /* ---- Dark nav bar ---- */
+  nav.mainbar{
+    background:var(--nav-black);
+
+    display:flex; align-items:center; justify-content:center;
+    gap:34px; padding:16px 20px; flex-wrap:wrap;
+  }
+  nav.mainbar a{
+     font-family:'Denk One', sans-serif;
+    color:#F0EEE6; font-size:0.82rem; font-weight:700;
+    letter-spacing:0.03em; text-transform:uppercase;
+    padding:4px 0; border-bottom:2px solid transparent;
+    transition:border-color .15s ease, color .15s ease;
+  }
+  nav.mainbar a:hover{border-color:var(--gold); color:#fff;}
+  nav.mainbar .social{display:flex; gap:16px; margin-left:8px;}
+  nav.mainbar .social a{
+    width:30px; height:30px; border:1px solid #504F49; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-size:0.75rem; letter-spacing:0; text-transform:none; font-weight:400;
+    padding:0; border-bottom:none;
+  }
+  nav.mainbar .social a:hover{border-color:var(--gold); color:var(--gold);}
+
+
+
+  /* ---- Hero ---- */
+  .hero{
+    position:relative;
+    width:100%;
+    height:100vh;
+    overflow:hidden;
+    display:flex; align-items:flex-end;
+  }
+  .hero iframe{
+    position:absolute;
+    top:50%; left:50%;
+    width:100vw; height:56.25vw;
+    min-height:100vh; min-width:177.78vh;
+    transform:translate(-50%, -50%);
+    border:0;
+  }
+  .hero::after{
+    content:"";
+    position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(0,0,0,0.15), rgba(0,0,0,0.4));
+    z-index:1;
+  }
+
+  .hero-caption{
+    position:absolute; z-index:2;
+    bottom:50px; left:50%;
+    transform:translateX(-50%);
+    color:#fff;
+    font-family:'Denk One', sans-serif; font-size:2rem;
+    text-shadow:0 2px 10px rgba(0,0,0,0.5);
+  }
+
+  .fab-stack{
+    position:fixed; right:22px; bottom:24px;
+    display:flex; flex-direction:column; gap:14px; z-index:40;
+  }
+  .fab{
+    width:56px; height:56px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-size:1.3rem; cursor:pointer; border:none;
+    box-shadow:0 6px 18px rgba(0,0,0,0.25);
+  }
+  .fab.primary{background:var(--nav-black); color:var(--gold);}
+  .fab.secondary{background:#fff; color:var(--ink);}
+
+  /* ---- Diagonal title banner ---- */
+  .title-banner{
+    background:#C6321F;
+    color:#171716;
+    padding:70px 40px 110px;
+    text-align:center;
+    position:relative;
+    clip-path:polygon(0 0, 100% 0, 100% 78%, 0 100%);
+  }
+  .title-banner h2{
+    font-family:'Denk One', sans-serif; font-weight:400;
+    font-size:clamp(2rem, 5vw, 3rem);
+  }
+
+  /* ---- About section ---- */
+  .about-section{
+    display:grid; grid-template-columns:1fr 1fr;
+    margin-top:-70px;
+  }
+  @media (max-width:860px){
+    .about-section{grid-template-columns:1fr;}
+  }
+  .about-photo{
+    min-height:520px;
+    background:linear-gradient(135deg, #3E2E22, #6B4A2E 55%, #2A2118);
+    overflow:hidden;
+  }
+  .about-photo img{
+    width:100%; height:100%;
+    min-height:520px;
+    object-fit:cover; object-position:center;
+    display:block;
+  }
+
+  .about-copy{
+    padding:90px 60px 60px;
+    display:flex; flex-direction:column; align-items:center;
+    text-align:center;
+  }
+  .about-copy h3{
+    font-family:'Denk One', sans-serif; font-weight:400;
+    font-size:clamp(2.2rem, 4vw, 3rem);
+    letter-spacing:0.01em;
+  }
+  .about-icon{
+    width:60px; height:60px; margin:26px auto;
+    border-radius:50% 50% 50% 4px;
+    background:radial-gradient(circle at 35% 30%, #E8A23A, #B85A1E 75%);
+    position:relative;
+  }
+  .about-icon::after{
+    content:""; position:absolute; top:-10px; left:24px;
+    width:4px; height:16px; background:#5A6E3B; border-radius:2px;
+    transform:rotate(20deg);
+  }
+  .about-copy p{
+    max-width:52ch; color:#3A3A36; font-size:1.02rem; line-height:1.8;
+  }
+  .about-copy h4{
+    font-family:'Denk One', sans-serif; font-weight:400;
+    font-size:1.3rem; margin-top:34px; color:#171716;
+  }
+  .about-copy .btn-outline{margin-top:38px;}
+
+  /* ---- Private parties ---- */
+  .parties-section{
+    position:relative;
+    display:grid; grid-template-columns:1fr 1fr;
+    background:var(--paper);
+  }
+  .parties-copy{
+    position:relative;
+    overflow:hidden;
+    display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+    text-align:center;
+    padding:120px 50px;
+    min-height:520px;
+  }
+  /* faded menu texture behind the copy */
+  .parties-copy::before{
+    content:"";
+    position:absolute; inset:0;
+    background:url("https://images.unsplash.com/photo-1541542684-4a9c2c1e0c9a?auto=format&fit=crop&w=1400&q=60") center/cover no-repeat;
+    filter:grayscale(1) contrast(1.05);
+    opacity:0.28;
+  }
+  /* white diagonal wedges top + bottom, like the reference */
+  .parties-copy::after{
+    content:"";
+    position:absolute; inset:0;
+    background:
+      linear-gradient(192deg, #fff 0 16%, rgba(255,255,255,0) 16.3%),
+      linear-gradient(12deg,  #fff 0 13%, rgba(255,255,255,0) 13.3%);
+  }
+  .parties-copy > *{position:relative; z-index:2;}
+  .parties-copy h2{
+    font-family:'Denk One', sans-serif; font-weight:400;
+    font-size:clamp(2.6rem, 5.4vw, 4.4rem);
+    letter-spacing:0.01em; text-transform:uppercase;
+    line-height:1.05;
+  }
+  .parties-copy p{
+    font-family:'Denk One', sans-serif; font-weight:400;
+    font-size:clamp(1.1rem, 2vw, 1.6rem);
+    margin-top:18px; color:#262623;
+  }
+  .parties-copy .btn-outline{margin-top:40px;}
+
+  .parties-photo{
+    min-height:520px;
+    background:linear-gradient(135deg, #2F3A2A, #4E5B3F 60%, #22271D);
+    overflow:hidden;
+  }
+  .parties-photo img{
+    width:100%; height:100%;
+    min-height:520px;
+    object-fit:cover; object-position:center;
+    display:block;
+  }
+
+  /* red angled divider sitting on the bottom edge */
+  .parties-wedge{
+    position:absolute; left:0; right:0; bottom:0;
+    height:90px;
+    background:var(--wedge-red);
+    clip-path:polygon(0 100%, 0 82%, 22% 6%, 100% 60%, 100% 100%);
+    z-index:3;
+    pointer-events:none;
+  }
+
+  /* ---- Full-bleed reservation slider ---- */
+  .shot-slider{
+    position:relative;
+    width:100%;
+    height:clamp(460px, 78vh, 760px);
+    overflow:hidden;
+    background:#0E0E0D;
+  }
+  .shot-slide{
+    position:absolute; inset:0;
+    opacity:0;
+    transition:opacity .9s ease;
+  }
+  .shot-slide.is-active{opacity:1;}
+  .shot-slide img{
+    width:100%; height:100%;
+    object-fit:cover; object-position:center;
+    display:block;
+  }
+  .shot-slider::after{
+    content:"";
+    position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(0,0,0,0.30), rgba(0,0,0,0.45));
+    z-index:2; pointer-events:none;
+  }
+  .shot-cta{
+    position:absolute; z-index:4;
+    top:50%; left:50%;
+    transform:translate(-50%, -50%);
+  }
+
+  /* prev / next arrows */
+  .shot-arrow{
+    position:absolute; z-index:4; top:50%;
+    transform:translateY(-50%);
+    width:52px; height:52px;
+    display:flex; align-items:center; justify-content:center;
+    background:transparent; border:none; cursor:pointer;
+    color:#fff; opacity:0.85;
+    transition:opacity .18s ease;
+  }
+  .shot-arrow:hover,
+  .shot-arrow:focus-visible{opacity:1;}
+  .shot-arrow svg{width:26px; height:26px; filter:drop-shadow(0 2px 6px rgba(0,0,0,0.5));}
+  .shot-arrow.prev{left:18px;}
+  .shot-arrow.next{right:18px;}
+
+  /* play / pause + progress rail */
+  .shot-play{
+    position:absolute; z-index:4;
+    left:34px; bottom:26px;
+    width:38px; height:38px;
+    display:flex; align-items:center; justify-content:center;
+    background:transparent; border:none; cursor:pointer;
+    color:#fff; opacity:0.9;
+  }
+  .shot-play:hover,
+  .shot-play:focus-visible{opacity:1;}
+  .shot-play svg{width:20px; height:20px; filter:drop-shadow(0 2px 6px rgba(0,0,0,0.5));}
+  .shot-play .icon-play{display:none;}
+  .shot-slider.is-paused .shot-play .icon-play{display:block;}
+  .shot-slider.is-paused .shot-play .icon-pause{display:none;}
+
+  .shot-rail{
+    position:absolute; z-index:4;
+    left:0; right:0; bottom:0;
+    height:3px;
+    background:rgba(255,255,255,0.22);
+  }
+  .shot-rail-fill{
+    height:100%; width:0;
+    background:#fff;
+    transform-origin:left center;
+  }
+  .shot-rail-fill.is-running{
+    width:100%;
+    animation:shot-fill 6s linear forwards;
+  }
+  .shot-slider.is-paused .shot-rail-fill.is-running{animation-play-state:paused;}
+  @keyframes shot-fill{
+    from{transform:scaleX(0);}
+    to{transform:scaleX(1);}
+  }
+
+  /* ---- Mosaic gallery ---- */
+  .gallery-section{background:var(--paper);}
+  .gallery-head{
+    text-align:center;
+    padding:80px 24px 34px;
+  }
+  .gallery-head h2{
+    font-family:'Denk One', sans-serif; font-weight:400;
+    font-size:clamp(2rem, 4vw, 2.8rem);
+    text-transform:uppercase; letter-spacing:0.02em;
+  }
+  .gallery-head p{
+    margin-top:12px; color:#5A5A54;
+    font-size:1rem; letter-spacing:0.02em;
+  }
+
+  .gallery-grid{
+    display:grid;
+    grid-template-columns:repeat(5, 1fr);
+    grid-auto-rows:var(--gal-row);
+    gap:var(--gal-gap);
+  }
+  .gallery-item{
+    position:relative;
+    overflow:hidden;
+    background:#EFEDE7;
+    display:block;
+  }
+  /* the two feature tiles: one opens each band of the mosaic */
+  .gallery-item.is-feature{
+    grid-column:span 2;
+    grid-row:span 2;
+  }
+  .gallery-item img{
+    width:100%; height:100%;
+    object-fit:cover; object-position:center;
+    display:block;
+    transition:transform .6s ease;
+  }
+  .gallery-item::after{
+    content:"";
+    position:absolute; inset:0;
+    background:rgba(23,23,22,0);
+    transition:background .3s ease;
+  }
+  .gallery-item:hover img,
+  .gallery-item:focus-visible img{transform:scale(1.06);}
+  .gallery-item:hover::after,
+  .gallery-item:focus-visible::after{background:rgba(23,23,22,0.18);}
+  .gallery-item:focus-visible{outline:2px solid var(--gold); outline-offset:-2px;}
+
+  .gallery-foot{
+    display:flex; justify-content:center;
+    padding:52px 24px 84px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .shot-slide{transition:none;}
+    .shot-rail-fill.is-running{animation:none; width:0;}
+    .gallery-item img{transition:none;}
+    .gallery-item:hover img{transform:none;}
+  }
+
+  @media (max-width:860px){
+    .parties-section{grid-template-columns:1fr;}
+    .parties-copy{order:2; padding:80px 28px 110px; min-height:0;}
+    .parties-photo{order:1; min-height:340px;}
+    .parties-photo img{min-height:340px;}
+    .parties-wedge{height:60px;}
+    .shot-slider{height:clamp(360px, 60vh, 520px);}
+    .shot-arrow.prev{left:4px;}
+    .shot-arrow.next{right:4px;}
+    .shot-play{left:16px; bottom:18px;}
+    .gallery-grid{grid-template-columns:repeat(2, 1fr);}
+    :root{--gal-row:46vw;}
+    .gallery-head{padding:56px 20px 26px;}
+    .gallery-foot{padding:38px 20px 60px;}
+  }
+
+  @media (max-width:760px){
+    nav.mainbar{gap:18px;}
+    nav.mainbar a{font-size:0.72rem;}
+    .logo-row h1{font-size:1.4rem;}
+    .about-copy{padding:60px 28px 40px;}
+    .btn-outline{padding:14px 34px; font-size:0.82rem;}
+    .btn-outline.on-dark{padding:14px 30px; font-size:0.92rem;}
+  }
+</style>
+</head>
+<body>
+
+
+
+<div class="logo-row">
+  <div class="mark">
+    <h1>Waffle <span class="thin">House</span></h1>
+  </div>
+</div>
+
+<nav class="mainbar">
+  <a href="#">Home</a>
+  <a href="#">Menu</a>
+  <a href="#">About Us</a>
+  <a href="#">Events</a>
+  <a href="#">Gallery</a>
+  <a href="#">Reservations</a>
+  <a href="#">Order Online</a>
+  <a href="#">Jobs</a>
+  <div class="social">
+    <a href="#" aria-label="Facebook">f</a>
+    <a href="#" aria-label="Instagram">ig</a>
+    <a href="#" aria-label="LinkedIn">in</a>
+  </div>
+</nav>
+
+
+
+<div class="hero">
+    <iframe
+        src="https://www.youtube.com/embed/rlE78bS6ZxA?autoplay=1&mute=1&loop=1&playlist=rlE78bS6ZxA&controls=0&rel=0"
+        title="Hero Video"
+        frameborder="0"
+        allow="autoplay; encrypted-media"
+        allowfullscreen>
+    </iframe>
+
+    <div class="hero-caption">Under the old oak, every night.</div>
+</div>
+
+<div class="title-banner">
+  <h2>Waffle House.</h2>
+</div>
+
+<div class="about-section">
+  <div class="about-photo">
+    <img src="https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg" alt="Interior of the restaurant">
+  </div>
+  <div class="about-copy">
+    <h3>About Us</h3>
+    <p>Waffle House is a seasonal kitchen built around one wood-fired hearth and produce sourced from farms we visit ourselves. Every dish is cooked to order, with options for gluten-free, dairy-free, and plant-based diets built into the menu from the start — not as an afterthought.</p>
+    <h4>A menu that changes with the season</h4>
+    <a href="#" class="btn-outline">More</a>
+  </div>
+</div>
+
+<section class="parties-section">
+  <div class="parties-copy">
+    <h2>New Section</h2>
+    <p>no content available now!</p>
+    <a href="#" class="btn-outline">view more</a>
+  </div>
+  <div class="parties-photo">
+    <img src="https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=1600&q=70" alt="Covered patio seating set for a private party">
+  </div>
+  <div class="parties-wedge" aria-hidden="true"></div>
+</section>
+
+<section class="shot-slider" id="shotSlider" aria-roledescription="carousel" aria-label="Inside the restaurant">
+  <div class="shot-slide is-active">
+    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1900&q=75" alt="Dining room with painted mural wall">
+  </div>
+  <div class="shot-slide">
+    <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1900&q=75" alt="Warm lit tables at dinner service">
+  </div>
+  <div class="shot-slide">
+    <img src="https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?auto=format&fit=crop&w=1900&q=75" alt="Bar seating and shelves of glassware">
+  </div>
+
+  <a href="#" class="btn-outline on-dark shot-cta">Reservations</a>
+
+  <button class="shot-arrow prev" type="button" aria-label="Previous slide">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+  </button>
+  <button class="shot-arrow next" type="button" aria-label="Next slide">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
+  </button>
+
+  <button class="shot-play" type="button" aria-label="Pause slideshow" aria-pressed="false">
+    <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+    <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="7 4 20 12 7 20"></polygon></svg>
+  </button>
+
+  <div class="shot-rail" aria-hidden="true"><div class="shot-rail-fill" id="shotRailFill"></div></div>
+</section>
+
+<section class="gallery-section">
+  <div class="gallery-head">
+    <h2>Our Gallery</h2>
+    <p>Plates, pours and desserts going out tonight.</p>
+  </div>
+
+  <div class="gallery-grid">
+    <a href="#" class="gallery-item is-feature">
+      <img src="https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=1400&q=75" alt="Cheesecake with a scoop of vanilla and a strawberry" loading="lazy">
+    </a>
+    <a href="#" class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=75" alt="Plated salad with shredded carrot and microgreens" loading="lazy">
+    </a>
+    <a href="#" class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=800&q=75" alt="Bottles of red, rose and white wine with poured glasses" loading="lazy">
+    </a>
+    <a href="#" class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=800&q=75" alt="Crab cake with sweet potato fries" loading="lazy">
+    </a>
+    <a href="#" class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=800&q=75" alt="Iced cocktail garnished with ribboned cucumber" loading="lazy">
+    </a>
+    <a href="#" class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=75" alt="Chopped green salad dressed with herb oil" loading="lazy">
+    </a>
+    <a href="#" class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=800&q=75" alt="Layered dessert in a coupe with a tuile and strawberry" loading="lazy">
+    </a>
+
+    <a href="#" class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&fit=crop&w=800&q=75" alt="Seared fish fillet with seasonal vegetables" loading="lazy">
+    </a>
+    <a href="#" class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=75" alt="Grilled steak sliced on a board" loading="lazy">
+    </a>
+    <a href="#" class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1551782450-a2132b4ba21d?auto=format&fit=crop&w=800&q=75" alt="Burger with fries on a plate" loading="lazy">
+    </a>
+    <a href="#" class="gallery-item is-feature">
+      <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1400&q=75" alt="Dining room laid up for evening service" loading="lazy">
+    </a>
+    <a href="#" class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=800&q=75" alt="Espresso cup on a saucer" loading="lazy">
+    </a>
+    <a href="#" class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1481931098730-318b6f776db0?auto=format&fit=crop&w=800&q=75" alt="Cocktail being finished at the bar" loading="lazy">
+    </a>
+    <a href="#" class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?auto=format&fit=crop&w=800&q=75" alt="Pasta plated with fresh herbs" loading="lazy">
+    </a>
+  </div>
+
+  <div class="gallery-foot">
+    <a href="#" class="btn-outline">View gallery</a>
+  </div>
+</section>
+
+<script>
+(function () {
+  var slider = document.getElementById('shotSlider');
+  if (!slider) { return; }
+
+  var slides = slider.querySelectorAll('.shot-slide');
+  var fill   = document.getElementById('shotRailFill');
+  var prev   = slider.querySelector('.shot-arrow.prev');
+  var next   = slider.querySelector('.shot-arrow.next');
+  var toggle = slider.querySelector('.shot-play');
+  if (!slides.length || !fill) { return; }
+
+  var index  = 0;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function restartTimer() {
+    fill.classList.remove('is-running');
+    void fill.offsetWidth;           // force reflow so the animation replays
+    if (!reduce && !slider.classList.contains('is-paused')) {
+      fill.classList.add('is-running');
+    }
+  }
+
+  function goTo(n) {
+    slides[index].classList.remove('is-active');
+    index = (n + slides.length) % slides.length;
+    slides[index].classList.add('is-active');
+    restartTimer();
+  }
+
+  fill.addEventListener('animationend', function () { goTo(index + 1); });
+  if (prev) { prev.addEventListener('click', function () { goTo(index - 1); }); }
+  if (next) { next.addEventListener('click', function () { goTo(index + 1); }); }
+
+  if (toggle) {
+    toggle.addEventListener('click', function () {
+      var paused = slider.classList.toggle('is-paused');
+      toggle.setAttribute('aria-pressed', paused ? 'true' : 'false');
+      toggle.setAttribute('aria-label', paused ? 'Play slideshow' : 'Pause slideshow');
+      if (!paused && !fill.classList.contains('is-running')) { restartTimer(); }
+    });
+  }
+
+  if (reduce) {
+    slider.classList.add('is-paused');
+    if (toggle) {
+      toggle.setAttribute('aria-pressed', 'true');
+      toggle.setAttribute('aria-label', 'Play slideshow');
+    }
+  } else {
+    restartTimer();
+  }
+})();
+</script>
+
+</body>
+</html>

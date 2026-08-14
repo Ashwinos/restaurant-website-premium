@@ -6,6 +6,7 @@
 <title>Waffle house</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Denk+One&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
   :root{
     --bar-dark:#2A2A28;
@@ -16,6 +17,11 @@
     --wedge-red:#E01B10;
     --gal-gap:6px;
     --gal-row:18.6vw;
+    --gal-wedge:90px;
+    --rev-wedge:90px;
+    --logo-row-h:66px;
+    --logo-row-h-stuck:76px;
+    
   }
   *{box-sizing:border-box; margin:0; padding:0;}
   body{font-family:'Work Sans', sans-serif; color:var(--ink);}
@@ -35,7 +41,6 @@
   .btn-outline:hover,
   .btn-outline:focus-visible{background:var(--ink); color:#fff;}
 
-  /* light variant for use over photography */
   .btn-outline.on-dark{
     color:#fff; border-color:#fff;
     font-family:'Denk One', sans-serif; font-weight:400;
@@ -45,15 +50,28 @@
   .btn-outline.on-dark:hover,
   .btn-outline.on-dark:focus-visible{background:#fff; color:var(--ink);}
 
+  /* ---- Sticky header shell ---- */
+  .site-head{
+    position:sticky; top:0;
+    width:100%;
+    background:var(--paper);
+    z-index:60;
+    transition:box-shadow .22s ease;
+  }
+  .site-head.is-stuck{box-shadow:0 6px 20px rgba(0,0,0,0.22);}
 
   /* ---- Logo row ---- */
   .logo-row{
     display:flex; align-items:center; justify-content:center;
-    padding:22px 20px;
+    min-height:var(--logo-row-h);
+    padding:10px 20px;
     background:var(--paper);
   }
-  .logo-row .mark{
-    display:flex; align-items:center; gap:12px;
+  .logo-row .mark{display:flex; align-items:center; gap:14px;}
+  .logo-row .logo-img{
+    width:52px; height:52px; flex-shrink:0;
+    object-fit:contain; object-position:center; display:block;
+    transition:width .22s ease, height .22s ease;
   }
   .logo-row .fruit{
     width:34px; height:34px; border-radius:50% 50% 50% 4px;
@@ -68,13 +86,23 @@
   .logo-row h1{
     font-family:'Denk One', sans-serif; font-weight:400; letter-spacing:0.04em;
     font-size:2rem; color:#1C1C1A; text-transform:uppercase;
+    transition:font-size .22s ease;
   }
   .logo-row h1 .thin{font-weight:400; opacity:0.85;}
+
+  /* ---- Shrunk state: logo + wordmark only ---- */
+  .site-head.is-stuck .logo-row .logo-img{width:34px; height:34px;}
+  .site-head.is-stuck .logo-row h1{font-size:1.25rem;}
+  .site-head.is-stuck .logo-row{
+    display:flex; align-items:center; justify-content:center;
+    min-height:var(--logo-row-h-stuck);
+    padding:10px 20px;
+    background:var(--paper);
+  }
 
   /* ---- Dark nav bar ---- */
   nav.mainbar{
     background:var(--nav-black);
-
     display:flex; align-items:center; justify-content:center;
     gap:34px; padding:16px 20px; flex-wrap:wrap;
   }
@@ -95,36 +123,25 @@
   }
   nav.mainbar .social a:hover{border-color:var(--gold); color:var(--gold);}
 
-
-
   /* ---- Hero ---- */
   .hero{
-    position:relative;
-    width:100%;
-    height:100vh;
-    overflow:hidden;
+    position:relative; width:100%; height:100vh; overflow:hidden;
     display:flex; align-items:flex-end;
   }
   .hero iframe{
-    position:absolute;
-    top:50%; left:50%;
+    position:absolute; top:50%; left:50%;
     width:100vw; height:56.25vw;
     min-height:100vh; min-width:177.78vh;
-    transform:translate(-50%, -50%);
-    border:0;
+    transform:translate(-50%, -50%); border:0;
   }
   .hero::after{
-    content:"";
-    position:absolute; inset:0;
+    content:""; position:absolute; inset:0;
     background:linear-gradient(180deg, rgba(0,0,0,0.15), rgba(0,0,0,0.4));
     z-index:1;
   }
-
   .hero-caption{
-    position:absolute; z-index:2;
-    bottom:50px; left:50%;
-    transform:translateX(-50%);
-    color:#fff;
+    position:absolute; z-index:2; bottom:50px; left:50%;
+    transform:translateX(-50%); color:#fff;
     font-family:'Denk One', sans-serif; font-size:2rem;
     text-shadow:0 2px 10px rgba(0,0,0,0.5);
   }
@@ -144,47 +161,34 @@
 
   /* ---- Diagonal title banner ---- */
   .title-banner{
-    background:#C6321F;
-    color:#171716;
-    padding:70px 40px 110px;
-    text-align:center;
-    position:relative;
+    background:#C6321F; color:#171716;
+    padding:70px 40px 110px; text-align:center; position:relative;
     clip-path:polygon(0 0, 100% 0, 100% 78%, 0 100%);
   }
-  .title-banner h2{
+  .title-banner h1{
     font-family:'Denk One', sans-serif; font-weight:400;
     font-size:clamp(2rem, 5vw, 3rem);
   }
 
   /* ---- About section ---- */
-  .about-section{
-    display:grid; grid-template-columns:1fr 1fr;
-    margin-top:-70px;
-  }
-  @media (max-width:860px){
-    .about-section{grid-template-columns:1fr;}
-  }
+  .about-section{display:grid; grid-template-columns:1fr 1fr; margin-top:-70px;}
+  @media (max-width:860px){ .about-section{grid-template-columns:1fr;} }
   .about-photo{
     min-height:520px;
     background:linear-gradient(135deg, #3E2E22, #6B4A2E 55%, #2A2118);
     overflow:hidden;
   }
   .about-photo img{
-    width:100%; height:100%;
-    min-height:520px;
-    object-fit:cover; object-position:center;
-    display:block;
+    width:100%; height:100%; min-height:520px;
+    object-fit:cover; object-position:center; display:block;
   }
-
   .about-copy{
     padding:90px 60px 60px;
-    display:flex; flex-direction:column; align-items:center;
-    text-align:center;
+    display:flex; flex-direction:column; align-items:center; text-align:center;
   }
   .about-copy h3{
     font-family:'Denk One', sans-serif; font-weight:400;
-    font-size:clamp(2.2rem, 4vw, 3rem);
-    letter-spacing:0.01em;
+    font-size:clamp(2.2rem, 4vw, 3rem); letter-spacing:0.01em;
   }
   .about-icon{
     width:60px; height:60px; margin:26px auto;
@@ -197,9 +201,7 @@
     width:4px; height:16px; background:#5A6E3B; border-radius:2px;
     transform:rotate(20deg);
   }
-  .about-copy p{
-    max-width:52ch; color:#3A3A36; font-size:1.02rem; line-height:1.8;
-  }
+  .about-copy p{max-width:52ch; color:#3A3A36; font-size:1.02rem; line-height:1.8;}
   .about-copy h4{
     font-family:'Denk One', sans-serif; font-weight:400;
     font-size:1.3rem; margin-top:34px; color:#171716;
@@ -207,32 +209,19 @@
   .about-copy .btn-outline{margin-top:38px;}
 
   /* ---- Private parties ---- */
-  .parties-section{
-    position:relative;
-    display:grid; grid-template-columns:1fr 1fr;
-    background:var(--paper);
-  }
+  .parties-section{position:relative; display:grid; grid-template-columns:1fr 1fr; background:var(--paper);}
   .parties-copy{
-    position:relative;
-    overflow:hidden;
-    display:flex; flex-direction:column;
-    align-items:center; justify-content:center;
-    text-align:center;
-    padding:120px 50px;
-    min-height:520px;
+    position:relative; overflow:hidden;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;
+    padding:120px 50px; min-height:520px;
   }
-  /* faded menu texture behind the copy */
   .parties-copy::before{
-    content:"";
-    position:absolute; inset:0;
+    content:""; position:absolute; inset:0;
     background:url("https://images.unsplash.com/photo-1541542684-4a9c2c1e0c9a?auto=format&fit=crop&w=1400&q=60") center/cover no-repeat;
-    filter:grayscale(1) contrast(1.05);
-    opacity:0.28;
+    filter:grayscale(1) contrast(1.05); opacity:0.28;
   }
-  /* white diagonal wedges top + bottom, like the reference */
   .parties-copy::after{
-    content:"";
-    position:absolute; inset:0;
+    content:""; position:absolute; inset:0;
     background:
       linear-gradient(192deg, #fff 0 16%, rgba(255,255,255,0) 16.3%),
       linear-gradient(12deg,  #fff 0 13%, rgba(255,255,255,0) 13.3%);
@@ -240,184 +229,189 @@
   .parties-copy > *{position:relative; z-index:2;}
   .parties-copy h2{
     font-family:'Denk One', sans-serif; font-weight:400;
-    font-size:clamp(2.6rem, 5.4vw, 4.4rem);
-    letter-spacing:0.01em; text-transform:uppercase;
-    line-height:1.05;
+    font-size:clamp(2.6rem, 5.4vw, 4.4rem); letter-spacing:0.01em; text-transform:uppercase; line-height:1.05;
   }
   .parties-copy p{
     font-family:'Denk One', sans-serif; font-weight:400;
-    font-size:clamp(1.1rem, 2vw, 1.6rem);
-    margin-top:18px; color:#262623;
+    font-size:clamp(1.1rem, 2vw, 1.6rem); margin-top:18px; color:#262623;
   }
   .parties-copy .btn-outline{margin-top:40px;}
-
-  .parties-photo{
-    min-height:520px;
-    background:linear-gradient(135deg, #2F3A2A, #4E5B3F 60%, #22271D);
-    overflow:hidden;
-  }
-  .parties-photo img{
-    width:100%; height:100%;
-    min-height:520px;
-    object-fit:cover; object-position:center;
-    display:block;
-  }
-
-  /* red angled divider sitting on the bottom edge */
+  .parties-photo{min-height:520px; background:linear-gradient(135deg, #2F3A2A, #4E5B3F 60%, #22271D); overflow:hidden;}
+  .parties-photo img{width:100%; height:100%; min-height:520px; object-fit:cover; object-position:center; display:block;}
   .parties-wedge{
-    position:absolute; left:0; right:0; bottom:0;
-    height:90px;
+    position:absolute; left:0; right:0; bottom:0; height:90px;
     background:var(--wedge-red);
     clip-path:polygon(0 100%, 0 82%, 22% 6%, 100% 60%, 100% 100%);
-    z-index:3;
-    pointer-events:none;
+    z-index:3; pointer-events:none;
   }
 
   /* ---- Full-bleed reservation slider ---- */
-  .shot-slider{
-    position:relative;
-    width:100%;
-    height:clamp(460px, 78vh, 760px);
-    overflow:hidden;
-    background:#0E0E0D;
-  }
+  .shot-slider{position:relative; width:100%; height:clamp(460px, 78vh, 760px); overflow:hidden; background:#0E0E0D;}
   .shot-slide{
     position:absolute; inset:0;
-    opacity:0;
-    transition:opacity .9s ease;
+    opacity:0; visibility:hidden; pointer-events:none;
+    transition:opacity .9s ease, visibility 0s linear .9s;
   }
-  .shot-slide.is-active{opacity:1;}
-  .shot-slide img{
-    width:100%; height:100%;
-    object-fit:cover; object-position:center;
-    display:block;
+  .shot-slide.is-active{
+    opacity:1; visibility:visible; pointer-events:auto;
+    transition:opacity .9s ease, visibility 0s linear 0s;
   }
+  .shot-slide img{width:100%; height:100%; object-fit:cover; object-position:center; display:block;}
   .shot-slider::after{
-    content:"";
-    position:absolute; inset:0;
+    content:""; position:absolute; inset:0;
     background:linear-gradient(180deg, rgba(0,0,0,0.30), rgba(0,0,0,0.45));
     z-index:2; pointer-events:none;
   }
-  .shot-cta{
-    position:absolute; z-index:4;
-    top:50%; left:50%;
-    transform:translate(-50%, -50%);
-  }
-
-  /* prev / next arrows */
+  .shot-cta{position:absolute; z-index:4; top:50%; left:50%; transform:translate(-50%, -50%); white-space:nowrap;}
   .shot-arrow{
-    position:absolute; z-index:4; top:50%;
-    transform:translateY(-50%);
-    width:52px; height:52px;
-    display:flex; align-items:center; justify-content:center;
-    background:transparent; border:none; cursor:pointer;
-    color:#fff; opacity:0.85;
+    position:absolute; z-index:5; top:50%; transform:translateY(-50%);
+    width:52px; height:52px; display:flex; align-items:center; justify-content:center;
+    background:transparent; border:none; cursor:pointer; color:#fff; opacity:0.85;
     transition:opacity .18s ease;
   }
-  .shot-arrow:hover,
-  .shot-arrow:focus-visible{opacity:1;}
+  .shot-arrow:hover, .shot-arrow:focus-visible{opacity:1;}
   .shot-arrow svg{width:26px; height:26px; filter:drop-shadow(0 2px 6px rgba(0,0,0,0.5));}
   .shot-arrow.prev{left:18px;}
   .shot-arrow.next{right:18px;}
-
-  /* play / pause + progress rail */
   .shot-play{
-    position:absolute; z-index:4;
-    left:34px; bottom:26px;
-    width:38px; height:38px;
-    display:flex; align-items:center; justify-content:center;
-    background:transparent; border:none; cursor:pointer;
-    color:#fff; opacity:0.9;
+    position:absolute; z-index:5; left:34px; bottom:26px;
+    width:38px; height:38px; display:flex; align-items:center; justify-content:center;
+    background:transparent; border:none; cursor:pointer; color:#fff; opacity:0.9;
   }
-  .shot-play:hover,
-  .shot-play:focus-visible{opacity:1;}
+  .shot-play:hover, .shot-play:focus-visible{opacity:1;}
   .shot-play svg{width:20px; height:20px; filter:drop-shadow(0 2px 6px rgba(0,0,0,0.5));}
   .shot-play .icon-play{display:none;}
   .shot-slider.is-paused .shot-play .icon-play{display:block;}
   .shot-slider.is-paused .shot-play .icon-pause{display:none;}
-
-  .shot-rail{
-    position:absolute; z-index:4;
-    left:0; right:0; bottom:0;
-    height:3px;
-    background:rgba(255,255,255,0.22);
-  }
-  .shot-rail-fill{
-    height:100%; width:0;
-    background:#fff;
-    transform-origin:left center;
-  }
-  .shot-rail-fill.is-running{
-    width:100%;
-    animation:shot-fill 6s linear forwards;
-  }
+  .shot-rail{position:absolute; z-index:5; left:0; right:0; bottom:0; height:3px; background:rgba(255,255,255,0.22);}
+  .shot-rail-fill{height:100%; width:0; background:#fff; transform-origin:left center;}
+  .shot-rail-fill.is-running{width:100%; animation:shot-fill 6s linear forwards;}
   .shot-slider.is-paused .shot-rail-fill.is-running{animation-play-state:paused;}
-  @keyframes shot-fill{
-    from{transform:scaleX(0);}
-    to{transform:scaleX(1);}
-  }
+  @keyframes shot-fill{ from{transform:scaleX(0);} to{transform:scaleX(1);} }
 
   /* ---- Mosaic gallery ---- */
   .gallery-section{background:var(--paper);}
-  .gallery-head{
-    text-align:center;
-    padding:80px 24px 34px;
-  }
+  .gallery-head{text-align:center; padding:80px 24px 34px;}
   .gallery-head h2{
     font-family:'Denk One', sans-serif; font-weight:400;
-    font-size:clamp(2rem, 4vw, 2.8rem);
-    text-transform:uppercase; letter-spacing:0.02em;
+    font-size:clamp(2rem, 4vw, 2.8rem); text-transform:uppercase; letter-spacing:0.02em;
   }
-  .gallery-head p{
-    margin-top:12px; color:#5A5A54;
-    font-size:1rem; letter-spacing:0.02em;
-  }
-
+  .gallery-head p{margin-top:12px; color:#5A5A54; font-size:1rem; letter-spacing:0.02em;}
   .gallery-grid{
-    display:grid;
-    grid-template-columns:repeat(5, 1fr);
-    grid-auto-rows:var(--gal-row);
-    gap:var(--gal-gap);
-  }
-  .gallery-item{
     position:relative;
-    overflow:hidden;
-    background:#EFEDE7;
-    display:block;
+    display:grid; grid-template-columns:repeat(5, 1fr);
+    grid-auto-rows:var(--gal-row); gap:var(--gal-gap);
   }
-  /* the two feature tiles: one opens each band of the mosaic */
-  .gallery-item.is-feature{
-    grid-column:span 2;
-    grid-row:span 2;
+  .gallery-wedge{
+    position:absolute; left:0; right:0;
+    height:var(--gal-wedge);
+    background:var(--paper);
+    z-index:3; pointer-events:none;
   }
-  .gallery-item img{
-    width:100%; height:100%;
-    object-fit:cover; object-position:center;
-    display:block;
-    transition:transform .6s ease;
+  .gallery-wedge.is-top{
+    top:-16px;
+    clip-path:polygon(0 0, 100% 0, 100% 40%, 84% 74%, 0 18%);
   }
-  .gallery-item::after{
-    content:"";
-    position:absolute; inset:0;
-    background:rgba(23,23,22,0);
-    transition:background .3s ease;
+  .gallery-wedge.is-bottom{
+    bottom:-16px;
+    clip-path:polygon(0 100%, 0 82%, 82% 26%, 100% 60%, 100% 100%);
   }
-  .gallery-item:hover img,
-  .gallery-item:focus-visible img{transform:scale(1.06);}
-  .gallery-item:hover::after,
-  .gallery-item:focus-visible::after{background:rgba(23,23,22,0.18);}
+  .gallery-item{position:relative; overflow:hidden; background:#EFEDE7; display:block;}
+  .gallery-item.is-feature{grid-column:span 2; grid-row:span 2;}
+  .gallery-item img{width:100%; height:100%; object-fit:cover; object-position:center; display:block; transition:transform .6s ease;}
+  .gallery-item::after{content:""; position:absolute; inset:0; background:rgba(23,23,22,0); transition:background .3s ease;}
+  .gallery-item:hover img, .gallery-item:focus-visible img{transform:scale(1.06);}
+  .gallery-item:hover::after, .gallery-item:focus-visible::after{background:rgba(23,23,22,0.18);}
   .gallery-item:focus-visible{outline:2px solid var(--gold); outline-offset:-2px;}
+  .gallery-foot{display:flex; justify-content:center; padding:52px 24px 84px;}
 
-  .gallery-foot{
-    display:flex; justify-content:center;
-    padding:52px 24px 84px;
+  /* ---- Guest reviews ---- */
+  .reviews-section{
+    position:relative;
+    background:
+      linear-gradient(180deg, rgba(10,10,9,0.72), rgba(10,10,9,0.82)),
+      url("https://images.unsplash.com/photo-1482575832494-771f74bf6857?auto=format&fit=crop&w=1900&q=70") center/cover no-repeat fixed;
+    color:#fff;
+    padding:calc(110px + var(--rev-wedge)) 90px calc(90px + var(--rev-wedge));
+    text-align:center;
+    overflow:hidden;
   }
+  .reviews-wedge{
+    position:absolute; left:0; right:0;
+    height:var(--rev-wedge);
+    background:var(--nav-black);
+    z-index:3; pointer-events:none;
+  }
+  .reviews-wedge.is-top{
+    top:0;
+    clip-path:polygon(0 0, 100% 0, 100% 40%, 22% 94%, 0 18%);
+  }
+  .reviews-wedge.is-bottom{
+    bottom:0;
+    clip-path:polygon(0 100%, 0 82%, 82% 6%, 100% 60%, 100% 100%);
+  }
+  .reviews-head h2{
+    font-family:'Denk One', sans-serif; font-weight:400;
+    font-size:clamp(2.4rem, 5vw, 3.6rem); text-transform:uppercase; letter-spacing:0.03em;
+  }
+  .reviews-head .src{
+    margin-top:16px;
+    font-family:'Denk One', sans-serif; font-weight:400;
+    color:var(--wedge-red); font-size:1.4rem;
+  }
+  .review-slide{display:none;}
+  .review-slide.is-active{display:block;}
+  .review-who{
+    margin-top:20px; font-family:'Fraunces', 'Work Sans', serif; letter-spacing:0.02em;
+    font-size:0.95rem; color:#EDEAE2;
+  }
+  .review-who .stars{color:var(--wedge-red); letter-spacing:2px; margin-left:8px;}
+  .review-body{
+    position:relative;
+    max-width:760px; margin:34px auto 0;
+    font-size:1.15rem; line-height:1.85; color:#E7E4DA;
+  }
+  .review-body .quote-mark{
+    position:absolute; font-family:Georgia, serif; font-weight:700;
+    font-size:5rem; color:var(--wedge-red); line-height:1; opacity:0.9;
+  }
+  .review-body .quote-mark.open{top:-30px; left:-70px;}
+  .review-body .quote-mark.close{bottom:-70px; right:-70px;}
+
+  .reviews-arrow{
+    position:absolute; top:50%; transform:translateY(-50%);
+    width:48px; height:48px; display:flex; align-items:center; justify-content:center;
+    background:transparent; border:none; cursor:pointer; color:var(--wedge-red); opacity:0.85;
+  }
+  .reviews-arrow:hover, .reviews-arrow:focus-visible{opacity:1;}
+  .reviews-arrow svg{width:26px; height:26px;}
+  .reviews-arrow.prev{left:26px;}
+  .reviews-arrow.next{right:26px;}
+
+  .reviews-dots{display:flex; justify-content:center; gap:14px; margin-top:56px;}
+  .reviews-dots button{
+    width:11px; height:11px; border-radius:50%;
+    border:1.5px solid var(--wedge-red); background:transparent;
+    padding:0; cursor:pointer;
+  }
+  .reviews-dots button.is-active{background:var(--wedge-red);}
+
+  .reviews-play{
+    margin:30px auto 0; width:34px; height:34px;
+    display:flex; align-items:center; justify-content:center;
+    background:transparent; border:none; cursor:pointer; color:var(--wedge-red);
+  }
+  .reviews-play svg{width:18px; height:18px;}
+  .reviews-play .icon-play{display:none;}
+  .reviews-section.is-paused .reviews-play .icon-play{display:block;}
+  .reviews-section.is-paused .reviews-play .icon-pause{display:none;}
 
   @media (prefers-reduced-motion: reduce){
     .shot-slide{transition:none;}
     .shot-rail-fill.is-running{animation:none; width:0;}
     .gallery-item img{transition:none;}
     .gallery-item:hover img{transform:none;}
+    .site-head, .logo-row .logo-img, .logo-row h1{transition:none;}
   }
 
   @media (max-width:860px){
@@ -430,49 +424,211 @@
     .shot-arrow.prev{left:4px;}
     .shot-arrow.next{right:4px;}
     .shot-play{left:16px; bottom:18px;}
+    .shot-cta{max-width:calc(100% - 120px); white-space:normal; text-align:center;}
     .gallery-grid{grid-template-columns:repeat(2, 1fr);}
-    :root{--gal-row:46vw;}
+    :root{--gal-row:46vw; --gal-wedge:56px; --rev-wedge:56px;}
     .gallery-head{padding:56px 20px 26px;}
     .gallery-foot{padding:38px 20px 60px;}
+    .reviews-section{padding:calc(80px + var(--rev-wedge)) 24px calc(60px + var(--rev-wedge));}
+    .review-body .quote-mark.open{left:-8px; top:-46px;}
+    .review-body .quote-mark.close{right:-8px; bottom:-56px;}
+    .reviews-arrow.prev{left:2px;}
+    .reviews-arrow.next{right:2px;}
+  }
+
+  /* ---- Newsletter + map ---- */
+  .signup-section{
+    display:grid; grid-template-columns:1fr 1fr;
+    min-height:560px;
+  }
+  @media (max-width:900px){ .signup-section{grid-template-columns:1fr;} }
+
+  .signup-copy{
+    position:relative;
+    overflow:hidden;
+    display:flex; flex-direction:column; justify-content:center;
+    padding:70px 60px;
+    clip-path:polygon(0 0, 100% 0, 100% 92%, 0 100%);
+  }
+  .signup-copy::before{
+    content:"";
+    position:absolute; inset:0;
+    background:
+      linear-gradient(120deg, rgba(255,255,255,0.55), rgba(255,255,255,0.75)),
+      url("https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=1400&q=60") center/cover no-repeat;
+    filter:grayscale(1) contrast(1.02);
+  }
+  .signup-copy > *{position:relative; z-index:1;}
+  .signup-copy h2{
+    font-family:'Denk One', sans-serif; font-weight:400;
+    font-size:clamp(2.4rem, 5vw, 3.4rem); text-transform:uppercase; letter-spacing:0.02em;
+  }
+  .signup-copy p{
+    margin-top:24px; max-width:44ch;
+    font-family:'Fraunces', 'Work Sans', serif; font-size:1.15rem; color:#262623;
+  }
+  .signup-form{margin-top:36px; max-width:440px;}
+  .signup-form label{
+    display:block; font-family:'Fraunces', 'Work Sans', serif;
+    font-size:1rem; color:#262623; margin-bottom:10px;
+  }
+  .signup-row{display:flex; align-items:flex-end; gap:18px; flex-wrap:wrap;}
+  .signup-row input{
+    flex:1; min-width:200px;
+    border:none; border-bottom:1.5px solid var(--ink);
+    background:transparent; padding:8px 2px;
+    font-family:'Fraunces', 'Work Sans', serif; font-size:1rem; color:var(--ink);
+  }
+  .signup-row input::placeholder{color:#7A7A73;}
+  .signup-row .btn-submit{
+    font-family:'Work Sans', sans-serif; font-weight:700;
+    font-size:0.95rem; letter-spacing:0.04em; text-transform:uppercase;
+    background:var(--wedge-red); color:var(--ink);
+    border:none; padding:18px 40px; cursor:pointer;
+    transition:filter .15s ease;
+  }
+  .signup-row .btn-submit:hover,
+  .signup-row .btn-submit:focus-visible{filter:brightness(0.92);}
+
+  .map-panel{
+    position:relative;
+  z-index: 3;}
+  .map-panel #siteMap{width:100%; height:100%; min-height:420px;}
+  .map-caption{
+    position:absolute; z-index:500;
+    left:24px; right:24px; bottom:24px;
+    background:#fff; padding:22px 26px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.18);
+    font-family:'Fraunces', 'Work Sans', serif; font-size:1.02rem; line-height:1.6;
+    color:#262623;
+  }
+  @media (max-width:900px){
+    .signup-copy{padding:60px 28px; clip-path:none;}
+    .map-panel #siteMap{min-height:380px;}
   }
 
   @media (max-width:760px){
     nav.mainbar{gap:18px;}
     nav.mainbar a{font-size:0.72rem;}
     .logo-row h1{font-size:1.4rem;}
+    .logo-row .logo-img{width:38px; height:38px;}
+    .logo-row .mark{gap:10px;}
+    :root{--logo-row-h:74px;}
+    .site-head.is-stuck .logo-row .logo-img{width:28px; height:28px;}
+    .site-head.is-stuck .logo-row h1{font-size:1.05rem;}
     .about-copy{padding:60px 28px 40px;}
     .btn-outline{padding:14px 34px; font-size:0.82rem;}
     .btn-outline.on-dark{padding:14px 30px; font-size:0.92rem;}
+    .signup-row{flex-direction:column; align-items:stretch;}
+    .signup-row .btn-submit{width:100%;}
+  }
+
+  /* ---- Footer ---- */
+  .site-footer{background:var(--wedge-red); color:#171716; padding:90px 70px 70px;}
+  .footer-grid{
+    display:grid; grid-template-columns:1fr 1fr 1fr;
+    gap:50px; max-width:1400px; margin:0 auto;
+  }
+  @media (max-width:860px){ .footer-grid{grid-template-columns:1fr;} }
+  .footer-grid h3{
+    font-family:'Denk One', sans-serif; font-weight:400;
+    font-size:1.4rem; text-transform:uppercase; letter-spacing:0.02em;
+    margin-bottom:22px;
+  }
+  .footer-grid p{
+    font-family:'Fraunces', 'Work Sans', serif; font-size:1.02rem;
+    line-height:1.7; color:#2A0D0A;
+  }
+
+  /* ---- Get Directions button ---- */
+  .footer-grid .directions{
+    display:inline-flex; align-items:center; gap:10px;
+    margin-top:18px; padding:12px 22px 12px 18px;
+    font-family:'Work Sans', sans-serif;
+    font-size:0.82rem; font-weight:600;
+    letter-spacing:0.12em; text-transform:uppercase;
+    color:#FFF; background:#171716;
+    border:1px solid #171716; border-radius:999px;
+    text-decoration:none;
+    transition:background .18s ease, color .18s ease, transform .18s ease;
+  }
+  .footer-grid .directions svg{
+    width:17px; height:17px; flex-shrink:0;
+    stroke:currentColor; fill:none;
+    stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round;
+    transition:transform .18s ease;
+  }
+  .footer-grid .directions:hover,
+  .footer-grid .directions:focus-visible{
+    background:transparent; color:#171716;
+    transform:translateY(-2px);
+  }
+  .footer-grid .directions:hover svg,
+  .footer-grid .directions:focus-visible svg{transform:translateY(-1px) scale(1.08);}
+  .footer-grid .directions:focus-visible{outline:2px solid #171716; outline-offset:3px;}
+  @media (prefers-reduced-motion: reduce){
+    .footer-grid .directions,
+    .footer-grid .directions svg{transition:none;}
+    .footer-grid .directions:hover,
+    .footer-grid .directions:focus-visible{transform:none;}
+    .footer-grid .directions:hover svg,
+    .footer-grid .directions:focus-visible svg{transform:none;}
+  }
+
+  .footer-hours .block + .block{margin-top:22px;}
+  .footer-social{display:flex; gap:14px; margin-bottom:36px;}
+  .footer-social a{
+    width:36px; height:36px; border-radius:50%;
+    background:#171716; color:#fff;
+    display:flex; align-items:center; justify-content:center;
+    font-size:0.9rem;
+  }
+  .footer-grid .contact-line{display:block; margin-top:4px;}
+
+  .site-footer-bottom{
+    background:#171716; color:#EDEAE2;
+    padding:34px 24px; text-align:center;
+    border-top:1px solid #3A3A38;
+  }
+  .site-footer-bottom .powered{
+    font-family:'Fraunces', 'Work Sans', serif; font-size:1.05rem;
+    display:flex; align-items:center; justify-content:center; gap:10px;
+  }
+  .site-footer-bottom .powered b{font-family:'Work Sans', sans-serif; font-weight:700;}
+  .site-footer-bottom .credit{
+    display:block; margin-top:14px;
+    font-family:'Fraunces', 'Work Sans', serif; font-size:0.92rem;
+    text-decoration:underline; color:#EDEAE2;
   }
 </style>
 </head>
 <body>
 
-
-
-<div class="logo-row">
-  <div class="mark">
-    <h1>Waffle <span class="thin">House</span></h1>
+<header class="site-head" id="siteHead">
+  <div class="logo-row">
+    <div class="mark">
+      <img class="logo-img" src="https://1000logos.net/wp-content/uploads/2025/02/Waffle-House-Logo.png" alt="Waffle House logo" width="52" height="52" fetchpriority="high">
+      <h1>Waffle <span class="thin">House</span></h1>
+    </div>
   </div>
-</div>
 
-<nav class="mainbar">
-  <a href="#">Home</a>
-  <a href="#">Menu</a>
-  <a href="#">About Us</a>
-  <a href="#">Events</a>
-  <a href="#">Gallery</a>
-  <a href="#">Reservations</a>
-  <a href="#">Order Online</a>
-  <a href="#">Jobs</a>
-  <div class="social">
-    <a href="#" aria-label="Facebook">f</a>
-    <a href="#" aria-label="Instagram">ig</a>
-    <a href="#" aria-label="LinkedIn">in</a>
-  </div>
-</nav>
+  <nav class="mainbar">
+    <a href="#">Home</a>
+    <a href="#">Menu</a>
+    <a href="#">About Us</a>
+    <a href="#">Events</a>
+    <a href="#">Gallery</a>
+    <a href="#">Reservations</a>
+    <a href="#">Jobs</a>
+    <a href="#">Order Online</a>
 
-
+    <div class="social">
+      <a href="#" aria-label="Facebook">f</a>
+      <a href="#" aria-label="Instagram">ig</a>
+      <a href="#" aria-label="LinkedIn">in</a>
+    </div>
+  </nav>
+</header>
 
 <div class="hero">
     <iframe
@@ -482,12 +638,12 @@
         allow="autoplay; encrypted-media"
         allowfullscreen>
     </iframe>
-
-    <div class="hero-caption">Under the old oak, every night.</div>
 </div>
 
 <div class="title-banner">
-  <h2>Waffle House.</h2>
+  <h1>Waffle House.</h1>
+  <!-- <div class="hero-caption">Under the old oak, every night.</div> -->
+
 </div>
 
 <div class="about-section">
@@ -517,15 +673,32 @@
 <section class="shot-slider" id="shotSlider" aria-roledescription="carousel" aria-label="Inside the restaurant">
   <div class="shot-slide is-active">
     <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1900&q=75" alt="Dining room with painted mural wall">
+    <a href="#" class="btn-outline on-dark shot-cta">Reservations</a>
   </div>
   <div class="shot-slide">
-    <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1900&q=75" alt="Warm lit tables at dinner service">
+    <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1900&q=75" alt="Warm lit tables at dinner service" loading="lazy">
+    <a href="#" class="btn-outline on-dark shot-cta">About Us</a>
   </div>
   <div class="shot-slide">
-    <img src="https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?auto=format&fit=crop&w=1900&q=75" alt="Bar seating and shelves of glassware">
+    <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1900&q=75" alt="Plated main course ready to go out" loading="lazy">
+    <a href="#" class="btn-outline on-dark shot-cta">Order Online</a>
   </div>
-
-  <a href="#" class="btn-outline on-dark shot-cta">Reservations</a>
+  <div class="shot-slide">
+    <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=1900&q=75" alt="Salad bowl with carrot and microgreens" loading="lazy">
+    <a href="#" class="btn-outline on-dark shot-cta">Menu</a>
+  </div>
+  <div class="shot-slide">
+    <img src="https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=1900&q=75" alt="Long table set for a group celebration" loading="lazy">
+    <a href="#" class="btn-outline on-dark shot-cta">Events</a>
+  </div>
+  <div class="shot-slide">
+    <img src="https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?auto=format&fit=crop&w=1900&q=75" alt="Bar seating and shelves of glassware" loading="lazy">
+    <a href="#" class="btn-outline on-dark shot-cta">Gallery</a>
+  </div>
+  <div class="shot-slide">
+    <img src="https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=1900&q=75" alt="Kitchen team working the pass" loading="lazy">
+    <a href="#" class="btn-outline on-dark shot-cta">Jobs</a>
+  </div>
 
   <button class="shot-arrow prev" type="button" aria-label="Previous slide">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
@@ -543,12 +716,15 @@
 </section>
 
 <section class="gallery-section">
+
   <div class="gallery-head">
     <h2>Our Gallery</h2>
     <p>Plates, pours and desserts going out tonight.</p>
   </div>
 
   <div class="gallery-grid">
+    <div class="gallery-wedge is-top" aria-hidden="true"></div>
+
     <a href="#" class="gallery-item is-feature">
       <img src="https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=1400&q=75" alt="Cheesecake with a scoop of vanilla and a strawberry" loading="lazy">
     </a>
@@ -570,7 +746,6 @@
     <a href="#" class="gallery-item">
       <img src="https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=800&q=75" alt="Layered dessert in a coupe with a tuile and strawberry" loading="lazy">
     </a>
-
     <a href="#" class="gallery-item">
       <img src="https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&fit=crop&w=800&q=75" alt="Seared fish fillet with seasonal vegetables" loading="lazy">
     </a>
@@ -592,6 +767,8 @@
     <a href="#" class="gallery-item">
       <img src="https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?auto=format&fit=crop&w=800&q=75" alt="Pasta plated with fresh herbs" loading="lazy">
     </a>
+
+    <div class="gallery-wedge is-bottom" aria-hidden="true"></div>
   </div>
 
   <div class="gallery-foot">
@@ -599,40 +776,224 @@
   </div>
 </section>
 
+<section class="reviews-section" id="reviewsSlider">
+  <!-- <div class="reviews-wedge is-top" aria-hidden="true"></div> -->
+
+  <div class="reviews-head">
+    <h2>Reviews</h2>
+    <div class="src">Guest Reviews</div>
+  </div>
+
+  <button class="reviews-arrow prev" type="button" aria-label="Previous review">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+  </button>
+  <button class="reviews-arrow next" type="button" aria-label="Next review">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
+  </button>
+
+  <div class="review-slide is-active">
+    <div class="review-who">MARA T.: <span class="stars">★★★★★</span></div>
+    <div class="review-body">
+      <span class="quote-mark open" aria-hidden="true">&ldquo;</span>
+      We came in on a whim after a long week and ended up staying for two rounds of dessert. The staff walked us through the seasonal specials without rushing, and the patio seating made it feel like a proper night out rather than a quick dinner.
+      <span class="quote-mark close" aria-hidden="true">&rdquo;</span>
+    </div>
+  </div>
+
+  <div class="review-slide">
+    <div class="review-who">DEVON K.: <span class="stars">★★★★★</span></div>
+    <div class="review-body">
+      <span class="quote-mark open" aria-hidden="true">&ldquo;</span>
+      Reservations were easy through the website, and the table was ready the moment we walked in. The kitchen was happy to adjust a couple of dishes for a dietary restriction without making a fuss about it.
+      <span class="quote-mark close" aria-hidden="true">&rdquo;</span>
+    </div>
+  </div>
+
+  <div class="review-slide">
+    <div class="review-who">PRIYA S.: <span class="stars">★★★★★</span></div>
+    <div class="review-body">
+      <span class="quote-mark open" aria-hidden="true">&ldquo;</span>
+      This is now our go-to for celebrating anything. The private room fit our whole group comfortably, and the staff kept checking in without ever hovering. Already planning our next visit.
+      <span class="quote-mark close" aria-hidden="true">&rdquo;</span>
+    </div>
+  </div>
+
+  <div class="reviews-dots">
+    <button type="button" class="is-active" aria-label="Show review 1"></button>
+    <button type="button" aria-label="Show review 2"></button>
+    <button type="button" aria-label="Show review 3"></button>
+  </div>
+
+  <button class="reviews-play" type="button" aria-label="Pause reviews" aria-pressed="false">
+    <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+    <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="7 4 20 12 7 20"></polygon></svg>
+  </button>
+
+  <!-- <div class="reviews-wedge is-bottom" aria-hidden="true"></div> -->
+</section>
+
+<section class="signup-section">
+  <div class="signup-copy">
+    <h2>Newsletter</h2>
+    <p>Sign up for our newsletter &amp; get exclusive offers and invites!</p>
+    <form class="signup-form" onsubmit="return false;">
+      <label for="newsletterEmail">Email (required)</label>
+      <div class="signup-row">
+        <input id="newsletterEmail" type="email" placeholder="e.g. email@example.com" required>
+        <button type="submit" class="btn-submit">Submit</button>
+      </div>
+    </form>
+  </div>
+  <div class="map-panel">
+    <div id="siteMap"></div>
+    <div class="map-caption">Waffle House is located in the Main District, just off the downtown corridor near the riverfront and the university area.</div>
+  </div>
+</section>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
+(function () {
+  var mapEl = document.getElementById('siteMap');
+  if (!mapEl || typeof L === 'undefined') { return; }
+  var coords = [29.7433, -95.4258]; // swap for your actual location
+  var map = L.map('siteMap', { scrollWheelZoom: false }).setView(coords, 15);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+  L.marker(coords).addTo(map);
+})();
+</script>
+
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div>
+      <h3>Location</h3>
+      <p>
+        Waffle House Restaurant<br>
+        400 Main Street<br>
+        Riverside, TX<br>
+        77000
+      </p>
+      <a href="#" class="directions" target="_blank" rel="noopener" aria-label="Get directions to Waffle House">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M20 10c0 5.25-8 12-8 12s-8-6.75-8-12a8 8 0 1 1 16 0Z"></path>
+          <circle cx="12" cy="10" r="3"></circle>
+        </svg>
+        <span>Get Directions</span>
+      </a>
+    </div>
+    <div class="footer-hours">
+      <h3>Hours</h3>
+      <div class="block">
+        <p>
+          Monday – Thursday<br>
+          11:00am – 3:00pm<br>
+          3:00pm – 5:00pm — Limited Menu Only<br>
+          5:00pm – 10:00pm
+        </p>
+      </div>
+      <div class="block">
+        <p>
+          Friday – Saturday<br>
+          11:00am – 3:00pm<br>
+          3:00pm – 5:00pm — Limited Menu Only<br>
+          5:00pm – 11:00pm
+        </p>
+      </div>
+      <div class="block">
+        <p>We're open for the holidays!</p>
+      </div>
+    </div>
+    <div>
+      <h3>Find Us On...</h3>
+      <div class="footer-social">
+        <a href="#" aria-label="Facebook">f</a>
+        <a href="#" aria-label="Instagram">ig</a>
+        <a href="#" aria-label="LinkedIn">in</a>
+      </div>
+      <h3>Contact Us</h3>
+      <p>
+        <span class="contact-line">(000) 000-0000</span>
+        <span class="contact-line">hello@wafflehouse.example</span>
+      </p>
+    </div>
+  </div>
+</footer>
+
+<div class="site-footer-bottom">
+  <div class="powered">Powered by <b>ZingMyOrder</b></div>
+</div>
+
+<script>
+(function () {
+  var head = document.getElementById('siteHead');
+  if (!head) { return; }
+
+  var ticking = false;
+
+  function apply() {
+    var y = window.pageYOffset || document.documentElement.scrollTop || 0;
+    if (y > 8) {
+      head.classList.add('is-stuck');
+    } else {
+      head.classList.remove('is-stuck');
+    }
+    ticking = false;
+  }
+
+  function onScroll() {
+    if (ticking) { return; }
+    ticking = true;
+    window.requestAnimationFrame(apply);
+  }
+
+  apply();
+  window.addEventListener('scroll', onScroll, { passive: true });
+})();
+
 (function () {
   var slider = document.getElementById('shotSlider');
   if (!slider) { return; }
-
   var slides = slider.querySelectorAll('.shot-slide');
   var fill   = document.getElementById('shotRailFill');
   var prev   = slider.querySelector('.shot-arrow.prev');
   var next   = slider.querySelector('.shot-arrow.next');
   var toggle = slider.querySelector('.shot-play');
   if (!slides.length || !fill) { return; }
-
   var index  = 0;
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
+  function setLinks() {
+    slides.forEach(function (slide, i) {
+      var cta = slide.querySelector('.shot-cta');
+      if (!cta) { return; }
+      if (i === index) {
+        cta.removeAttribute('tabindex');
+        cta.removeAttribute('aria-hidden');
+      } else {
+        cta.setAttribute('tabindex', '-1');
+        cta.setAttribute('aria-hidden', 'true');
+      }
+    });
+  }
   function restartTimer() {
     fill.classList.remove('is-running');
-    void fill.offsetWidth;           // force reflow so the animation replays
+    void fill.offsetWidth;
     if (!reduce && !slider.classList.contains('is-paused')) {
       fill.classList.add('is-running');
     }
   }
-
   function goTo(n) {
     slides[index].classList.remove('is-active');
     index = (n + slides.length) % slides.length;
     slides[index].classList.add('is-active');
+    setLinks();
     restartTimer();
   }
-
+  setLinks();
   fill.addEventListener('animationend', function () { goTo(index + 1); });
   if (prev) { prev.addEventListener('click', function () { goTo(index - 1); }); }
   if (next) { next.addEventListener('click', function () { goTo(index + 1); }); }
-
   if (toggle) {
     toggle.addEventListener('click', function () {
       var paused = slider.classList.toggle('is-paused');
@@ -641,7 +1002,6 @@
       if (!paused && !fill.classList.contains('is-running')) { restartTimer(); }
     });
   }
-
   if (reduce) {
     slider.classList.add('is-paused');
     if (toggle) {
@@ -650,6 +1010,62 @@
     }
   } else {
     restartTimer();
+  }
+})();
+
+(function () {
+  var section = document.getElementById('reviewsSlider');
+  if (!section) { return; }
+  var slides = section.querySelectorAll('.review-slide');
+  var dots   = section.querySelectorAll('.reviews-dots button');
+  var prev   = section.querySelector('.reviews-arrow.prev');
+  var next   = section.querySelector('.reviews-arrow.next');
+  var toggle = section.querySelector('.reviews-play');
+  if (!slides.length) { return; }
+  var index  = 0;
+  var timer  = null;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function render() {
+    slides.forEach(function (s, i) { s.classList.toggle('is-active', i === index); });
+    dots.forEach(function (d, i) { d.classList.toggle('is-active', i === index); });
+  }
+  function goTo(n) {
+    index = (n + slides.length) % slides.length;
+    render();
+  }
+  function startTimer() {
+    stopTimer();
+    if (!reduce && !section.classList.contains('is-paused')) {
+      timer = setInterval(function () { goTo(index + 1); }, 7000);
+    }
+  }
+  function stopTimer() {
+    if (timer) { clearInterval(timer); timer = null; }
+  }
+
+  if (prev) { prev.addEventListener('click', function () { goTo(index - 1); startTimer(); }); }
+  if (next) { next.addEventListener('click', function () { goTo(index + 1); startTimer(); }); }
+  dots.forEach(function (d, i) {
+    d.addEventListener('click', function () { goTo(i); startTimer(); });
+  });
+  if (toggle) {
+    toggle.addEventListener('click', function () {
+      var paused = section.classList.toggle('is-paused');
+      toggle.setAttribute('aria-pressed', paused ? 'true' : 'false');
+      toggle.setAttribute('aria-label', paused ? 'Play reviews' : 'Pause reviews');
+      if (paused) { stopTimer(); } else { startTimer(); }
+    });
+  }
+
+  if (reduce) {
+    section.classList.add('is-paused');
+    if (toggle) {
+      toggle.setAttribute('aria-pressed', 'true');
+      toggle.setAttribute('aria-label', 'Play reviews');
+    }
+  } else {
+    startTimer();
   }
 })();
 </script>

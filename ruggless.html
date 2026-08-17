@@ -15,16 +15,19 @@
     --paper:#FFFFFF;
     --ink:#1C1C1A;
     --wedge-red:#E01B10;
-    --gal-gap:6px;
-    --gal-row:18.6vw;
+    --gal-gap:10px;
+    --gal-cols:4;
+    --gal-radius:6px;
     --gal-wedge:90px;
     --rev-wedge:90px;
     --logo-row-h:66px;
     --logo-row-h-stuck:76px;
-    
+    --dark-blend:#0A0A09;
+    --botbar-h:66px;
   }
   *{box-sizing:border-box; margin:0; padding:0;}
   body{font-family:'Work Sans', sans-serif; color:var(--ink);}
+  body.nav-open{overflow:hidden;}
   a{color:inherit; text-decoration:none;}
 
   /* ---- Shared outline button ---- */
@@ -33,8 +36,19 @@
     font-family:'Work Sans', sans-serif;
     font-size:0.9rem; font-weight:600;
     letter-spacing:0.14em; text-transform:uppercase;
-    color:var(--ink); background:transparent;
-    border:1px solid var(--ink);
+    color:#fff; background:transparent;
+    border:1px solid #fff;
+    padding:16px 42px; cursor:pointer;
+    transition:background .18s ease, color .18s ease;
+  }
+
+    .btn-outline-white{
+    display:inline-block;
+    font-family:'Work Sans', sans-serif;
+    font-size:0.9rem; font-weight:600;
+    letter-spacing:0.14em; text-transform:uppercase;
+    color:#000000; background:transparent;
+    border:1px solid #000000;
     padding:16px 42px; cursor:pointer;
     transition:background .18s ease, color .18s ease;
   }
@@ -62,6 +76,7 @@
 
   /* ---- Logo row ---- */
   .logo-row{
+    position:relative;
     display:flex; align-items:center; justify-content:center;
     min-height:var(--logo-row-h);
     padding:10px 20px;
@@ -94,20 +109,102 @@
   .site-head.is-stuck .logo-row .logo-img{width:34px; height:34px;}
   .site-head.is-stuck .logo-row h1{font-size:1.25rem;}
   .site-head.is-stuck .logo-row{
-    display:flex; align-items:center; justify-content:center;
+    display:flex; align-items:center; justify-content:start;
     min-height:var(--logo-row-h-stuck);
     padding:10px 20px;
     background:var(--paper);
   }
 
-  /* ---- Dark nav bar ---- */
+  /* ---- Burger toggle ---- */
+  .nav-toggle{
+    position:absolute; right:18px; top:50%; transform:translateY(-50%);
+    width:36px; height:36px; padding:0;
+    display:none; flex-direction:column; align-items:center; justify-content:center; gap:5px;
+    background:transparent; border:1px solid rgba(28,28,26,0.18); border-radius:4px;
+    cursor:pointer;
+  }
+  .nav-toggle i{
+    display:block; width:20px; height:2px; background:var(--ink);
+    transition:transform .25s ease, opacity .18s ease;
+  }
+  .nav-toggle:hover{border-color:var(--ink);}
+  .nav-toggle:focus-visible{outline:2px solid var(--gold); outline-offset:3px;}
+  body.nav-open .nav-toggle i:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  body.nav-open .nav-toggle i:nth-child(2){opacity:0;}
+  body.nav-open .nav-toggle i:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+  /* ---- Slide-in drawer ---- */
+  .nav-overlay{
+    position:fixed; inset:0; background:rgba(10,10,9,0.55);
+    opacity:0; visibility:hidden; z-index:80;
+    transition:opacity .28s ease, visibility 0s linear .28s;
+  }
+  body.nav-open .nav-overlay{opacity:1; visibility:visible; transition-delay:0s;}
+
+  .nav-drawer{
+    position:fixed; top:0; right:0; bottom:0;
+    width:min(360px, 86vw);
+    background:var(--nav-black); color:#F0EEE6;
+    z-index:90; overflow-y:auto;
+    display:flex; flex-direction:column;
+    padding:24px 26px calc(30px + var(--botbar-h));
+    transform:translateX(100%); visibility:hidden;
+    transition:transform .3s cubic-bezier(.2,.7,.3,1), visibility 0s linear .3s;
+  }
+  body.nav-open .nav-drawer{transform:translateX(0); visibility:visible; transition-delay:0s;}
+  .drawer-head{
+    display:flex; align-items:center; justify-content:space-between;
+    padding-bottom:20px; border-bottom:1px solid rgba(240,238,230,0.16);
+  }
+  .drawer-head span{
+    font-family:'Denk One', sans-serif; font-size:1.1rem;
+    letter-spacing:0.08em; text-transform:uppercase; color:#fff;
+  }
+  .drawer-close{
+    width:38px; height:38px; padding:0; cursor:pointer;
+    background:transparent; border:1px solid rgba(240,238,230,0.24); border-radius:50%;
+    color:#F0EEE6; display:flex; align-items:center; justify-content:center;
+  }
+  .drawer-close svg{width:16px; height:16px; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round;}
+  .drawer-close:hover{border-color:var(--gold); color:var(--gold);}
+  .drawer-close:focus-visible{outline:2px solid var(--gold); outline-offset:3px;}
+
+  .nav-drawer .js-mob-list{list-style:none; margin-top:8px;}
+  .nav-drawer .js-mob-list li a{
+    display:block; padding:16px 0;
+    border-bottom:1px solid rgba(240,238,230,0.12);
+    font-family:'Denk One', sans-serif; font-size:1.05rem;
+    letter-spacing:0.05em; text-transform:uppercase; color:#F0EEE6;
+    transition:color .18s ease, padding-left .18s ease;
+  }
+  .nav-drawer .js-mob-list li a:hover,
+  .nav-drawer .js-mob-list li a:focus-visible{color:var(--gold); padding-left:8px;}
+  .nav-drawer .bk-btn{margin-top:28px;}
+  .nav-drawer .btn-3d{
+    display:block; text-align:center;
+    padding:15px 20px; background:var(--wedge-red); color:#fff;
+    font-family:'Denk One', sans-serif; font-size:1rem;
+    letter-spacing:0.08em; text-transform:uppercase;
+    transition:background .18s ease;
+  }
+  .nav-drawer .btn-3d:hover{background:#fff; color:var(--ink);}
+  .drawer-social{display:flex; gap:14px; margin-top:30px;}
+  .drawer-social a{
+    width:36px; height:36px; border-radius:50%;
+    border:1px solid rgba(240,238,230,0.28);
+    display:flex; align-items:center; justify-content:center;
+    font-size:0.8rem; color:#F0EEE6;
+  }
+  .drawer-social a:hover{border-color:var(--gold); color:var(--gold);}
+
+  /* ---- Dark nav bar (desktop, in header) ---- */
   nav.mainbar{
     background:var(--nav-black);
     display:flex; align-items:center; justify-content:center;
     gap:34px; padding:16px 20px; flex-wrap:wrap;
   }
   nav.mainbar a{
-     font-family:'Denk One', sans-serif;
+    font-family:'Denk One', sans-serif;
     color:#F0EEE6; font-size:0.82rem; font-weight:700;
     letter-spacing:0.03em; text-transform:uppercase;
     padding:4px 0; border-bottom:2px solid transparent;
@@ -122,6 +219,62 @@
     padding:0; border-bottom:none;
   }
   nav.mainbar .social a:hover{border-color:var(--gold); color:var(--gold);}
+
+  /* ---- Bottom tab bar (mobile only) ---- */
+  nav.botbar{
+    display:none;
+    position:fixed; left:0; right:0; bottom:0;
+    z-index:70;
+    background:var(--nav-black);
+    align-items:stretch; justify-content:center;
+    padding:0 0 env(safe-area-inset-bottom, 0px);
+    box-shadow:0 -6px 22px rgba(0,0,0,0.30);
+  }
+  nav.botbar a{
+    flex:1 1 0; max-width:190px; height:var(--botbar-h);
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:5px;
+    font-family:'Denk One', sans-serif;
+    color:#B9B7AE; font-size:0.68rem; font-weight:400;
+    letter-spacing:0.06em; text-transform:uppercase;
+    border-top:2px solid transparent;
+    transition:color .16s ease, border-color .16s ease;
+  }
+  nav.botbar a svg{
+    width:20px; height:20px; display:block;
+    fill:none; stroke:currentColor; stroke-width:1.7;
+    stroke-linecap:round; stroke-linejoin:round;
+  }
+  nav.botbar a svg .solid{fill:currentColor; stroke:none;}
+  nav.botbar a:hover,
+  nav.botbar a:focus-visible{color:#fff; border-top-color:var(--gold);}
+  nav.botbar a.is-active{color:var(--gold); border-top-color:var(--gold);}
+  nav.botbar a:focus-visible{outline:none;}
+
+  /* ---- Mobile switch: top bar out, burger + bottom bar in ---- */
+  @media (min-width:901px){
+    .nav-drawer, .nav-overlay{display:none;}
+         .site-head.is-stuck .logo-row{
+        display:flex; align-items:center; justify-content:center;
+        min-height:var(--logo-row-h-stuck);
+        padding:10px 20px;
+        background:var(--paper);
+      }
+  }
+  @media (max-width:900px){
+    nav.mainbar{display:none;}
+    nav.botbar{display:flex;}
+    .nav-toggle{display:flex;}
+    body{padding-bottom:calc(var(--botbar-h) + env(safe-area-inset-bottom, 0px));}
+    .logo-row,
+    .site-head.is-stuck .logo-row{padding:0px 20px;}
+    .fab-stack{bottom:calc(24px + var(--botbar-h));}
+
+    .logo-row{
+      justify-content: start;
+    }
+
+
+  }
 
   /* ---- Hero ---- */
   .hero{
@@ -161,17 +314,40 @@
 
   /* ---- Diagonal title banner ---- */
   .title-banner{
-    background:#C6321F; color:#171716;
-    padding:70px 40px 110px; text-align:center; position:relative;
-    clip-path:polygon(0 0, 100% 0, 100% 78%, 0 100%);
+    background:#C6321F;
+    color:#171716;
+    padding:20px;
+    text-align:center;
+    position:relative;
   }
   .title-banner h1{
     font-family:'Denk One', sans-serif; font-weight:400;
     font-size:clamp(2rem, 5vw, 3rem);
   }
 
+  /* ---- Parallax B&W backdrop (About + New Section) ---- */
+  .parallax-host{position:relative; overflow:hidden;}
+  .parallax-bg{
+    position:absolute; left:0; right:0; top:-22%; bottom:-22%;
+    background-image:var(--px-img);
+    background-size:cover; background-position:center; background-repeat:no-repeat;
+    filter:grayscale(1) contrast(1.06);
+    opacity:0.30;
+    transform:translate3d(0,0,0);
+    will-change:transform;
+    z-index:0; pointer-events:none;
+  }
+  .parallax-bg::after{
+    content:""; position:absolute; inset:0;
+    background:linear-gradient(120deg, rgba(255,255,255,0.30), rgba(255,255,255,0.55));
+  }
+  .about-section .about-photo,
+  .about-section .about-copy,
+  .parties-section .parties-copy,
+  .parties-section .parties-photo{position:relative; z-index:1;}
+
   /* ---- About section ---- */
-  .about-section{display:grid; grid-template-columns:1fr 1fr; margin-top:-70px;}
+  .about-section{display:grid; grid-template-columns:1fr 1fr; }
   @media (max-width:860px){ .about-section{grid-template-columns:1fr;} }
   .about-photo{
     min-height:520px;
@@ -207,6 +383,7 @@
     font-size:1.3rem; margin-top:34px; color:#171716;
   }
   .about-copy .btn-outline{margin-top:38px;}
+  .btn-outline-white{margin-top:38px;}
 
   /* ---- Private parties ---- */
   .parties-section{position:relative; display:grid; grid-template-columns:1fr 1fr; background:var(--paper);}
@@ -215,17 +392,7 @@
     display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;
     padding:120px 50px; min-height:520px;
   }
-  .parties-copy::before{
-    content:""; position:absolute; inset:0;
-    background:url("https://images.unsplash.com/photo-1541542684-4a9c2c1e0c9a?auto=format&fit=crop&w=1400&q=60") center/cover no-repeat;
-    filter:grayscale(1) contrast(1.05); opacity:0.28;
-  }
-  .parties-copy::after{
-    content:""; position:absolute; inset:0;
-    background:
-      linear-gradient(192deg, #fff 0 16%, rgba(255,255,255,0) 16.3%),
-      linear-gradient(12deg,  #fff 0 13%, rgba(255,255,255,0) 13.3%);
-  }
+
   .parties-copy > *{position:relative; z-index:2;}
   .parties-copy h2{
     font-family:'Denk One', sans-serif; font-weight:400;
@@ -239,9 +406,8 @@
   .parties-photo{min-height:520px; background:linear-gradient(135deg, #2F3A2A, #4E5B3F 60%, #22271D); overflow:hidden;}
   .parties-photo img{width:100%; height:100%; min-height:520px; object-fit:cover; object-position:center; display:block;}
   .parties-wedge{
-    position:absolute; left:0; right:0; bottom:0; height:90px;
+    position:absolute; left:0; right:0; bottom:0; height:10px;
     background:var(--wedge-red);
-    clip-path:polygon(0 100%, 0 82%, 22% 6%, 100% 60%, 100% 100%);
     z-index:3; pointer-events:none;
   }
 
@@ -289,7 +455,9 @@
   .shot-slider.is-paused .shot-rail-fill.is-running{animation-play-state:paused;}
   @keyframes shot-fill{ from{transform:scaleX(0);} to{transform:scaleX(1);} }
 
-  /* ---- Mosaic gallery ---- */
+  /* ================================================
+     Pinterest-style masonry gallery
+     ================================================ */
   .gallery-section{background:var(--paper);}
   .gallery-head{text-align:center; padding:80px 24px 34px;}
   .gallery-head h2{
@@ -297,39 +465,89 @@
     font-size:clamp(2rem, 4vw, 2.8rem); text-transform:uppercase; letter-spacing:0.02em;
   }
   .gallery-head p{margin-top:12px; color:#5A5A54; font-size:1rem; letter-spacing:0.02em;}
-  .gallery-grid{
+
+  /* Canvas holds the wedges so they aren't trapped inside a column box */
+  .gallery-canvas{
     position:relative;
-    display:grid; grid-template-columns:repeat(5, 1fr);
-    grid-auto-rows:var(--gal-row); gap:var(--gal-gap);
+    background:var(--dark-blend);
+    padding:var(--gal-gap);
   }
+  .gallery-masonry{
+    column-count:var(--gal-cols);
+    column-gap:var(--gal-gap);
+  }
+  .gallery-card{
+    position:relative; display:block;
+    width:100%; margin:0 0 var(--gal-gap);
+    break-inside:avoid; -webkit-column-break-inside:avoid; page-break-inside:avoid;
+    border-radius:var(--gal-radius); overflow:hidden;
+    background:#141413;
+    aspect-ratio:var(--ar, 3 / 4);
+    box-shadow:0 2px 10px rgba(0,0,0,0.35);
+  }
+  .gallery-card img{
+    width:100%; height:100%;
+    object-fit:cover; object-position:center; display:block;
+    transition:transform .55s cubic-bezier(.2,.7,.3,1);
+  }
+  .gallery-card::after{
+    content:"";
+    position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(0,0,0,0) 45%, rgba(0,0,0,0.72) 100%);
+    opacity:0; transition:opacity .3s ease;
+  }
+  .gallery-card .card-label{
+    position:absolute; z-index:2;
+    left:16px; right:16px; bottom:14px;
+    font-family:'Work Sans', sans-serif;
+    font-size:0.78rem; font-weight:600;
+    letter-spacing:0.1em; text-transform:uppercase;
+    color:#fff;
+    opacity:0; transform:translateY(8px);
+    transition:opacity .3s ease, transform .3s ease;
+  }
+  .gallery-card:hover img,
+  .gallery-card:focus-visible img{transform:scale(1.07);}
+  .gallery-card:hover::after,
+  .gallery-card:focus-visible::after{opacity:1;}
+  .gallery-card:hover .card-label,
+  .gallery-card:focus-visible .card-label{opacity:1; transform:translateY(0);}
+  .gallery-card:focus-visible{outline:2px solid var(--gold); outline-offset:2px;}
+
   .gallery-wedge{
     position:absolute; left:0; right:0;
     height:var(--gal-wedge);
-    background:var(--paper);
     z-index:3; pointer-events:none;
   }
   .gallery-wedge.is-top{
-    top:-16px;
+    top:-1px;
+    background:var(--paper);
     clip-path:polygon(0 0, 100% 0, 100% 40%, 84% 74%, 0 18%);
   }
   .gallery-wedge.is-bottom{
-    bottom:-16px;
+    bottom:-1px;
+    background:#000;
     clip-path:polygon(0 100%, 0 82%, 82% 26%, 100% 60%, 100% 100%);
   }
-  .gallery-item{position:relative; overflow:hidden; background:#EFEDE7; display:block;}
-  .gallery-item.is-feature{grid-column:span 2; grid-row:span 2;}
-  .gallery-item img{width:100%; height:100%; object-fit:cover; object-position:center; display:block; transition:transform .6s ease;}
-  .gallery-item::after{content:""; position:absolute; inset:0; background:rgba(23,23,22,0); transition:background .3s ease;}
-  .gallery-item:hover img, .gallery-item:focus-visible img{transform:scale(1.06);}
-  .gallery-item:hover::after, .gallery-item:focus-visible::after{background:rgba(23,23,22,0.18);}
-  .gallery-item:focus-visible{outline:2px solid var(--gold); outline-offset:-2px;}
-  .gallery-foot{display:flex; justify-content:center; padding:52px 24px 84px;}
+
+  .gallery-foot{
+    display:flex; justify-content:center;
+    padding:52px 24px 110px;
+    background:linear-gradient(180deg, #000 0%, var(--dark-blend) 60%, var(--dark-blend) 100%);
+  }
 
   /* ---- Guest reviews ---- */
   .reviews-section{
     position:relative;
+    margin-top:-1px;
     background:
-      linear-gradient(180deg, rgba(10,10,9,0.72), rgba(10,10,9,0.82)),
+      linear-gradient(180deg,
+        var(--dark-blend) 0%,
+        rgba(10,10,9,0.96) 8%,
+        rgba(10,10,9,0.86) 20%,
+        rgba(10,10,9,0.78) 34%,
+        rgba(10,10,9,0.80) 78%,
+        rgba(10,10,9,0.90) 100%),
       url("https://images.unsplash.com/photo-1482575832494-771f74bf6857?auto=format&fit=crop&w=1900&q=70") center/cover no-repeat fixed;
     color:#fff;
     padding:calc(110px + var(--rev-wedge)) 90px calc(90px + var(--rev-wedge));
@@ -409,9 +627,15 @@
   @media (prefers-reduced-motion: reduce){
     .shot-slide{transition:none;}
     .shot-rail-fill.is-running{animation:none; width:0;}
-    .gallery-item img{transition:none;}
-    .gallery-item:hover img{transform:none;}
+    .gallery-card img, .gallery-card::after, .gallery-card .card-label{transition:none;}
+    .gallery-card:hover img{transform:none;}
     .site-head, .logo-row .logo-img, .logo-row h1{transition:none;}
+    .parallax-bg{transform:none !important; top:0; bottom:0;}
+    .nav-drawer, .nav-overlay, .nav-toggle i{transition:none;}
+  }
+
+  @media (max-width:1200px){
+    :root{--gal-cols:3;}
   }
 
   @media (max-width:860px){
@@ -425,70 +649,126 @@
     .shot-arrow.next{right:4px;}
     .shot-play{left:16px; bottom:18px;}
     .shot-cta{max-width:calc(100% - 120px); white-space:normal; text-align:center;}
-    .gallery-grid{grid-template-columns:repeat(2, 1fr);}
-    :root{--gal-row:46vw; --gal-wedge:56px; --rev-wedge:56px;}
+    :root{--gal-cols:2; --gal-gap:8px; --gal-wedge:56px; --rev-wedge:56px;}
     .gallery-head{padding:56px 20px 26px;}
-    .gallery-foot{padding:38px 20px 60px;}
+    .gallery-foot{padding:38px 20px 80px;}
     .reviews-section{padding:calc(80px + var(--rev-wedge)) 24px calc(60px + var(--rev-wedge));}
     .review-body .quote-mark.open{left:-8px; top:-46px;}
     .review-body .quote-mark.close{right:-8px; bottom:-56px;}
     .reviews-arrow.prev{left:2px;}
     .reviews-arrow.next{right:2px;}
+    .parallax-bg{top:-14%; bottom:-14%;}
+    .gallery-card .card-label{opacity:1; transform:none; font-size:0.7rem;}
+    .gallery-card::after{opacity:1;}
   }
 
-  /* ---- Newsletter + map ---- */
-  .signup-section{
+  /* ================================================
+     Social directory + contact + map
+     ================================================ */
+  .social-section{
     display:grid; grid-template-columns:1fr 1fr;
     min-height:560px;
   }
-  @media (max-width:900px){ .signup-section{grid-template-columns:1fr;} }
+  @media (max-width:900px){ .social-section{grid-template-columns:1fr;} }
 
-  .signup-copy{
-    position:relative;
-    overflow:hidden;
+  .social-copy{
+    position:relative; overflow:hidden;
     display:flex; flex-direction:column; justify-content:center;
-    padding:70px 60px;
-    clip-path:polygon(0 0, 100% 0, 100% 92%, 0 100%);
+    padding:84px 60px 96px;
+    background:var(--nav-black); color:#F0EEE6;
   }
-  .signup-copy::before{
-    content:"";
-    position:absolute; inset:0;
-    background:
-      linear-gradient(120deg, rgba(255,255,255,0.55), rgba(255,255,255,0.75)),
-      url("https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=1400&q=60") center/cover no-repeat;
-    filter:grayscale(1) contrast(1.02);
+  .social-eyebrow{
+    font-family:'Work Sans', sans-serif;
+    font-size:0.72rem; font-weight:700;
+    letter-spacing:0.24em; text-transform:uppercase;
+    color:var(--wedge-red);
   }
-  .signup-copy > *{position:relative; z-index:1;}
-  .signup-copy h2{
+  .social-copy h2{
+    margin-top:14px;
     font-family:'Denk One', sans-serif; font-weight:400;
     font-size:clamp(2.4rem, 5vw, 3.4rem); text-transform:uppercase; letter-spacing:0.02em;
+    color:#fff;
   }
-  .signup-copy p{
-    margin-top:24px; max-width:44ch;
-    font-family:'Fraunces', 'Work Sans', serif; font-size:1.15rem; color:#262623;
+
+  /* ---- Channel rows ---- */
+  .social-channels{
+    margin-top:36px;
+    border-top:1px solid rgba(240,238,230,0.16);
   }
-  .signup-form{margin-top:36px; max-width:440px;}
-  .signup-form label{
-    display:block; font-family:'Fraunces', 'Work Sans', serif;
-    font-size:1rem; color:#262623; margin-bottom:10px;
+  .social-channels a{
+    position:relative;
+    display:flex; align-items:center; gap:16px;
+    padding:17px 4px 17px 0;
+    border-bottom:1px solid rgba(240,238,230,0.16);
+    color:#F0EEE6;
+    transition:padding-left .22s ease, color .22s ease;
   }
-  .signup-row{display:flex; align-items:flex-end; gap:18px; flex-wrap:wrap;}
-  .signup-row input{
-    flex:1; min-width:200px;
-    border:none; border-bottom:1.5px solid var(--ink);
-    background:transparent; padding:8px 2px;
-    font-family:'Fraunces', 'Work Sans', serif; font-size:1rem; color:var(--ink);
+  .social-channels a::before{
+    content:"";
+    position:absolute; left:0; top:50%;
+    width:0; height:2px; background:var(--wedge-red);
+    transform:translateY(-50%);
+    transition:width .22s ease;
   }
-  .signup-row input::placeholder{color:#7A7A73;}
-  .signup-row .btn-submit{
-    font-family:'Work Sans', sans-serif; font-weight:700;
-    font-size:0.95rem; letter-spacing:0.04em; text-transform:uppercase;
-    background:var(--wedge-red); color:var(--ink);
-    border:none; padding:18px 40px; cursor:pointer;
-    transition:filter .15s ease;
+  .social-channels svg{
+    width:21px; height:21px; flex-shrink:0; pointer-events:none;
+    fill:none; stroke:currentColor;
+    stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round;
+    transition:color .22s ease;
   }
-  .signup-row .btn-submit:hover,
-  .signup-row .btn-submit:focus-visible{filter:brightness(0.92);}
+  .social-channels svg .solid{fill:currentColor; stroke:none;}
+  .social-channels .net{
+    font-family:'Denk One', sans-serif; font-weight:400;
+    font-size:1.02rem; letter-spacing:0.05em; text-transform:uppercase;
+  }
+  .social-channels .handle{
+    margin-left:auto;
+    font-family:'Work Sans', sans-serif; font-size:0.88rem;
+    letter-spacing:0.04em; color:#9C9A92;
+    transition:color .22s ease;
+  }
+  .social-channels a:hover,
+  .social-channels a:focus-visible{padding-left:20px; color:#fff;}
+  .social-channels a:hover::before,
+  .social-channels a:focus-visible::before{width:12px;}
+  .social-channels a:hover .handle,
+  .social-channels a:focus-visible .handle{color:var(--wedge-red);}
+  .social-channels a:focus-visible{outline:none;}
+  .social-channels a:focus-visible .net{text-decoration:underline; text-underline-offset:4px;}
+
+  /* ---- Contact details ---- */
+  .social-contact{
+    display:grid; grid-template-columns:repeat(2, minmax(0, 1fr));
+    gap:28px 34px; margin-top:44px;
+  }
+  .social-contact .full{grid-column:1 / -1;}
+  .social-contact .label{
+    display:block;
+    font-family:'Work Sans', sans-serif;
+    font-size:0.68rem; font-weight:700;
+    letter-spacing:0.2em; text-transform:uppercase;
+    color:var(--wedge-red); margin-bottom:9px;
+  }
+  .social-contact .value{
+    font-family:'Work Sans', sans-serif;
+    font-size:1.02rem; line-height:1.6; color:#EDEAE2;
+  }
+  .social-contact a.value{
+    display:inline-block;
+    border-bottom:1px solid transparent;
+    transition:color .18s ease, border-color .18s ease;
+  }
+  .social-contact a.value:hover,
+  .social-contact a.value:focus-visible{color:#fff; border-color:var(--wedge-red);}
+  .social-contact a.value:focus-visible{outline:2px solid var(--wedge-red); outline-offset:4px;}
+
+  @media (prefers-reduced-motion: reduce){
+    .social-channels a,
+    .social-channels a::before,
+    .social-contact a.value{transition:none;}
+    .social-channels a:hover,
+    .social-channels a:focus-visible{padding-left:0;}
+  }
 
   .map-panel{
     position:relative;
@@ -503,24 +783,29 @@
     color:#262623;
   }
   @media (max-width:900px){
-    .signup-copy{padding:60px 28px; clip-path:none;}
+    .social-copy{padding:64px 28px 76px; clip-path:none;}
     .map-panel #siteMap{min-height:380px;}
   }
 
   @media (max-width:760px){
-    nav.mainbar{gap:18px;}
-    nav.mainbar a{font-size:0.72rem;}
+    :root{--botbar-h:60px;}
+    nav.botbar a{font-size:0.62rem; letter-spacing:0.04em; gap:4px;}
+    nav.botbar a svg{width:19px; height:19px;}
     .logo-row h1{font-size:1.4rem;}
     .logo-row .logo-img{width:38px; height:38px;}
     .logo-row .mark{gap:10px;}
+ 
+    .nav-toggle{right:12px;}
     :root{--logo-row-h:74px;}
     .site-head.is-stuck .logo-row .logo-img{width:28px; height:28px;}
     .site-head.is-stuck .logo-row h1{font-size:1.05rem;}
     .about-copy{padding:60px 28px 40px;}
     .btn-outline{padding:14px 34px; font-size:0.82rem;}
     .btn-outline.on-dark{padding:14px 30px; font-size:0.92rem;}
-    .signup-row{flex-direction:column; align-items:stretch;}
-    .signup-row .btn-submit{width:100%;}
+    .social-channels a{gap:12px; padding:15px 2px 15px 0;}
+    .social-channels .net{font-size:0.94rem;}
+    .social-channels .handle{font-size:0.8rem;}
+    .social-contact{grid-template-columns:1fr; gap:24px;}
   }
 
   /* ---- Footer ---- */
@@ -600,6 +885,24 @@
     font-family:'Fraunces', 'Work Sans', serif; font-size:0.92rem;
     text-decoration:underline; color:#EDEAE2;
   }
+  .title-banner h1{
+    font-family:'Denk One', sans-serif; font-weight:400;
+    font-size:clamp(2rem, 5vw, 3rem);
+    line-height:1.1;
+  }
+  .title-banner .banner-sub{
+    display:flex; align-items:center; justify-content:center; gap:16px;
+    margin-top:14px;
+    font-family:'Work Sans', sans-serif;
+    font-size:clamp(0.74rem, 1.4vw, 0.88rem); font-weight:600;
+    letter-spacing:0.22em; text-transform:uppercase;
+    color:#2A0D0A;
+  }
+
+  @media (max-width:600px){
+    .title-banner{padding:26px 18px;}
+    .title-banner .banner-sub{gap:10px; letter-spacing:0.16em;}
+  }
 </style>
 </head>
 <body>
@@ -610,9 +913,13 @@
       <img class="logo-img" src="https://1000logos.net/wp-content/uploads/2025/02/Waffle-House-Logo.png" alt="Waffle House logo" width="52" height="52" fetchpriority="high">
       <h1>Waffle <span class="thin">House</span></h1>
     </div>
+
+    <button class="nav-toggle" id="navToggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="navDrawer">
+      <i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>
+    </button>
   </div>
 
-  <nav class="mainbar">
+  <nav class="mainbar" aria-label="Primary">
     <a href="#">Home</a>
     <a href="#">Menu</a>
     <a href="#">About Us</a>
@@ -630,23 +937,58 @@
   </nav>
 </header>
 
+<div class="nav-overlay" id="navOverlay"></div>
+
+<aside class="nav-drawer" id="navDrawer" aria-label="All pages">
+  <div class="drawer-head">
+    <span>Menu</span>
+    <button class="drawer-close" id="navClose" type="button" aria-label="Close menu">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6 18 18M18 6 6 18"></path></svg>
+    </button>
+  </div>
+
+  <ul class="js-mob-list">
+    <li><a href="#">Home</a></li>
+    <li><a class="remove-font-color" href="#">About Us</a></li>
+    <li><a href="#">Menu</a></li>
+    <li><a href="#">Reservations</a></li>
+    <li><a href="#">Gallery</a></li>
+    <li><a href="#">Events</a></li>
+    <li><a href="#">Jobs</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+
+  <div class="bk-btn mt-4">
+    <a href="#" class="btn-3d">Order Online</a>
+  </div>
+
+  <div class="drawer-social">
+    <a href="#" aria-label="Facebook">f</a>
+    <a href="#" aria-label="Instagram">ig</a>
+    <a href="#" aria-label="LinkedIn">in</a>
+  </div>
+</aside>
+
 <div class="hero">
     <iframe
-        src="https://www.youtube.com/embed/rlE78bS6ZxA?autoplay=1&mute=1&loop=1&playlist=rlE78bS6ZxA&controls=0&rel=0"
+        src="https://www.youtube.com/embed/PtOOI_nKwtw?autoplay=1&mute=1&loop=1&playlist=PtOOI_nKwtw&controls=0&rel=0&playsinline=1"
         title="Hero Video"
         frameborder="0"
-        allow="autoplay; encrypted-media"
+        allow="autoplay; encrypted-media; picture-in-picture"
         allowfullscreen>
     </iframe>
 </div>
 
 <div class="title-banner">
   <h1>Waffle House.</h1>
-  <!-- <div class="hero-caption">Under the old oak, every night.</div> -->
-
+  <p class="banner-sub">Breakfast all day, every day</p>
 </div>
 
-<div class="about-section">
+<div class="about-section parallax-host">
+  <div class="parallax-bg" data-speed="0.22"
+       style="--px-img:url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1600&q=60');"
+       aria-hidden="true"></div>
+
   <div class="about-photo">
     <img src="https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg" alt="Interior of the restaurant">
   </div>
@@ -654,15 +996,19 @@
     <h3>About Us</h3>
     <p>Waffle House is a seasonal kitchen built around one wood-fired hearth and produce sourced from farms we visit ourselves. Every dish is cooked to order, with options for gluten-free, dairy-free, and plant-based diets built into the menu from the start — not as an afterthought.</p>
     <h4>A menu that changes with the season</h4>
-    <a href="#" class="btn-outline">More</a>
+    <a href="#" class="btn-outline-white">More</a>
   </div>
 </div>
 
-<section class="parties-section">
+<section class="parties-section parallax-host">
+  <div class="parallax-bg" data-speed="0.22"
+       style="--px-img:url('https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=1600&q=60');"
+       aria-hidden="true"></div>
+
   <div class="parties-copy">
     <h2>New Section</h2>
     <p>no content available now!</p>
-    <a href="#" class="btn-outline">view more</a>
+    <a href="#" class="btn-outline-white">view more</a>
   </div>
   <div class="parties-photo">
     <img src="https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=1600&q=70" alt="Covered patio seating set for a private party">
@@ -722,53 +1068,61 @@
     <p>Plates, pours and desserts going out tonight.</p>
   </div>
 
-  <div class="gallery-grid">
+  <div class="gallery-canvas">
     <div class="gallery-wedge is-top" aria-hidden="true"></div>
 
-    <a href="#" class="gallery-item is-feature">
-      <img src="https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=1400&q=75" alt="Cheesecake with a scoop of vanilla and a strawberry" loading="lazy">
-    </a>
-    <a href="#" class="gallery-item">
-      <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=75" alt="Plated salad with shredded carrot and microgreens" loading="lazy">
-    </a>
-    <a href="#" class="gallery-item">
-      <img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=800&q=75" alt="Bottles of red, rose and white wine with poured glasses" loading="lazy">
-    </a>
-    <a href="#" class="gallery-item">
-      <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=800&q=75" alt="Crab cake with sweet potato fries" loading="lazy">
-    </a>
-    <a href="#" class="gallery-item">
-      <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=800&q=75" alt="Iced cocktail garnished with ribboned cucumber" loading="lazy">
-    </a>
-    <a href="#" class="gallery-item">
-      <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=75" alt="Chopped green salad dressed with herb oil" loading="lazy">
-    </a>
-    <a href="#" class="gallery-item">
-      <img src="https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=800&q=75" alt="Layered dessert in a coupe with a tuile and strawberry" loading="lazy">
-    </a>
-    <a href="#" class="gallery-item">
-      <img src="https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&fit=crop&w=800&q=75" alt="Seared fish fillet with seasonal vegetables" loading="lazy">
-    </a>
-    <a href="#" class="gallery-item">
-      <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=75" alt="Grilled steak sliced on a board" loading="lazy">
-    </a>
-    <a href="#" class="gallery-item">
-      <img src="https://images.unsplash.com/photo-1551782450-a2132b4ba21d?auto=format&fit=crop&w=800&q=75" alt="Burger with fries on a plate" loading="lazy">
-    </a>
-    <a href="#" class="gallery-item is-feature">
-      <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1400&q=75" alt="Dining room laid up for evening service" loading="lazy">
-    </a>
-    <a href="#" class="gallery-item">
-      <img src="https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=800&q=75" alt="Espresso cup on a saucer" loading="lazy">
-    </a>
-    <a href="#" class="gallery-item">
-      <img src="https://images.unsplash.com/photo-1481931098730-318b6f776db0?auto=format&fit=crop&w=800&q=75" alt="Cocktail being finished at the bar" loading="lazy">
-    </a>
-    <a href="#" class="gallery-item">
-      <img src="https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?auto=format&fit=crop&w=800&q=75" alt="Pasta plated with fresh herbs" loading="lazy">
-    </a>
+    <div class="gallery-masonry">
+      <a href="#" class="gallery-card" style="--ar:3/4;">
+        <img src="https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=800&q=75" alt="Cheesecake with a scoop of vanilla and a strawberry" loading="lazy" decoding="async">
+      </a>
+      <a href="#" class="gallery-card" style="--ar:1/1;">
+        <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=75" alt="Plated salad with shredded carrot and microgreens" loading="lazy" decoding="async">
+      </a>
+      <a href="#" class="gallery-card" style="--ar:4/5;">
+        <img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=800&q=75" alt="Bottles of red, rose and white wine with poured glasses" loading="lazy" decoding="async">
+      </a>
+      <a href="#" class="gallery-card" style="--ar:3/2;">
+        <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=800&q=75" alt="Crab cake with sweet potato fries" loading="lazy" decoding="async">
+      </a>
+      <a href="#" class="gallery-card" style="--ar:2/3;">
+        <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=800&q=75" alt="Iced cocktail garnished with ribboned cucumber" loading="lazy" decoding="async">
+      </a>
+      <a href="#" class="gallery-card" style="--ar:1/1;">
+        <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=75" alt="Chopped green salad dressed with herb oil" loading="lazy" decoding="async">
+      </a>
+      <a href="#" class="gallery-card" style="--ar:4/5;">
+        <img src="https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=800&q=75" alt="Layered dessert in a coupe with a tuile and strawberry" loading="lazy" decoding="async">
+      </a>
+      <a href="#" class="gallery-card" style="--ar:3/4;">
+        <img src="https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&fit=crop&w=800&q=75" alt="Seared fish fillet with seasonal vegetables" loading="lazy" decoding="async">
+      </a>
+      <a href="#" class="gallery-card" style="--ar:3/2;">
+        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=75" alt="Grilled steak sliced on a board" loading="lazy" decoding="async">
+      </a>
+      <a href="#" class="gallery-card" style="--ar:4/5;">
+        <img src="https://images.unsplash.com/photo-1551782450-a2132b4ba21d?auto=format&fit=crop&w=800&q=75" alt="Burger with fries on a plate" loading="lazy" decoding="async">
+      </a>
+      <a href="#" class="gallery-card" style="--ar:16/9;">
+        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1200&q=75" alt="Dining room laid up for evening service" loading="lazy" decoding="async">
+      </a>
+      <a href="#" class="gallery-card" style="--ar:1/1;">
+        <img src="https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=800&q=75" alt="Espresso cup on a saucer" loading="lazy" decoding="async">
+      </a>
+      <a href="#" class="gallery-card" style="--ar:2/3;">
+        <img src="https://images.unsplash.com/photo-1481931098730-318b6f776db0?auto=format&fit=crop&w=800&q=75" alt="Cocktail being finished at the bar" loading="lazy" decoding="async">
+      </a>
+      <a href="#" class="gallery-card" style="--ar:4/5;">
+        <img src="https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?auto=format&fit=crop&w=800&q=75" alt="Pasta plated with fresh herbs" loading="lazy" decoding="async">
+      </a>
+      <a href="#" class="gallery-card" style="--ar:3/4;">
+        <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=75" alt="Plated main course ready to go out" loading="lazy" decoding="async">
+      </a>
+      <a href="#" class="gallery-card" style="--ar:3/2;">
+        <img src="https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?auto=format&fit=crop&w=800&q=75" alt="Bar seating and shelves of glassware" loading="lazy" decoding="async">
+      </a>
 
-    <div class="gallery-wedge is-bottom" aria-hidden="true"></div>
+      <div class="gallery-wedge is-bottom" aria-hidden="true"></div>
+    </div>
   </div>
 
   <div class="gallery-foot">
@@ -832,18 +1186,67 @@
   <!-- <div class="reviews-wedge is-bottom" aria-hidden="true"></div> -->
 </section>
 
-<section class="signup-section">
-  <div class="signup-copy">
-    <h2>Newsletter</h2>
-    <p>Sign up for our newsletter &amp; get exclusive offers and invites!</p>
-    <form class="signup-form" onsubmit="return false;">
-      <label for="newsletterEmail">Email (required)</label>
-      <div class="signup-row">
-        <input id="newsletterEmail" type="email" placeholder="e.g. email@example.com" required>
-        <button type="submit" class="btn-submit">Submit</button>
+<section class="social-section">
+  <div class="social-copy">
+    <span class="social-eyebrow">Stay in touch</span>
+    <h2>Follow Us</h2>
+
+    <div class="social-channels">
+      <a href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <circle cx="12" cy="12" r="9"></circle>
+          <path d="M14.4 8.2h-1.3a1.7 1.7 0 0 0-1.7 1.7V19.6"></path>
+          <path d="M9.7 13h4.7"></path>
+        </svg>
+        <span class="net">Facebook</span>
+        <span class="handle">/wafflehouse</span>
+      </a>
+      <a href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <rect x="3" y="3" width="18" height="18" rx="5"></rect>
+          <circle cx="12" cy="12" r="4.2"></circle>
+          <circle class="solid" cx="17.2" cy="6.8" r="1.1"></circle>
+        </svg>
+        <span class="net">Instagram</span>
+        <span class="handle">@wafflehouse</span>
+      </a>
+      <a href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <rect x="3" y="3" width="18" height="18" rx="4.5"></rect>
+          <path d="M7.5 10.6V17"></path>
+          <circle class="solid" cx="7.5" cy="7.9" r="0.95"></circle>
+          <path d="M11.6 17v-6.4"></path>
+          <path d="M11.6 13.4a2.7 2.7 0 0 1 5.4 0V17"></path>
+        </svg>
+        <span class="net">LinkedIn</span>
+        <span class="handle">/waffle-house</span>
+      </a>
+      <a href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <rect x="2.5" y="6" width="19" height="12" rx="3.5"></rect>
+          <path class="solid" d="M10.3 9.4 15.7 12l-5.4 2.6Z"></path>
+        </svg>
+        <span class="net">YouTube</span>
+        <span class="handle">@wafflehouse</span>
+      </a>
+    </div>
+
+    <div class="social-contact">
+      <div>
+        <span class="label">Call us</span>
+        <a class="value" href="tel:+10000000000">(000) 000-0000</a>
       </div>
-    </form>
+      <div>
+        <span class="label">Email</span>
+        <a class="value" href="mailto:hello@wafflehouse.example">hello@wafflehouse.example</a>
+      </div>
+      <div class="full">
+        <span class="label">Visit</span>
+        <span class="value">400 Main Street, Riverside, TX 77000</span>
+      </div>
+    </div>
   </div>
+
   <div class="map-panel">
     <div id="siteMap"></div>
     <div class="map-caption">Waffle House is located in the Main District, just off the downtown corridor near the riverfront and the university area.</div>
@@ -925,7 +1328,86 @@
   <div class="powered">Powered by <b>ZingMyOrder</b></div>
 </div>
 
+<nav class="botbar" id="botBar" aria-label="Quick links">
+  <a href="#" class="is-active">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M4 10.6 12 4l8 6.6V19a1.4 1.4 0 0 1-1.4 1.4h-3.2v-5.6H8.6v5.6H5.4A1.4 1.4 0 0 1 4 19Z"></path>
+    </svg>
+    <span>Home</span>
+  </a>
+  <a href="#">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <circle cx="12" cy="12" r="8.6"></circle>
+      <path d="M12 11.2V16.4"></path>
+      <circle class="solid" cx="12" cy="7.9" r="1"></circle>
+    </svg>
+    <span>About Us</span>
+  </a>
+  <a href="#">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M7.2 3.4v5.2a2.3 2.3 0 0 0 4.6 0V3.4"></path>
+      <path d="M9.5 10.9V20.6"></path>
+      <path d="M17.4 3.4c-1.4 1.9-2.1 3.6-2.1 5.8 0 1.5.7 2.3 2.1 2.3V20.6"></path>
+    </svg>
+    <span>Menu</span>
+  </a>
+  <a href="#">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <rect x="3" y="4.6" width="18" height="14.8" rx="2.2"></rect>
+      <circle cx="8.4" cy="9.6" r="1.5"></circle>
+      <path d="m3.8 16.6 4.4-4.2 3.8 3.8"></path>
+      <path d="m13.4 14.6 2.6-2.4 4.2 4"></path>
+    </svg>
+    <span>Gallery</span>
+  </a>
+</nav>
+
 <script>
+/* ---- Mobile burger drawer ---- */
+(function () {
+  var toggle  = document.getElementById('navToggle');
+  var drawer  = document.getElementById('navDrawer');
+  var overlay = document.getElementById('navOverlay');
+  var closeBt = document.getElementById('navClose');
+  if (!toggle || !drawer || !overlay) { return; }
+
+  function openNav() {
+    document.body.classList.add('nav-open');
+    toggle.setAttribute('aria-expanded', 'true');
+    toggle.setAttribute('aria-label', 'Close menu');
+    var first = drawer.querySelector('a, button');
+    if (first) { first.focus(); }
+  }
+
+  function closeNav(refocus) {
+    document.body.classList.remove('nav-open');
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.setAttribute('aria-label', 'Open menu');
+    if (refocus !== false) { toggle.focus(); }
+  }
+
+  toggle.addEventListener('click', function () {
+    if (document.body.classList.contains('nav-open')) { closeNav(); } else { openNav(); }
+  });
+
+  overlay.addEventListener('click', function () { closeNav(false); });
+  if (closeBt) { closeBt.addEventListener('click', function () { closeNav(); }); }
+
+  drawer.addEventListener('click', function (e) {
+    if (e.target && e.target.closest && e.target.closest('a')) { closeNav(false); }
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if ((e.key === 'Escape' || e.key === 'Esc') && document.body.classList.contains('nav-open')) {
+      closeNav();
+    }
+  });
+
+  window.addEventListener('resize', function () {
+    if (window.innerWidth > 1100 && document.body.classList.contains('nav-open')) { closeNav(false); }
+  });
+})();
+
 (function () {
   var head = document.getElementById('siteHead');
   if (!head) { return; }
@@ -950,6 +1432,51 @@
 
   apply();
   window.addEventListener('scroll', onScroll, { passive: true });
+})();
+
+/* ---- Parallax backdrops (About + New Section) ---- */
+(function () {
+  var layers = Array.prototype.slice.call(document.querySelectorAll('.parallax-bg'));
+  if (!layers.length) { return; }
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { return; }
+
+  var ticking = false;
+
+  function update() {
+    var vh = window.innerHeight || document.documentElement.clientHeight;
+
+    layers.forEach(function (layer) {
+      var host = layer.parentElement;
+      if (!host) { return; }
+
+      var rect = host.getBoundingClientRect();
+      if (rect.bottom < -240 || rect.top > vh + 240) { return; }
+
+      var speed  = parseFloat(layer.getAttribute('data-speed')) || 0.22;
+      var mid    = rect.top + (rect.height / 2);
+      var slack  = (layer.offsetHeight - host.offsetHeight) / 2;
+      var offset = ((vh / 2) - mid) * speed;
+
+      if (slack < 0) { slack = 0; }
+      if (offset >  slack) { offset =  slack; }
+      if (offset < -slack) { offset = -slack; }
+
+      layer.style.transform = 'translate3d(0,' + offset.toFixed(2) + 'px,0)';
+    });
+
+    ticking = false;
+  }
+
+  function onScroll() {
+    if (ticking) { return; }
+    ticking = true;
+    window.requestAnimationFrame(update);
+  }
+
+  update();
+  window.addEventListener('load', update);
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
 })();
 
 (function () {

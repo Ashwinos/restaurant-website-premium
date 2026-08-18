@@ -1,0 +1,1845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Waffle house</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Denk+One&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<style>
+  :root{
+    --bar-dark:#2A2A28;
+    --nav-black:#171716;
+    --gold:#C9A227;
+    --paper:#FFFFFF;
+    --ink:#1C1C1A;
+    --wedge-red:#E01B10;
+    --gal-gap:10px;
+    --gal-cols:4;
+    --gal-radius:6px;
+    --gal-wedge:90px;
+    --rev-wedge:90px;
+    --logo-row-h:66px;
+    --logo-row-h-stuck:76px;
+    --dark-blend:#0A0A09;
+    --botbar-h:66px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:'Work Sans', sans-serif; color:var(--ink);}
+  body.nav-open{overflow:hidden;}
+  a{color:inherit; text-decoration:none;}
+
+  /* ---- Shared outline button ---- */
+  .btn-outline{
+    display:inline-block;
+    font-family:'Work Sans', sans-serif;
+    font-size:0.9rem; font-weight:600;
+    letter-spacing:0.14em; text-transform:uppercase;
+    color:#fff; background:transparent;
+    border:1px solid #fff;
+    padding:16px 42px; cursor:pointer;
+    transition:background .18s ease, color .18s ease;
+  }
+
+    .btn-outline-white{
+    display:inline-block;
+    font-family:'Work Sans', sans-serif;
+    font-size:0.9rem; font-weight:600;
+    letter-spacing:0.14em; text-transform:uppercase;
+    color:#000000; background:transparent;
+    border:1px solid #000000;
+    padding:16px 42px; cursor:pointer;
+    transition:background .18s ease, color .18s ease;
+  }
+  .btn-outline:hover,
+  .btn-outline:focus-visible{background:var(--ink); color:#fff;}
+
+  .btn-outline.on-dark{
+    color:#fff; border-color:#fff;
+    font-family:'Oswald', sans-serif; font-weight:400;
+    letter-spacing:0.1em; font-size:1.05rem;
+    padding:18px 46px;
+  }
+  .btn-outline.on-dark:hover,
+  .btn-outline.on-dark:focus-visible{background:#fff; color:var(--ink);}
+
+  /* ---- Sticky header shell ---- */
+  .site-head{
+    position:sticky; top:0;
+    width:100%;
+    background:var(--paper);
+    z-index:60;
+    transition:box-shadow .22s ease;
+  }
+  .site-head.is-stuck{box-shadow:0 6px 20px rgba(0,0,0,0.22);}
+
+  /* ---- Logo row ---- */
+  .logo-row{
+    position:relative;
+    display:flex; align-items:center; justify-content:center;
+    min-height:var(--logo-row-h);
+    padding:10px 20px;
+    background:var(--paper);
+  }
+  .logo-row .mark{display:flex; align-items:center; gap:14px;}
+  .logo-row .logo-img{
+    width:52px; height:52px; flex-shrink:0;
+    object-fit:contain; object-position:center; display:block;
+    transition:width .22s ease, height .22s ease;
+  }
+  .logo-row .fruit{
+    width:34px; height:34px; border-radius:50% 50% 50% 4px;
+    background:radial-gradient(circle at 35% 30%, #E8A23A, #B85A1E 75%);
+    position:relative; flex-shrink:0;
+  }
+  .logo-row .fruit::after{
+    content:""; position:absolute; top:-8px; left:14px;
+    width:3px; height:12px; background:#5A6E3B; border-radius:2px;
+    transform:rotate(20deg);
+  }
+  .logo-row h1{
+    font-family:'Oswald', sans-serif; font-weight:600; letter-spacing:0.04em;
+    font-size:2rem; color:#1C1C1A; text-transform:uppercase;
+    transition:font-size .22s ease;
+  }
+  .logo-row h1 .thin{font-weight:400; opacity:0.85;}
+
+  /* ---- Shrunk state: logo + wordmark only ---- */
+  .site-head.is-stuck .logo-row .logo-img{width:34px; height:34px;}
+  .site-head.is-stuck .logo-row h1{font-size:1.25rem;}
+  .site-head.is-stuck .logo-row{
+    display:flex; align-items:center; justify-content:start;
+    min-height:var(--logo-row-h-stuck);
+    padding:10px 20px;
+    background:var(--paper);
+  }
+
+  /* ---- Burger toggle ---- */
+  .nav-toggle{
+    position:absolute; right:18px; top:50%; transform:translateY(-50%);
+    width:36px; height:36px; padding:0;
+    display:none; flex-direction:column; align-items:center; justify-content:center; gap:5px;
+    background:transparent; border:1px solid rgba(28,28,26,0.18); border-radius:4px;
+    cursor:pointer;
+  }
+  .nav-toggle i{
+    display:block; width:20px; height:2px; background:var(--ink);
+    transition:transform .25s ease, opacity .18s ease;
+  }
+  .nav-toggle:hover{border-color:var(--ink);}
+  .nav-toggle:focus-visible{outline:2px solid var(--gold); outline-offset:3px;}
+  body.nav-open .nav-toggle i:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  body.nav-open .nav-toggle i:nth-child(2){opacity:0;}
+  body.nav-open .nav-toggle i:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+  /* ---- Slide-in drawer ---- */
+  .nav-overlay{
+    position:fixed; inset:0; background:rgba(10,10,9,0.55);
+    opacity:0; visibility:hidden; z-index:80;
+    transition:opacity .28s ease, visibility 0s linear .28s;
+  }
+  body.nav-open .nav-overlay{opacity:1; visibility:visible; transition-delay:0s;}
+
+  .nav-drawer{
+    position:fixed; top:0; right:0; bottom:0;
+    width:min(360px, 86vw);
+    background:var(--nav-black); color:#F0EEE6;
+    z-index:90; overflow-y:auto;
+    display:flex; flex-direction:column;
+    padding:24px 26px calc(30px + var(--botbar-h));
+    transform:translateX(100%); visibility:hidden;
+    transition:transform .3s cubic-bezier(.2,.7,.3,1), visibility 0s linear .3s;
+  }
+  body.nav-open .nav-drawer{transform:translateX(0); visibility:visible; transition-delay:0s;}
+  .drawer-head{
+    display:flex; align-items:center; justify-content:space-between;
+    padding-bottom:20px; border-bottom:1px solid rgba(240,238,230,0.16);
+  }
+  .drawer-head span{
+    font-family:'Oswald', sans-serif; font-size:1.1rem;
+    letter-spacing:0.08em; text-transform:uppercase; color:#fff;
+  }
+  .drawer-close{
+    width:38px; height:38px; padding:0; cursor:pointer;
+    background:transparent; border:1px solid rgba(240,238,230,0.24); border-radius:50%;
+    color:#F0EEE6; display:flex; align-items:center; justify-content:center;
+  }
+  .drawer-close svg{width:16px; height:16px; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round;}
+  .drawer-close:hover{border-color:var(--gold); color:var(--gold);}
+  .drawer-close:focus-visible{outline:2px solid var(--gold); outline-offset:3px;}
+
+  .nav-drawer .js-mob-list{list-style:none; margin-top:8px;}
+  .nav-drawer .js-mob-list li a{
+    display:block; padding:16px 0;
+    border-bottom:1px solid rgba(240,238,230,0.12);
+    font-family:'Oswald', sans-serif; font-size:1.05rem;
+    letter-spacing:0.05em; text-transform:uppercase; color:#F0EEE6;
+    transition:color .18s ease, padding-left .18s ease;
+  }
+  .nav-drawer .js-mob-list li a:hover,
+  .nav-drawer .js-mob-list li a:focus-visible{color:var(--gold); padding-left:8px;}
+  .nav-drawer .bk-btn{margin-top:28px;}
+  .nav-drawer .btn-3d{
+    display:block; text-align:center;
+    padding:15px 20px; background:var(--wedge-red); color:#fff;
+    font-family:'Oswald', sans-serif; font-size:1rem;
+    letter-spacing:0.08em; text-transform:uppercase;
+    transition:background .18s ease;
+  }
+  .nav-drawer .btn-3d:hover{background:#fff; color:var(--ink);}
+  .drawer-social{display:flex; gap:14px; margin-top:30px;}
+  .drawer-social a{
+    width:36px; height:36px; border-radius:50%;
+    border:1px solid rgba(240,238,230,0.28);
+    display:flex; align-items:center; justify-content:center;
+    font-size:0.8rem; color:#F0EEE6;
+  }
+  .drawer-social a:hover{border-color:var(--gold); color:var(--gold);}
+
+  /* ---- Dark nav bar (desktop, in header) ---- */
+  nav.mainbar{
+    background:var(--nav-black);
+    display:flex; align-items:center; justify-content:center;
+    gap:34px; padding:16px 20px; flex-wrap:wrap;
+  }
+  nav.mainbar a{
+    font-family:'Oswald', sans-serif;
+    color:#F0EEE6; font-size:0.82rem; font-weight:700;
+    letter-spacing:0.03em; text-transform:uppercase;
+    padding:4px 0; border-bottom:2px solid transparent;
+    transition:border-color .15s ease, color .15s ease;
+  }
+  nav.mainbar a:hover{border-color:var(--gold); color:#fff;}
+  nav.mainbar .social{display:flex; gap:16px; margin-left:8px;}
+  nav.mainbar .social a{
+    width:30px; height:30px; border:1px solid #504F49; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-size:0.75rem; letter-spacing:0; text-transform:none; font-weight:400;
+    padding:0; border-bottom:none;
+  }
+  nav.mainbar .social a:hover{border-color:var(--gold); color:var(--gold);}
+
+  /* ---- Bottom tab bar (mobile only) ---- */
+  nav.botbar{
+    display:none;
+    position:fixed; left:0; right:0; bottom:0;
+    z-index:70;
+    background:var(--nav-black);
+    align-items:stretch; justify-content:center;
+    padding:0 0 env(safe-area-inset-bottom, 0px);
+    box-shadow:0 -6px 22px rgba(0,0,0,0.30);
+  }
+  nav.botbar a{
+    flex:1 1 0; max-width:190px; height:var(--botbar-h);
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:5px;
+    font-family:'Oswald', sans-serif;
+    color:#B9B7AE; font-size:0.68rem; font-weight:400;
+    letter-spacing:0.06em; text-transform:uppercase;
+    border-top:2px solid transparent;
+    transition:color .16s ease, border-color .16s ease;
+  }
+  nav.botbar a svg{
+    width:20px; height:20px; display:block;
+    fill:none; stroke:currentColor; stroke-width:1.7;
+    stroke-linecap:round; stroke-linejoin:round;
+  }
+  nav.botbar a svg .solid{fill:currentColor; stroke:none;}
+  nav.botbar a:hover,
+  nav.botbar a:focus-visible{color:#fff; border-top-color:var(--gold);}
+  nav.botbar a.is-active{color:var(--gold); border-top-color:var(--gold);}
+  nav.botbar a:focus-visible{outline:none;}
+
+  /* ---- Mobile switch: top bar out, burger + bottom bar in ---- */
+  @media (min-width:901px){
+    .nav-drawer, .nav-overlay{display:none;}
+         .site-head.is-stuck .logo-row{
+        display:flex; align-items:center; justify-content:center;
+        min-height:var(--logo-row-h-stuck);
+        padding:10px 20px;
+        background:var(--paper);
+      }
+  }
+  @media (max-width:900px){
+    nav.mainbar{display:none;}
+    nav.botbar{display:flex;}
+    .nav-toggle{display:flex;}
+    body{padding-bottom:calc(var(--botbar-h) + env(safe-area-inset-bottom, 0px));}
+    .logo-row,
+    .site-head.is-stuck .logo-row{padding:0px 20px;}
+    .fab-stack{bottom:calc(24px + var(--botbar-h));}
+
+    .logo-row{
+      justify-content: start;
+    }
+
+
+  }
+
+  /* ---- Hero ---- */
+  .hero{
+    position:relative; width:100%; height:100vh; overflow:hidden;
+    display:flex; align-items:flex-end;
+  }
+  .hero iframe{
+    position:absolute; top:50%; left:50%;
+    width:100vw; height:56.25vw;
+    min-height:100vh; min-width:177.78vh;
+    transform:translate(-50%, -50%); border:0;
+  }
+  .hero::after{
+    content:""; position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(0,0,0,0.15), rgba(0,0,0,0.4));
+    z-index:1;
+  }
+  .hero-caption{
+    position:absolute; z-index:2; bottom:50px; left:50%;
+    transform:translateX(-50%); color:#fff;
+    font-family:'Oswald', sans-serif; font-size:2rem;
+    text-shadow:0 2px 10px rgba(0,0,0,0.5);
+  }
+
+  .fab-stack{
+    position:fixed; right:22px; bottom:24px;
+    display:flex; flex-direction:column; gap:14px; z-index:40;
+  }
+  .fab{
+    width:56px; height:56px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-size:1.3rem; cursor:pointer; border:none;
+    box-shadow:0 6px 18px rgba(0,0,0,0.25);
+  }
+  .fab.primary{background:var(--nav-black); color:var(--gold);}
+  .fab.secondary{background:#fff; color:var(--ink);}
+
+  /* ---- Diagonal title banner ---- */
+  .title-banner{
+    background:#C6321F;
+    color:#171716;
+    padding:20px;
+    text-align:center;
+    position:relative;
+  }
+  .title-banner h1{
+    font-family:'Oswald', sans-serif; font-weight:400;
+    font-size:clamp(2rem, 5vw, 3rem);
+  }
+
+  /* ---- Parallax B&W backdrop (About + New Section) ---- */
+  .parallax-host{position:relative; overflow:hidden;}
+  .parallax-bg{
+    position:absolute; left:0; right:0; top:-22%; bottom:-22%;
+    background-image:var(--px-img);
+    background-size:cover; background-position:center; background-repeat:no-repeat;
+    filter:grayscale(1) contrast(1.06);
+    opacity:0.30;
+    transform:translate3d(0,0,0);
+    will-change:transform;
+    z-index:0; pointer-events:none;
+  }
+  .parallax-bg::after{
+    content:""; position:absolute; inset:0;
+    background:linear-gradient(120deg, rgba(255,255,255,0.30), rgba(255,255,255,0.55));
+  }
+  .about-section .about-photo,
+  .about-section .about-copy,
+  .parties-section .parties-copy,
+  .parties-section .parties-photo{position:relative; z-index:1;}
+
+  /* ---- About section ---- */
+  .about-section{display:grid; grid-template-columns:1fr 1fr; }
+  @media (max-width:860px){ .about-section{grid-template-columns:1fr;} }
+  .about-photo{
+    min-height:520px;
+    background:linear-gradient(135deg, #3E2E22, #6B4A2E 55%, #2A2118);
+    overflow:hidden;
+  }
+  .about-photo img{
+    width:100%; height:100%; min-height:520px;
+    object-fit:cover; object-position:center; display:block;
+  }
+  .about-copy{
+    padding:90px 60px 60px;
+    display:flex; flex-direction:column; align-items:center; text-align:center;
+  }
+  .about-copy h3{
+    font-family:'Oswald', sans-serif; font-weight:400;
+    font-size:clamp(2.2rem, 4vw, 3rem); letter-spacing:0.01em;
+  }
+  .about-icon{
+    width:60px; height:60px; margin:26px auto;
+    border-radius:50% 50% 50% 4px;
+    background:radial-gradient(circle at 35% 30%, #E8A23A, #B85A1E 75%);
+    position:relative;
+  }
+  .about-icon::after{
+    content:""; position:absolute; top:-10px; left:24px;
+    width:4px; height:16px; background:#5A6E3B; border-radius:2px;
+    transform:rotate(20deg);
+  }
+  .about-copy p{max-width:52ch; color:#3A3A36; font-size:1.02rem; line-height:1.8;}
+  .about-copy h4{
+    font-family:'Oswald', sans-serif; font-weight:400;
+    font-size:1.3rem; margin-top:34px; color:#171716;
+  }
+  .about-copy .btn-outline{margin-top:38px;}
+  .btn-outline-white{margin-top:38px;}
+
+  /* ---- Private parties ---- */
+  .parties-section{position:relative; display:grid; grid-template-columns:1fr 1fr; background:var(--paper);}
+  .parties-copy{
+    position:relative; overflow:hidden;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;
+    padding:120px 50px; min-height:520px;
+  }
+
+  .parties-copy > *{position:relative; z-index:2;}
+  .parties-copy h2{
+    font-family:'Oswald', sans-serif; font-weight:400;
+    font-size:clamp(2.6rem, 5.4vw, 4.4rem); letter-spacing:0.01em; text-transform:uppercase; line-height:1.05;
+  }
+  .parties-copy p{
+    font-family:'Oswald', sans-serif; font-weight:400;
+    font-size:clamp(1.1rem, 2vw, 1.6rem); margin-top:18px; color:#262623;
+  }
+  .parties-copy .btn-outline{margin-top:40px;}
+  .parties-photo{min-height:520px; background:linear-gradient(135deg, #2F3A2A, #4E5B3F 60%, #22271D); overflow:hidden;}
+  .parties-photo img{width:100%; height:100%; min-height:520px; object-fit:cover; object-position:center; display:block;}
+  .parties-wedge{
+    position:absolute; left:0; right:0; bottom:0; height:10px;
+    background:var(--wedge-red);
+    z-index:3; pointer-events:none;
+  }
+
+  /* ---- Full-bleed reservation slider ---- */
+  .shot-slider{position:relative; width:100%; height:clamp(460px, 78vh, 760px); overflow:hidden; background:#0E0E0D;}
+  .shot-slide{
+    position:absolute; inset:0;
+    opacity:0; visibility:hidden; pointer-events:none;
+    transition:opacity .9s ease, visibility 0s linear .9s;
+  }
+  .shot-slide.is-active{
+    opacity:1; visibility:visible; pointer-events:auto;
+    transition:opacity .9s ease, visibility 0s linear 0s;
+  }
+  .shot-slide img{width:100%; height:100%; object-fit:cover; object-position:center; display:block;}
+  .shot-slider::after{
+    content:""; position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(0,0,0,0.30), rgba(0,0,0,0.45));
+    z-index:2; pointer-events:none;
+  }
+  .shot-cta{position:absolute; z-index:4; top:50%; left:50%; transform:translate(-50%, -50%); white-space:nowrap;}
+  .shot-arrow{
+    position:absolute; z-index:5; top:50%; transform:translateY(-50%);
+    width:52px; height:52px; display:flex; align-items:center; justify-content:center;
+    background:transparent; border:none; cursor:pointer; color:#fff; opacity:0.85;
+    transition:opacity .18s ease;
+  }
+  .shot-arrow:hover, .shot-arrow:focus-visible{opacity:1;}
+  .shot-arrow svg{width:26px; height:26px; filter:drop-shadow(0 2px 6px rgba(0,0,0,0.5));}
+  .shot-arrow.prev{left:18px;}
+  .shot-arrow.next{right:18px;}
+  .shot-play{
+    position:absolute; z-index:5; left:34px; bottom:26px;
+    width:38px; height:38px; display:flex; align-items:center; justify-content:center;
+    background:transparent; border:none; cursor:pointer; color:#fff; opacity:0.9;
+  }
+  .shot-play:hover, .shot-play:focus-visible{opacity:1;}
+  .shot-play svg{width:20px; height:20px; filter:drop-shadow(0 2px 6px rgba(0,0,0,0.5));}
+  .shot-play .icon-play{display:none;}
+  .shot-slider.is-paused .shot-play .icon-play{display:block;}
+  .shot-slider.is-paused .shot-play .icon-pause{display:none;}
+  .shot-rail{position:absolute; z-index:5; left:0; right:0; bottom:0; height:3px; background:rgba(255,255,255,0.22);}
+  .shot-rail-fill{height:100%; width:0; background:#fff; transform-origin:left center;}
+  .shot-rail-fill.is-running{width:100%; animation:shot-fill 6s linear forwards;}
+  .shot-slider.is-paused .shot-rail-fill.is-running{animation-play-state:paused;}
+  @keyframes shot-fill{ from{transform:scaleX(0);} to{transform:scaleX(1);} }
+
+  /* ================================================
+     Pinterest-style masonry gallery
+     ================================================ */
+  .gallery-section{background:var(--paper);}
+  .gallery-head{text-align:center; padding:80px 24px 34px;}
+  .gallery-head h2{
+    font-family:'Oswald', sans-serif; font-weight:400;
+    font-size:clamp(2rem, 4vw, 2.8rem); text-transform:uppercase; letter-spacing:0.02em;
+  }
+  .gallery-head p{margin-top:12px; color:#5A5A54; font-size:1rem; letter-spacing:0.02em;}
+
+  /* Canvas holds the wedges so they aren't trapped inside a column box */
+  .gallery-canvas{
+    position:relative;
+    background:var(--dark-blend);
+    padding:var(--gal-gap);
+  }
+  .gallery-masonry{
+    column-count:var(--gal-cols);
+    column-gap:var(--gal-gap);
+  }
+  .gallery-card{
+    position:relative; display:block;
+    width:100%; margin:0 0 var(--gal-gap);
+    break-inside:avoid; -webkit-column-break-inside:avoid; page-break-inside:avoid;
+    border-radius:var(--gal-radius); overflow:hidden;
+    background:#141413;
+    aspect-ratio:var(--ar, 3 / 4);
+    box-shadow:0 2px 10px rgba(0,0,0,0.35);
+  }
+  .gallery-card img{
+    width:100%; height:100%;
+    object-fit:cover; object-position:center; display:block;
+    transition:transform .55s cubic-bezier(.2,.7,.3,1);
+  }
+  .gallery-card::after{
+    content:"";
+    position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(0,0,0,0) 45%, rgba(0,0,0,0.72) 100%);
+    opacity:0; transition:opacity .3s ease;
+  }
+  .gallery-card .card-label{
+    position:absolute; z-index:2;
+    left:16px; right:16px; bottom:14px;
+    font-family:'Work Sans', sans-serif;
+    font-size:0.78rem; font-weight:600;
+    letter-spacing:0.1em; text-transform:uppercase;
+    color:#fff;
+    opacity:0; transform:translateY(8px);
+    transition:opacity .3s ease, transform .3s ease;
+  }
+  .gallery-card:hover img,
+  .gallery-card:focus-visible img{transform:scale(1.07);}
+  .gallery-card:hover::after,
+  .gallery-card:focus-visible::after{opacity:1;}
+  .gallery-card:hover .card-label,
+  .gallery-card:focus-visible .card-label{opacity:1; transform:translateY(0);}
+  .gallery-card:focus-visible{outline:2px solid var(--gold); outline-offset:2px;}
+
+  .gallery-wedge{
+    position:absolute; left:0; right:0;
+    height:var(--gal-wedge);
+    z-index:3; pointer-events:none;
+  }
+  .gallery-wedge.is-top{
+    top:-1px;
+    background:var(--paper);
+    clip-path:polygon(0 0, 100% 0, 100% 40%, 84% 74%, 0 18%);
+  }
+  .gallery-wedge.is-bottom{
+    bottom:-1px;
+    background:#000;
+    clip-path:polygon(0 100%, 0 82%, 82% 26%, 100% 60%, 100% 100%);
+  }
+
+  .gallery-foot{
+    display:flex; justify-content:center;
+    padding:52px 24px 110px;
+    background:linear-gradient(180deg, #000 0%, var(--dark-blend) 60%, var(--dark-blend) 100%);
+  }
+
+  /* ---- Guest reviews ---- */
+  .reviews-section{
+    position:relative;
+    margin-top:-1px;
+    background:
+      linear-gradient(180deg,
+        var(--dark-blend) 0%,
+        rgba(10,10,9,0.96) 8%,
+        rgba(10,10,9,0.86) 20%,
+        rgba(10,10,9,0.78) 34%,
+        rgba(10,10,9,0.80) 78%,
+        rgba(10,10,9,0.90) 100%),
+      url("https://images.unsplash.com/photo-1482575832494-771f74bf6857?auto=format&fit=crop&w=1900&q=70") center/cover no-repeat fixed;
+    color:#fff;
+    padding:calc(110px + var(--rev-wedge)) 90px calc(90px + var(--rev-wedge));
+    text-align:center;
+    overflow:hidden;
+  }
+  .reviews-wedge{
+    position:absolute; left:0; right:0;
+    height:var(--rev-wedge);
+    background:var(--nav-black);
+    z-index:3; pointer-events:none;
+  }
+  .reviews-wedge.is-top{
+    top:0;
+    clip-path:polygon(0 0, 100% 0, 100% 40%, 22% 94%, 0 18%);
+  }
+  .reviews-wedge.is-bottom{
+    bottom:0;
+    clip-path:polygon(0 100%, 0 82%, 82% 6%, 100% 60%, 100% 100%);
+  }
+  .reviews-head h2{
+    font-family:'Oswald', sans-serif; font-weight:400;
+    font-size:clamp(2.4rem, 5vw, 3.6rem); text-transform:uppercase; letter-spacing:0.03em;
+  }
+  .reviews-head .src{
+    margin-top:16px;
+    font-family:'Oswald', sans-serif; font-weight:400;
+    color:var(--wedge-red); font-size:1.4rem;
+  }
+  .review-slide{display:none;}
+  .review-slide.is-active{display:block;}
+  .review-who{
+    margin-top:20px; font-family:'Fraunces', 'Work Sans', serif; letter-spacing:0.02em;
+    font-size:0.95rem; color:#EDEAE2;
+  }
+  .review-who .stars{color:var(--wedge-red); letter-spacing:2px; margin-left:8px;}
+  .review-body{
+    position:relative;
+    max-width:760px; margin:34px auto 0;
+    font-size:1.15rem; line-height:1.85; color:#E7E4DA;
+  }
+  .review-body .quote-mark{
+    position:absolute; font-family:Georgia, serif; font-weight:700;
+    font-size:5rem; color:var(--wedge-red); line-height:1; opacity:0.9;
+  }
+  .review-body .quote-mark.open{top:-30px; left:-70px;}
+  .review-body .quote-mark.close{bottom:-70px; right:-70px;}
+
+  .reviews-arrow{
+    position:absolute; top:50%; transform:translateY(-50%);
+    width:48px; height:48px; display:flex; align-items:center; justify-content:center;
+    background:transparent; border:none; cursor:pointer; color:var(--wedge-red); opacity:0.85;
+  }
+  .reviews-arrow:hover, .reviews-arrow:focus-visible{opacity:1;}
+  .reviews-arrow svg{width:26px; height:26px;}
+  .reviews-arrow.prev{left:26px;}
+  .reviews-arrow.next{right:26px;}
+
+  .reviews-dots{display:flex; justify-content:center; gap:14px; margin-top:56px;}
+  .reviews-dots button{
+    width:11px; height:11px; border-radius:50%;
+    border:1.5px solid var(--wedge-red); background:transparent;
+    padding:0; cursor:pointer;
+  }
+  .reviews-dots button.is-active{background:var(--wedge-red);}
+
+  .reviews-play{
+    margin:30px auto 0; width:34px; height:34px;
+    display:flex; align-items:center; justify-content:center;
+    background:transparent; border:none; cursor:pointer; color:var(--wedge-red);
+  }
+  .reviews-play svg{width:18px; height:18px;}
+  .reviews-play .icon-play{display:none;}
+  .reviews-section.is-paused .reviews-play .icon-play{display:block;}
+  .reviews-section.is-paused .reviews-play .icon-pause{display:none;}
+
+  /* ================================================
+     FAQ accordion
+     ================================================ */
+  .faq-section{
+    background:var(--paper);
+    padding:96px 24px 110px;
+  }
+  .faq-head{
+    max-width:720px; margin:0 auto 46px;
+    text-align:center;
+  }
+
+  .faq-head h2{
+    margin-top:14px;
+    font-family:'Oswald', sans-serif; font-weight:400;
+    font-size:clamp(2rem, 4vw, 2.8rem);
+    text-transform:uppercase; letter-spacing:0.02em;
+  }
+  .faq-head p{
+    margin-top:14px;
+    color:#5A5A54; font-size:1rem; line-height:1.7;
+  }
+
+  .faq-list{
+    max-width:880px; margin:0 auto;
+    border-top:1px solid rgba(28,28,26,0.14);
+  }
+  .faq-item{border-bottom:1px solid rgba(28,28,26,0.14);}
+
+  .faq-q{
+    width:100%; display:flex; align-items:center; gap:22px;
+    padding:26px 2px;
+    background:transparent; border:0; cursor:pointer;
+    text-align:left;
+    font-family:'Oswald', sans-serif; font-weight:400;
+    font-size:clamp(1rem, 2vw, 1.2rem);
+    letter-spacing:0.03em; text-transform:uppercase;
+    color:var(--ink);
+    transition:color .18s ease;
+  }
+  .faq-q:hover{color:var(--wedge-red);}
+  .faq-q:focus-visible{outline:2px solid var(--wedge-red); outline-offset:4px;}
+  .faq-item.is-open .faq-q{color:var(--wedge-red);}
+
+  /* plus that folds into a minus */
+  .faq-icon{
+    position:relative; flex-shrink:0;
+    width:20px; height:20px; margin-left:auto;
+  }
+  .faq-icon::before,
+  .faq-icon::after{
+    content:""; position:absolute; left:50%; top:50%;
+    background:var(--wedge-red);
+    transform:translate(-50%, -50%);
+  }
+  .faq-icon::before{width:18px; height:2px;}
+  .faq-icon::after{
+    width:2px; height:18px;
+    transition:transform .3s cubic-bezier(.2,.7,.3,1);
+  }
+  .faq-item.is-open .faq-icon::after{transform:translate(-50%, -50%) rotate(90deg);}
+
+  .faq-a{
+    max-height:0; overflow:hidden;
+    transition:max-height .38s cubic-bezier(.2,.7,.3,1);
+  }
+  .faq-a-inner{
+    padding:0 46px 30px 0;
+    max-width:64ch;
+    color:#3A3A36; font-size:1.02rem; line-height:1.8;
+  }
+  .faq-a-inner a{
+    color:var(--wedge-red);
+    border-bottom:1px solid transparent;
+    transition:border-color .18s ease;
+  }
+  .faq-a-inner a:hover,
+  .faq-a-inner a:focus-visible{border-color:var(--wedge-red);}
+
+  .faq-foot{
+    max-width:880px; margin:44px auto 0;
+    display:flex; flex-wrap:wrap; align-items:center; justify-content:center;
+    gap:16px 24px; text-align:center;
+    font-size:1rem; color:#5A5A54;
+  }
+  .faq-foot .btn-outline-white{margin-top:0;}
+
+  @media (max-width:760px){
+    .faq-section{padding:64px 20px 76px;}
+    .faq-q{gap:16px; padding:22px 2px;}
+    .faq-a-inner{padding:0 8px 24px 0; font-size:0.98rem;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .shot-slide{transition:none;}
+    .shot-rail-fill.is-running{animation:none; width:0;}
+    .gallery-card img, .gallery-card::after, .gallery-card .card-label{transition:none;}
+    .gallery-card:hover img{transform:none;}
+    .site-head, .logo-row .logo-img, .logo-row h1{transition:none;}
+    .parallax-bg{transform:none !important; top:0; bottom:0;}
+    .nav-drawer, .nav-overlay, .nav-toggle i{transition:none;}
+    .faq-a, .faq-icon::after, .faq-q{transition:none;}
+  }
+
+  @media (max-width:1200px){
+    :root{--gal-cols:3;}
+  }
+
+  @media (max-width:860px){
+    .parties-section{grid-template-columns:1fr;}
+    .parties-copy{order:2; padding:80px 28px 110px; min-height:0;}
+    .parties-photo{order:1; min-height:340px;}
+    .parties-photo img{min-height:340px;}
+    .parties-wedge{height:60px;}
+    .shot-slider{height:clamp(360px, 60vh, 520px);}
+    .shot-arrow.prev{left:4px;}
+    .shot-arrow.next{right:4px;}
+    .shot-play{left:16px; bottom:18px;}
+    .shot-cta{max-width:calc(100% - 120px); white-space:normal; text-align:center;}
+    :root{--gal-cols:2; --gal-gap:8px; --gal-wedge:56px; --rev-wedge:56px;}
+    .gallery-head{padding:56px 20px 26px;}
+    .gallery-foot{padding:38px 20px 80px;}
+    .reviews-section{padding:calc(80px + var(--rev-wedge)) 24px calc(60px + var(--rev-wedge));}
+    .review-body .quote-mark.open{left:-8px; top:-46px;}
+    .review-body .quote-mark.close{right:-8px; bottom:-56px;}
+    .reviews-arrow.prev{left:2px;}
+    .reviews-arrow.next{right:2px;}
+    .parallax-bg{top:-14%; bottom:-14%;}
+    .gallery-card .card-label{opacity:1; transform:none; font-size:0.7rem;}
+    .gallery-card::after{opacity:1;}
+  }
+
+  /* ================================================
+     Social directory + contact + map
+     ================================================ */
+  .social-section{
+    display:grid; grid-template-columns:1fr 1fr;
+    min-height:560px;
+  }
+  @media (max-width:900px){ .social-section{grid-template-columns:1fr;} }
+
+  .social-copy{
+    position:relative; overflow:hidden;
+    display:flex; flex-direction:column; justify-content:center;
+    padding:84px 60px 96px;
+    background:var(--nav-black); color:#F0EEE6;
+  }
+  .social-eyebrow{
+    font-family:'Work Sans', sans-serif;
+    font-size:0.72rem; font-weight:700;
+    letter-spacing:0.24em; text-transform:uppercase;
+    color:var(--wedge-red);
+  }
+  .social-copy h2{
+    margin-top:14px;
+    font-family:'Oswald', sans-serif; font-weight:400;
+    font-size:clamp(2.4rem, 5vw, 3.4rem); text-transform:uppercase; letter-spacing:0.02em;
+    color:#fff;
+  }
+
+  /* ---- Channel rows ---- */
+  .social-channels{
+    margin-top:36px;
+    border-top:1px solid rgba(240,238,230,0.16);
+  }
+  .social-channels a{
+    position:relative;
+    display:flex; align-items:center; gap:16px;
+    padding:17px 4px 17px 0;
+    border-bottom:1px solid rgba(240,238,230,0.16);
+    color:#F0EEE6;
+    transition:padding-left .22s ease, color .22s ease;
+  }
+  .social-channels a::before{
+    content:"";
+    position:absolute; left:0; top:50%;
+    width:0; height:2px; background:var(--wedge-red);
+    transform:translateY(-50%);
+    transition:width .22s ease;
+  }
+  .social-channels svg{
+    width:21px; height:21px; flex-shrink:0; pointer-events:none;
+    fill:none; stroke:currentColor;
+    stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round;
+    transition:color .22s ease;
+  }
+  .social-channels svg .solid{fill:currentColor; stroke:none;}
+  .social-channels .net{
+    font-family:'Oswald', sans-serif; font-weight:400;
+    font-size:1.02rem; letter-spacing:0.05em; text-transform:uppercase;
+  }
+  .social-channels .handle{
+    margin-left:auto;
+    font-family:'Work Sans', sans-serif; font-size:0.88rem;
+    letter-spacing:0.04em; color:#9C9A92;
+    transition:color .22s ease;
+  }
+  .social-channels a:hover,
+  .social-channels a:focus-visible{padding-left:20px; color:#fff;}
+  .social-channels a:hover::before,
+  .social-channels a:focus-visible::before{width:12px;}
+  .social-channels a:hover .handle,
+  .social-channels a:focus-visible .handle{color:var(--wedge-red);}
+  .social-channels a:focus-visible{outline:none;}
+  .social-channels a:focus-visible .net{text-decoration:underline; text-underline-offset:4px;}
+
+  /* ---- Contact details ---- */
+  .social-contact{
+    display:grid; grid-template-columns:repeat(2, minmax(0, 1fr));
+    gap:28px 34px; margin-top:44px;
+  }
+  .social-contact .full{grid-column:1 / -1;}
+  .social-contact .label{
+    display:block;
+    font-family:'Work Sans', sans-serif;
+    font-size:0.68rem; font-weight:700;
+    letter-spacing:0.2em; text-transform:uppercase;
+    color:var(--wedge-red); margin-bottom:9px;
+  }
+  .social-contact .value{
+    font-family:'Work Sans', sans-serif;
+    font-size:1.02rem; line-height:1.6; color:#EDEAE2;
+  }
+  .social-contact a.value{
+    display:inline-block;
+    border-bottom:1px solid transparent;
+    transition:color .18s ease, border-color .18s ease;
+  }
+  .social-contact a.value:hover,
+  .social-contact a.value:focus-visible{color:#fff; border-color:var(--wedge-red);}
+  .social-contact a.value:focus-visible{outline:2px solid var(--wedge-red); outline-offset:4px;}
+
+  @media (prefers-reduced-motion: reduce){
+    .social-channels a,
+    .social-channels a::before,
+    .social-contact a.value{transition:none;}
+    .social-channels a:hover,
+    .social-channels a:focus-visible{padding-left:0;}
+  }
+
+  .map-panel{
+    position:relative;
+  z-index: 3;}
+  .map-panel #siteMap{width:100%; height:100%; min-height:420px;}
+  .map-caption{
+    position:absolute; z-index:500;
+    left:24px; right:24px; bottom:24px;
+    background:#fff; padding:22px 26px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.18);
+    font-family:'Fraunces', 'Work Sans', serif; font-size:1.02rem; line-height:1.6;
+    color:#262623;
+  }
+  @media (max-width:900px){
+    .social-copy{padding:64px 28px 76px; clip-path:none;}
+    .map-panel #siteMap{min-height:380px;}
+  }
+
+  @media (max-width:760px){
+    :root{--botbar-h:60px;}
+    nav.botbar a{font-size:0.62rem; letter-spacing:0.04em; gap:4px;}
+    nav.botbar a svg{width:19px; height:19px;}
+    .logo-row h1{font-size:1.4rem;}
+    .logo-row .logo-img{width:38px; height:38px;}
+    .logo-row .mark{gap:10px;}
+ 
+    .nav-toggle{right:12px;}
+    :root{--logo-row-h:74px;}
+    .site-head.is-stuck .logo-row .logo-img{width:28px; height:28px;}
+    .site-head.is-stuck .logo-row h1{font-size:1.05rem;}
+    .about-copy{padding:60px 28px 40px;}
+    .btn-outline{padding:14px 34px; font-size:0.82rem;}
+    .btn-outline.on-dark{padding:14px 30px; font-size:0.92rem;}
+    .social-channels a{gap:12px; padding:15px 2px 15px 0;}
+    .social-channels .net{font-size:0.94rem;}
+    .social-channels .handle{font-size:0.8rem;}
+    .social-contact{grid-template-columns:1fr; gap:24px;}
+  }
+
+  /* ---- Footer ---- */
+  .site-footer{background:var(--wedge-red); color:#171716; padding:90px 70px 70px;}
+  .footer-grid{
+    display:grid; grid-template-columns:1fr 1fr 1fr;
+    gap:50px; max-width:1400px; margin:0 auto;
+  }
+  @media (max-width:860px){ .footer-grid{grid-template-columns:1fr;} }
+  .footer-grid h3{
+    font-family:'Oswald', sans-serif; font-weight:400;
+    font-size:1.4rem; text-transform:uppercase; letter-spacing:0.02em;
+    margin-bottom:22px;
+  }
+  .footer-grid p{
+    font-family:'Fraunces', 'Work Sans', serif; font-size:1.02rem;
+    line-height:1.7; color:#2A0D0A;
+  }
+
+  /* ---- Get Directions button ---- */
+  .footer-grid .directions{
+    display:inline-flex; align-items:center; gap:10px;
+    margin-top:18px; padding:12px 22px 12px 18px;
+    font-family:'Work Sans', sans-serif;
+    font-size:0.82rem; font-weight:600;
+    letter-spacing:0.12em; text-transform:uppercase;
+    color:#FFF; background:#171716;
+    border:1px solid #171716; border-radius:999px;
+    text-decoration:none;
+    transition:background .18s ease, color .18s ease, transform .18s ease;
+  }
+  .footer-grid .directions svg{
+    width:17px; height:17px; flex-shrink:0;
+    stroke:currentColor; fill:none;
+    stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round;
+    transition:transform .18s ease;
+  }
+  .footer-grid .directions:hover,
+  .footer-grid .directions:focus-visible{
+    background:transparent; color:#171716;
+    transform:translateY(-2px);
+  }
+  .footer-grid .directions:hover svg,
+  .footer-grid .directions:focus-visible svg{transform:translateY(-1px) scale(1.08);}
+  .footer-grid .directions:focus-visible{outline:2px solid #171716; outline-offset:3px;}
+  @media (prefers-reduced-motion: reduce){
+    .footer-grid .directions,
+    .footer-grid .directions svg{transition:none;}
+    .footer-grid .directions:hover,
+    .footer-grid .directions:focus-visible{transform:none;}
+    .footer-grid .directions:hover svg,
+    .footer-grid .directions:focus-visible svg{transform:none;}
+  }
+
+  .footer-hours .block + .block{margin-top:22px;}
+  .footer-social{display:flex; gap:14px; margin-bottom:36px;}
+  .footer-social a{
+    width:36px; height:36px; border-radius:50%;
+    background:#171716; color:#fff;
+    display:flex; align-items:center; justify-content:center;
+    font-size:0.9rem;
+  }
+  .footer-grid .contact-line{display:block; margin-top:4px;}
+
+  .site-footer-bottom{
+    background:#171716; color:#EDEAE2;
+    padding:34px 24px; text-align:center;
+    border-top:1px solid #3A3A38;
+  }
+  .site-footer-bottom .powered{
+    font-family:'Fraunces', 'Work Sans', serif; font-size:1.05rem;
+    display:flex; align-items:center; justify-content:center; gap:10px;
+  }
+  .site-footer-bottom .powered b{font-family:'Work Sans', sans-serif; font-weight:700;}
+  .site-footer-bottom .credit{
+    display:block; margin-top:14px;
+    font-family:'Fraunces', 'Work Sans', serif; font-size:0.92rem;
+    text-decoration:underline; color:#EDEAE2;
+  }
+  .title-banner h1{
+    font-family:'Oswald', sans-serif; font-weight:600;
+    font-size:clamp(2rem, 5vw, 3rem);
+    line-height:1.1;
+  }
+  .title-banner .banner-sub{
+    display:flex; align-items:center; justify-content:center; gap:16px;
+    margin-top:14px;
+    font-family:'Work Sans', sans-serif;
+    font-size:clamp(0.74rem, 1.4vw, 0.88rem); font-weight:600;
+    letter-spacing:0.22em; text-transform:uppercase;
+    color:#2A0D0A;
+  }
+
+  @media (max-width:600px){
+    .title-banner{padding:26px 18px;}
+    .title-banner .banner-sub{gap:10px; letter-spacing:0.16em;}
+  }
+</style>
+</head>
+<body>
+
+<header class="site-head" id="siteHead">
+  <div class="logo-row">
+    <div class="mark">
+      <img class="logo-img" src="https://1000logos.net/wp-content/uploads/2025/02/Waffle-House-Logo.png" alt="Waffle House logo" width="52" height="52" fetchpriority="high">
+      <h1>Waffle House</h1>
+    </div>
+
+    <button class="nav-toggle" id="navToggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="navDrawer">
+      <i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>
+    </button>
+  </div>
+
+  <nav class="mainbar" aria-label="Primary">
+    <a href="#">Home</a>
+    <a href="#">Menu</a>
+    <a href="#">About Us</a>
+    <a href="#">Events</a>
+    <a href="#">Gallery</a>
+    <a href="#">Reservations</a>
+    <a href="#">Jobs</a>
+    <a href="#">Order Online</a>
+
+    <div class="social">
+      <a href="#" aria-label="Facebook">f</a>
+      <a href="#" aria-label="Instagram">ig</a>
+      <a href="#" aria-label="LinkedIn">in</a>
+    </div>
+  </nav>
+</header>
+
+<div class="nav-overlay" id="navOverlay"></div>
+
+<aside class="nav-drawer" id="navDrawer" aria-label="All pages">
+  <div class="drawer-head">
+    <span>Menu</span>
+    <button class="drawer-close" id="navClose" type="button" aria-label="Close menu">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6 18 18M18 6 6 18"></path></svg>
+    </button>
+  </div>
+
+  <ul class="js-mob-list">
+    <li><a href="#">Home</a></li>
+    <li><a class="remove-font-color" href="#">About Us</a></li>
+    <li><a href="#">Menu</a></li>
+    <li><a href="#">Reservations</a></li>
+    <li><a href="#">Gallery</a></li>
+    <li><a href="#">Events</a></li>
+    <li><a href="#">Jobs</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+
+  <div class="bk-btn mt-4">
+    <a href="#" class="btn-3d">Order Online</a>
+  </div>
+
+  <div class="drawer-social">
+    <a href="#" aria-label="Facebook">f</a>
+    <a href="#" aria-label="Instagram">ig</a>
+    <a href="#" aria-label="LinkedIn">in</a>
+  </div>
+</aside>
+
+<div class="hero">
+    <iframe
+        src="https://www.youtube.com/embed/D409IPfk9jE?autoplay=1&mute=1&loop=1&playlist=D409IPfk9jE&controls=0&rel=0"
+        
+        title="Hero Video"
+        frameborder="0"
+        allow="autoplay; encrypted-media"
+        allowfullscreen>
+    </iframe>
+    <!--<iframe src="https://www.youtube-nocookie.com/embed/D409IPfk9jE?si=dw99NOFxBdfSKkR5&amp;controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay;" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>-->
+</div>
+
+<div class="title-banner">
+  <h1>Waffle House.</h1>
+  <p class="banner-sub">Breakfast all day, every day</p>
+</div>
+
+<div class="about-section parallax-host">
+  <div class="parallax-bg" data-speed="0.22"
+       style="--px-img:url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1600&q=60');"
+       aria-hidden="true"></div>
+
+  <div class="about-photo">
+    <img src="https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg" alt="Interior of the restaurant">
+  </div>
+  <div class="about-copy">
+    <h3>About Us</h3>
+    <p>Waffle House is a seasonal kitchen built around one wood-fired hearth and produce sourced from farms we visit ourselves. Every dish is cooked to order, with options for gluten-free, dairy-free, and plant-based diets built into the menu from the start — not as an afterthought.</p>
+    <h4>A menu that changes with the season</h4>
+    <a href="#" class="btn-outline-white">More</a>
+  </div>
+</div>
+
+<section class="parties-section parallax-host">
+  <div class="parallax-bg" data-speed="0.22"
+       style="--px-img:url('https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=1600&q=60');"
+       aria-hidden="true"></div>
+
+  <div class="parties-copy">
+     <h2>Great Moments</h2>
+    <p>
+        Discover delicious flavors, freshly prepared dishes, and a warm dining
+        experience made for every occasion. From casual meals to special
+        gatherings, there’s always something delicious waiting for you.
+    </p>
+    <a href="#" class="btn-outline-white">view more</a>
+  </div>
+  <div class="parties-photo">
+    <img src="https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=1600&q=70" alt="Covered patio seating set for a private party">
+  </div>
+  <div class="parties-wedge" aria-hidden="true"></div>
+</section>
+
+<section class="shot-slider" id="shotSlider" aria-roledescription="carousel" aria-label="Inside the restaurant">
+  <div class="shot-slide is-active">
+    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1900&q=75" alt="Dining room with painted mural wall">
+    <a href="#" class="btn-outline on-dark shot-cta">Reservations</a>
+  </div>
+  <div class="shot-slide">
+    <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1900&q=75" alt="Warm lit tables at dinner service" loading="lazy">
+    <a href="#" class="btn-outline on-dark shot-cta">About Us</a>
+  </div>
+  <div class="shot-slide">
+    <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1900&q=75" alt="Plated main course ready to go out" loading="lazy">
+    <a href="#" class="btn-outline on-dark shot-cta">Order Online</a>
+  </div>
+  <div class="shot-slide">
+    <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=1900&q=75" alt="Salad bowl with carrot and microgreens" loading="lazy">
+    <a href="#" class="btn-outline on-dark shot-cta">Menu</a>
+  </div>
+  <div class="shot-slide">
+    <img src="https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=1900&q=75" alt="Long table set for a group celebration" loading="lazy">
+    <a href="#" class="btn-outline on-dark shot-cta">Events</a>
+  </div>
+  <div class="shot-slide">
+    <img src="https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?auto=format&fit=crop&w=1900&q=75" alt="Bar seating and shelves of glassware" loading="lazy">
+    <a href="#" class="btn-outline on-dark shot-cta">Gallery</a>
+  </div>
+  <div class="shot-slide">
+    <img src="https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=1900&q=75" alt="Kitchen team working the pass" loading="lazy">
+    <a href="#" class="btn-outline on-dark shot-cta">Jobs</a>
+  </div>
+
+  <button class="shot-arrow prev" type="button" aria-label="Previous slide">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+  </button>
+  <button class="shot-arrow next" type="button" aria-label="Next slide">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
+  </button>
+
+  <button class="shot-play" type="button" aria-label="Pause slideshow" aria-pressed="false">
+    <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+    <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="7 4 20 12 7 20"></polygon></svg>
+  </button>
+
+  <div class="shot-rail" aria-hidden="true"><div class="shot-rail-fill" id="shotRailFill"></div></div>
+</section>
+
+<section class="gallery-section">
+
+  <div class="gallery-head">
+    <h2>Our Gallery</h2>
+    <p>Plates, pours and desserts going out tonight.</p>
+  </div>
+
+  <div class="gallery-canvas">
+    <div class="gallery-wedge is-top" aria-hidden="true"></div>
+
+    <div class="gallery-masonry">
+      <a href="#" class="gallery-card" style="--ar:3/4;">
+        <img src="https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=800&q=75" alt="Cheesecake with a scoop of vanilla and a strawberry" loading="lazy" decoding="async">
+      </a>
+      <a href="#" class="gallery-card" style="--ar:1/1;">
+        <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=75" alt="Plated salad with shredded carrot and microgreens" loading="lazy" decoding="async">
+      </a>
+      <a href="#" class="gallery-card" style="--ar:4/5;">
+        <img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=800&q=75" alt="Bottles of red, rose and white wine with poured glasses" loading="lazy" decoding="async">
+      </a>
+      <a href="#" class="gallery-card" style="--ar:3/2;">
+        <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=800&q=75" alt="Crab cake with sweet potato fries" loading="lazy" decoding="async">
+      </a>
+      <a href="#" class="gallery-card" style="--ar:2/3;">
+        <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=800&q=75" alt="Iced cocktail garnished with ribboned cucumber" loading="lazy" decoding="async">
+      </a>
+      <a href="#" class="gallery-card" style="--ar:1/1;">
+        <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=75" alt="Chopped green salad dressed with herb oil" loading="lazy" decoding="async">
+      </a>
+      <a href="#" class="gallery-card" style="--ar:4/5;">
+        <img src="https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=800&q=75" alt="Layered dessert in a coupe with a tuile and strawberry" loading="lazy" decoding="async">
+      </a>
+      <a href="#" class="gallery-card" style="--ar:3/4;">
+        <img src="https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&fit=crop&w=800&q=75" alt="Seared fish fillet with seasonal vegetables" loading="lazy" decoding="async">
+      </a>
+      <a href="#" class="gallery-card" style="--ar:3/2;">
+        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=75" alt="Grilled steak sliced on a board" loading="lazy" decoding="async">
+      </a>
+      <a href="#" class="gallery-card" style="--ar:4/5;">
+        <img src="https://images.unsplash.com/photo-1551782450-a2132b4ba21d?auto=format&fit=crop&w=800&q=75" alt="Burger with fries on a plate" loading="lazy" decoding="async">
+      </a>
+      <a href="#" class="gallery-card" style="--ar:16/9;">
+        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1200&q=75" alt="Dining room laid up for evening service" loading="lazy" decoding="async">
+      </a>
+      <a href="#" class="gallery-card" style="--ar:1/1;">
+        <img src="https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=800&q=75" alt="Espresso cup on a saucer" loading="lazy" decoding="async">
+      </a>
+      <a href="#" class="gallery-card" style="--ar:2/3;">
+        <img src="https://images.unsplash.com/photo-1481931098730-318b6f776db0?auto=format&fit=crop&w=800&q=75" alt="Cocktail being finished at the bar" loading="lazy" decoding="async">
+      </a>
+      <a href="#" class="gallery-card" style="--ar:4/5;">
+        <img src="https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?auto=format&fit=crop&w=800&q=75" alt="Pasta plated with fresh herbs" loading="lazy" decoding="async">
+      </a>
+      <a href="#" class="gallery-card" style="--ar:3/4;">
+        <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=75" alt="Plated main course ready to go out" loading="lazy" decoding="async">
+      </a>
+      <a href="#" class="gallery-card" style="--ar:3/2;">
+        <img src="https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?auto=format&fit=crop&w=800&q=75" alt="Bar seating and shelves of glassware" loading="lazy" decoding="async">
+      </a>
+
+      <div class="gallery-wedge is-bottom" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <div class="gallery-foot">
+    <a href="#" class="btn-outline">View gallery</a>
+  </div>
+</section>
+
+<section class="reviews-section" id="reviewsSlider">
+  <!-- <div class="reviews-wedge is-top" aria-hidden="true"></div> -->
+
+  <div class="reviews-head">
+    <h2>Reviews</h2>
+    <div class="src">Guest Reviews</div>
+  </div>
+
+  <button class="reviews-arrow prev" type="button" aria-label="Previous review">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+  </button>
+  <button class="reviews-arrow next" type="button" aria-label="Next review">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
+  </button>
+
+  <div class="review-slide is-active">
+    <div class="review-who">MARA T.: <span class="stars">★★★★★</span></div>
+    <div class="review-body">
+      <span class="quote-mark open" aria-hidden="true">&ldquo;</span>
+      We came in on a whim after a long week and ended up staying for two rounds of dessert. The staff walked us through the seasonal specials without rushing, and the patio seating made it feel like a proper night out rather than a quick dinner.
+      <span class="quote-mark close" aria-hidden="true">&rdquo;</span>
+    </div>
+  </div>
+
+  <div class="review-slide">
+    <div class="review-who">DEVON K.: <span class="stars">★★★★★</span></div>
+    <div class="review-body">
+      <span class="quote-mark open" aria-hidden="true">&ldquo;</span>
+      Reservations were easy through the website, and the table was ready the moment we walked in. The kitchen was happy to adjust a couple of dishes for a dietary restriction without making a fuss about it.
+      <span class="quote-mark close" aria-hidden="true">&rdquo;</span>
+    </div>
+  </div>
+
+  <div class="review-slide">
+    <div class="review-who">PRIYA S.: <span class="stars">★★★★★</span></div>
+    <div class="review-body">
+      <span class="quote-mark open" aria-hidden="true">&ldquo;</span>
+      This is now our go-to for celebrating anything. The private room fit our whole group comfortably, and the staff kept checking in without ever hovering. Already planning our next visit.
+      <span class="quote-mark close" aria-hidden="true">&rdquo;</span>
+    </div>
+  </div>
+
+  <div class="reviews-dots">
+    <button type="button" class="is-active" aria-label="Show review 1"></button>
+    <button type="button" aria-label="Show review 2"></button>
+    <button type="button" aria-label="Show review 3"></button>
+  </div>
+
+  <button class="reviews-play" type="button" aria-label="Pause reviews" aria-pressed="false">
+    <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+    <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="7 4 20 12 7 20"></polygon></svg>
+  </button>
+
+  <!-- <div class="reviews-wedge is-bottom" aria-hidden="true"></div> -->
+</section>
+
+<section class="faq-section" id="faqSection">
+  <div class="faq-head">
+    
+    <h2>Frequently Asked</h2>
+    <p>The things guests ask us most, answered before you call.</p>
+  </div>
+
+  <div class="faq-list" id="faqList">
+    <div class="faq-item">
+      <button class="faq-q" type="button" aria-expanded="false" aria-controls="faqPanel1" id="faqBtn1">
+        <span>Do you take reservations?</span>
+        <span class="faq-icon" aria-hidden="true"></span>
+      </button>
+      <div class="faq-a" id="faqPanel1" role="region" aria-labelledby="faqBtn1">
+        <div class="faq-a-inner">
+          Yes. Book online any time, or call us during opening hours. We hold reserved tables for 15 minutes past the booking time, so give us a ring if you're running late and we'll keep it for you.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" type="button" aria-expanded="false" aria-controls="faqPanel2" id="faqBtn2">
+        <span>Can you cater for dietary requirements?</span>
+        <span class="faq-icon" aria-hidden="true"></span>
+      </button>
+      <div class="faq-a" id="faqPanel2" role="region" aria-labelledby="faqBtn2">
+        <div class="faq-a-inner">
+          Gluten-free, dairy-free and plant-based options are on the menu as standard, not as substitutions. Tell your server about any allergies when you order and the kitchen will confirm what's safe for you.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" type="button" aria-expanded="false" aria-controls="faqPanel3" id="faqBtn3">
+        <span>Do you host private events?</span>
+        <span class="faq-icon" aria-hidden="true"></span>
+      </button>
+      <div class="faq-a" id="faqPanel3" role="region" aria-labelledby="faqBtn3">
+        <div class="faq-a-inner">
+          We take private bookings for groups from 12 to 60, with a set menu agreed in advance. Email us with your date, headcount and any dietary notes and we'll send options back the same week.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" type="button" aria-expanded="false" aria-controls="faqPanel4" id="faqBtn4">
+        <span>Can I order online for pickup or delivery?</span>
+        <span class="faq-icon" aria-hidden="true"></span>
+      </button>
+      <div class="faq-a" id="faqPanel4" role="region" aria-labelledby="faqBtn4">
+        <div class="faq-a-inner">
+          Order online and choose pickup or delivery at checkout. Pickup orders are usually ready in 20 minutes; delivery runs within a five-mile radius of the restaurant.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" type="button" aria-expanded="false" aria-controls="faqPanel5" id="faqBtn5">
+        <span>Is there parking nearby?</span>
+        <span class="faq-icon" aria-hidden="true"></span>
+      </button>
+      <div class="faq-a" id="faqPanel5" role="region" aria-labelledby="faqBtn5">
+        <div class="faq-a-inner">
+          There's free street parking on Main Street after 6pm, and a paid lot one block east that stays open until midnight. The riverfront entrance is step-free.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" type="button" aria-expanded="false" aria-controls="faqPanel6" id="faqBtn6">
+        <span>Are you open on holidays?</span>
+        <span class="faq-icon" aria-hidden="true"></span>
+      </button>
+      <div class="faq-a" id="faqPanel6" role="region" aria-labelledby="faqBtn6">
+        <div class="faq-a-inner">
+          We're open for most holidays, often on a limited menu. Holiday hours go up on our social channels a week ahead, so check there before you travel.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="faq-foot">
+    <a href="#" class="btn-outline-white">Contact us</a>
+  </div>
+</section>
+
+<section class="social-section">
+  <div class="social-copy">
+    <span class="social-eyebrow">Stay in touch</span>
+    <h2>Follow Us</h2>
+
+    <div class="social-channels">
+      <a href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <circle cx="12" cy="12" r="9"></circle>
+          <path d="M14.4 8.2h-1.3a1.7 1.7 0 0 0-1.7 1.7V19.6"></path>
+          <path d="M9.7 13h4.7"></path>
+        </svg>
+        <span class="net">Facebook</span>
+        <span class="handle">/wafflehouse</span>
+      </a>
+      <a href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <rect x="3" y="3" width="18" height="18" rx="5"></rect>
+          <circle cx="12" cy="12" r="4.2"></circle>
+          <circle class="solid" cx="17.2" cy="6.8" r="1.1"></circle>
+        </svg>
+        <span class="net">Instagram</span>
+        <span class="handle">@wafflehouse</span>
+      </a>
+      <a href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <rect x="3" y="3" width="18" height="18" rx="4.5"></rect>
+          <path d="M7.5 10.6V17"></path>
+          <circle class="solid" cx="7.5" cy="7.9" r="0.95"></circle>
+          <path d="M11.6 17v-6.4"></path>
+          <path d="M11.6 13.4a2.7 2.7 0 0 1 5.4 0V17"></path>
+        </svg>
+        <span class="net">LinkedIn</span>
+        <span class="handle">/waffle-house</span>
+      </a>
+      <a href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <rect x="2.5" y="6" width="19" height="12" rx="3.5"></rect>
+          <path class="solid" d="M10.3 9.4 15.7 12l-5.4 2.6Z"></path>
+        </svg>
+        <span class="net">YouTube</span>
+        <span class="handle">@wafflehouse</span>
+      </a>
+    </div>
+
+    <div class="social-contact">
+      <div>
+        <span class="label">Call us</span>
+        <a class="value" href="tel:+10000000000">(000) 000-0000</a>
+      </div>
+      <div>
+        <span class="label">Email</span>
+        <a class="value" href="mailto:hello@wafflehouse.example">hello@wafflehouse.example</a>
+      </div>
+      <div class="full">
+        <span class="label">Visit</span>
+        <span class="value">400 Main Street, Riverside, TX 77000</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="map-panel">
+    <div id="siteMap"></div>
+    <div class="map-caption">Waffle House is located in the Main District, just off the downtown corridor near the riverfront and the university area.</div>
+  </div>
+</section>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+(function () {
+  var mapEl = document.getElementById('siteMap');
+  if (!mapEl || typeof L === 'undefined') { return; }
+  var coords = [29.7433, -95.4258]; // swap for your actual location
+  var map = L.map('siteMap', { scrollWheelZoom: false }).setView(coords, 15);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+  L.marker(coords).addTo(map);
+})();
+</script>
+
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div>
+      <h3>Location</h3>
+      <p>
+        Waffle House Restaurant<br>
+        400 Main Street<br>
+        Riverside, TX<br>
+        77000
+      </p>
+      <a href="#" class="directions" target="_blank" rel="noopener" aria-label="Get directions to Waffle House">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M20 10c0 5.25-8 12-8 12s-8-6.75-8-12a8 8 0 1 1 16 0Z"></path>
+          <circle cx="12" cy="10" r="3"></circle>
+        </svg>
+        <span>Get Directions</span>
+      </a>
+    </div>
+    <div class="footer-hours">
+      <h3>Hours</h3>
+      <div class="block">
+        <p>
+          Monday – Thursday<br>
+          11:00am – 3:00pm<br>
+          3:00pm – 5:00pm — Limited Menu Only<br>
+          5:00pm – 10:00pm
+        </p>
+      </div>
+      <div class="block">
+        <p>
+          Friday – Saturday<br>
+          11:00am – 3:00pm<br>
+          3:00pm – 5:00pm — Limited Menu Only<br>
+          5:00pm – 11:00pm
+        </p>
+      </div>
+      <div class="block">
+        <p>We're open for the holidays!</p>
+      </div>
+    </div>
+    <div>
+      <h3>Find Us On...</h3>
+      <div class="footer-social">
+        <a href="#" aria-label="Facebook">f</a>
+        <a href="#" aria-label="Instagram">ig</a>
+        <a href="#" aria-label="LinkedIn">in</a>
+      </div>
+      <h3>Contact Us</h3>
+      <p>
+        <span class="contact-line">(000) 000-0000</span>
+        <span class="contact-line">hello@wafflehouse.example</span>
+      </p>
+    </div>
+  </div>
+</footer>
+
+<div class="site-footer-bottom">
+  <div class="powered">Powered by <b>ZingMyOrder</b></div>
+</div>
+
+<nav class="botbar" id="botBar" aria-label="Quick links">
+  <a href="#" class="is-active">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M4 10.6 12 4l8 6.6V19a1.4 1.4 0 0 1-1.4 1.4h-3.2v-5.6H8.6v5.6H5.4A1.4 1.4 0 0 1 4 19Z"></path>
+    </svg>
+    <span>Home</span>
+  </a>
+  <a href="#">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <circle cx="12" cy="12" r="8.6"></circle>
+      <path d="M12 11.2V16.4"></path>
+      <circle class="solid" cx="12" cy="7.9" r="1"></circle>
+    </svg>
+    <span>About Us</span>
+  </a>
+  <a href="#">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M7.2 3.4v5.2a2.3 2.3 0 0 0 4.6 0V3.4"></path>
+      <path d="M9.5 10.9V20.6"></path>
+      <path d="M17.4 3.4c-1.4 1.9-2.1 3.6-2.1 5.8 0 1.5.7 2.3 2.1 2.3V20.6"></path>
+    </svg>
+    <span>Menu</span>
+  </a>
+  <a href="#">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <rect x="3" y="4.6" width="18" height="14.8" rx="2.2"></rect>
+      <circle cx="8.4" cy="9.6" r="1.5"></circle>
+      <path d="m3.8 16.6 4.4-4.2 3.8 3.8"></path>
+      <path d="m13.4 14.6 2.6-2.4 4.2 4"></path>
+    </svg>
+    <span>Gallery</span>
+  </a>
+</nav>
+
+<script>
+/* ---- FAQ accordion ---- */
+(function () {
+  var list = document.getElementById('faqList');
+  if (!list) { return; }
+
+  var items = Array.prototype.slice.call(list.querySelectorAll('.faq-item'));
+  if (!items.length) { return; }
+
+  function panelOf(item) { return item.querySelector('.faq-a'); }
+  function buttonOf(item) { return item.querySelector('.faq-q'); }
+
+  function closeItem(item) {
+    var panel = panelOf(item);
+    var btn   = buttonOf(item);
+    if (!panel || !btn) { return; }
+    panel.style.maxHeight = '0px';
+    item.classList.remove('is-open');
+    btn.setAttribute('aria-expanded', 'false');
+  }
+
+  function openItem(item) {
+    var panel = panelOf(item);
+    var btn   = buttonOf(item);
+    if (!panel || !btn) { return; }
+    item.classList.add('is-open');
+    btn.setAttribute('aria-expanded', 'true');
+    panel.style.maxHeight = panel.scrollHeight + 'px';
+  }
+
+  items.forEach(function (item) {
+    var btn = buttonOf(item);
+    if (!btn) { return; }
+
+    btn.addEventListener('click', function () {
+      var isOpen = item.classList.contains('is-open');
+
+      /* one panel open at a time - drop this loop to allow several */
+      items.forEach(function (other) {
+        if (other !== item) { closeItem(other); }
+      });
+
+      if (isOpen) { closeItem(item); } else { openItem(item); }
+    });
+  });
+
+  /* keep the open panel the right height when text reflows */
+  window.addEventListener('resize', function () {
+    items.forEach(function (item) {
+      if (!item.classList.contains('is-open')) { return; }
+      var panel = panelOf(item);
+      if (!panel) { return; }
+      panel.style.maxHeight = panel.scrollHeight + 'px';
+    });
+  });
+})();
+
+/* ---- Mobile burger drawer ---- */
+(function () {
+  var toggle  = document.getElementById('navToggle');
+  var drawer  = document.getElementById('navDrawer');
+  var overlay = document.getElementById('navOverlay');
+  var closeBt = document.getElementById('navClose');
+  if (!toggle || !drawer || !overlay) { return; }
+
+  function openNav() {
+    document.body.classList.add('nav-open');
+    toggle.setAttribute('aria-expanded', 'true');
+    toggle.setAttribute('aria-label', 'Close menu');
+    var first = drawer.querySelector('a, button');
+    if (first) { first.focus(); }
+  }
+
+  function closeNav(refocus) {
+    document.body.classList.remove('nav-open');
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.setAttribute('aria-label', 'Open menu');
+    if (refocus !== false) { toggle.focus(); }
+  }
+
+  toggle.addEventListener('click', function () {
+    if (document.body.classList.contains('nav-open')) { closeNav(); } else { openNav(); }
+  });
+
+  overlay.addEventListener('click', function () { closeNav(false); });
+  if (closeBt) { closeBt.addEventListener('click', function () { closeNav(); }); }
+
+  drawer.addEventListener('click', function (e) {
+    if (e.target && e.target.closest && e.target.closest('a')) { closeNav(false); }
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if ((e.key === 'Escape' || e.key === 'Esc') && document.body.classList.contains('nav-open')) {
+      closeNav();
+    }
+  });
+
+  window.addEventListener('resize', function () {
+    if (window.innerWidth > 1100 && document.body.classList.contains('nav-open')) { closeNav(false); }
+  });
+})();
+
+(function () {
+  var head = document.getElementById('siteHead');
+  if (!head) { return; }
+
+  var ticking = false;
+
+  function apply() {
+    var y = window.pageYOffset || document.documentElement.scrollTop || 0;
+    if (y > 8) {
+      head.classList.add('is-stuck');
+    } else {
+      head.classList.remove('is-stuck');
+    }
+    ticking = false;
+  }
+
+  function onScroll() {
+    if (ticking) { return; }
+    ticking = true;
+    window.requestAnimationFrame(apply);
+  }
+
+  apply();
+  window.addEventListener('scroll', onScroll, { passive: true });
+})();
+
+/* ---- Parallax backdrops (About + New Section) ---- */
+(function () {
+  var layers = Array.prototype.slice.call(document.querySelectorAll('.parallax-bg'));
+  if (!layers.length) { return; }
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { return; }
+
+  var ticking = false;
+
+  function update() {
+    var vh = window.innerHeight || document.documentElement.clientHeight;
+
+    layers.forEach(function (layer) {
+      var host = layer.parentElement;
+      if (!host) { return; }
+
+      var rect = host.getBoundingClientRect();
+      if (rect.bottom < -240 || rect.top > vh + 240) { return; }
+
+      var speed  = parseFloat(layer.getAttribute('data-speed')) || 0.22;
+      var mid    = rect.top + (rect.height / 2);
+      var slack  = (layer.offsetHeight - host.offsetHeight) / 2;
+      var offset = ((vh / 2) - mid) * speed;
+
+      if (slack < 0) { slack = 0; }
+      if (offset >  slack) { offset =  slack; }
+      if (offset < -slack) { offset = -slack; }
+
+      layer.style.transform = 'translate3d(0,' + offset.toFixed(2) + 'px,0)';
+    });
+
+    ticking = false;
+  }
+
+  function onScroll() {
+    if (ticking) { return; }
+    ticking = true;
+    window.requestAnimationFrame(update);
+  }
+
+  update();
+  window.addEventListener('load', update);
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+})();
+
+(function () {
+  var slider = document.getElementById('shotSlider');
+  if (!slider) { return; }
+  var slides = slider.querySelectorAll('.shot-slide');
+  var fill   = document.getElementById('shotRailFill');
+  var prev   = slider.querySelector('.shot-arrow.prev');
+  var next   = slider.querySelector('.shot-arrow.next');
+  var toggle = slider.querySelector('.shot-play');
+  if (!slides.length || !fill) { return; }
+  var index  = 0;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function setLinks() {
+    slides.forEach(function (slide, i) {
+      var cta = slide.querySelector('.shot-cta');
+      if (!cta) { return; }
+      if (i === index) {
+        cta.removeAttribute('tabindex');
+        cta.removeAttribute('aria-hidden');
+      } else {
+        cta.setAttribute('tabindex', '-1');
+        cta.setAttribute('aria-hidden', 'true');
+      }
+    });
+  }
+  function restartTimer() {
+    fill.classList.remove('is-running');
+    void fill.offsetWidth;
+    if (!reduce && !slider.classList.contains('is-paused')) {
+      fill.classList.add('is-running');
+    }
+  }
+  function goTo(n) {
+    slides[index].classList.remove('is-active');
+    index = (n + slides.length) % slides.length;
+    slides[index].classList.add('is-active');
+    setLinks();
+    restartTimer();
+  }
+  setLinks();
+  fill.addEventListener('animationend', function () { goTo(index + 1); });
+  if (prev) { prev.addEventListener('click', function () { goTo(index - 1); }); }
+  if (next) { next.addEventListener('click', function () { goTo(index + 1); }); }
+  if (toggle) {
+    toggle.addEventListener('click', function () {
+      var paused = slider.classList.toggle('is-paused');
+      toggle.setAttribute('aria-pressed', paused ? 'true' : 'false');
+      toggle.setAttribute('aria-label', paused ? 'Play slideshow' : 'Pause slideshow');
+      if (!paused && !fill.classList.contains('is-running')) { restartTimer(); }
+    });
+  }
+  if (reduce) {
+    slider.classList.add('is-paused');
+    if (toggle) {
+      toggle.setAttribute('aria-pressed', 'true');
+      toggle.setAttribute('aria-label', 'Play slideshow');
+    }
+  } else {
+    restartTimer();
+  }
+})();
+
+(function () {
+  var section = document.getElementById('reviewsSlider');
+  if (!section) { return; }
+  var slides = section.querySelectorAll('.review-slide');
+  var dots   = section.querySelectorAll('.reviews-dots button');
+  var prev   = section.querySelector('.reviews-arrow.prev');
+  var next   = section.querySelector('.reviews-arrow.next');
+  var toggle = section.querySelector('.reviews-play');
+  if (!slides.length) { return; }
+  var index  = 0;
+  var timer  = null;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function render() {
+    slides.forEach(function (s, i) { s.classList.toggle('is-active', i === index); });
+    dots.forEach(function (d, i) { d.classList.toggle('is-active', i === index); });
+  }
+  function goTo(n) {
+    index = (n + slides.length) % slides.length;
+    render();
+  }
+  function startTimer() {
+    stopTimer();
+    if (!reduce && !section.classList.contains('is-paused')) {
+      timer = setInterval(function () { goTo(index + 1); }, 7000);
+    }
+  }
+  function stopTimer() {
+    if (timer) { clearInterval(timer); timer = null; }
+  }
+
+  if (prev) { prev.addEventListener('click', function () { goTo(index - 1); startTimer(); }); }
+  if (next) { next.addEventListener('click', function () { goTo(index + 1); startTimer(); }); }
+  dots.forEach(function (d, i) {
+    d.addEventListener('click', function () { goTo(i); startTimer(); });
+  });
+  if (toggle) {
+    toggle.addEventListener('click', function () {
+      var paused = section.classList.toggle('is-paused');
+      toggle.setAttribute('aria-pressed', paused ? 'true' : 'false');
+      toggle.setAttribute('aria-label', paused ? 'Play reviews' : 'Pause reviews');
+      if (paused) { stopTimer(); } else { startTimer(); }
+    });
+  }
+
+  if (reduce) {
+    section.classList.add('is-paused');
+    if (toggle) {
+      toggle.setAttribute('aria-pressed', 'true');
+      toggle.setAttribute('aria-label', 'Play reviews');
+    }
+  } else {
+    startTimer();
+  }
+})();
+</script>
+
+</body>
+</html>

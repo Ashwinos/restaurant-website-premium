@@ -4,7 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Grill House — Fire-Cooked, Always</title>
+  <title>Guatemex
+Restaurant — Fire-Cooked, Always</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -420,7 +421,7 @@
       background: rgba(var(--char-rgb), 0.86);
       backdrop-filter: blur(14px) saturate(140%);
       padding: 16px 56px;
-      border-bottom: 1px solid transparent;
+      border-bottom: 1px solid var(--ember);
     }
 
     /* ---------- nav grill + embers (bottom edge, fades in with .scrolled) ---------- */
@@ -542,7 +543,7 @@
     nav ul li a {
       position: relative;
       padding-bottom: 6px;
-      color: var(--bone-dim);
+      color: #cd8106;
       transition: color .3s ease;
     }
 
@@ -620,8 +621,7 @@
       width: 135px;
       height: 135px;
       margin-bottom: 26px;
-      opacity: 0;
-      animation: fadeUp .8s var(--ease) .05s forwards, logoFloat 5s ease-in-out .9s infinite;
+
     }
 
     @keyframes logoFloat {
@@ -992,7 +992,7 @@
       transform-origin: 100% 100%;
     }
 
-    
+
 
     @media (prefers-reduced-motion: reduce) {
       .hero-slope .corner-triangle-fill {
@@ -1375,7 +1375,7 @@
       border-color: var(--brass);
     }
 
-  
+
 
     .about-img-grate {
       position: absolute;
@@ -1800,7 +1800,7 @@
     .spec-photo-tall {
       position: relative;
       z-index: 1;
-      height: 440px;
+      height: 410px;
     }
 
     .spec-photo-tall img {
@@ -2654,8 +2654,8 @@
         padding: 0;
       }
 
-      
-      .hero-slope svg{
+
+      .hero-slope svg {
         width: 115%;
       }
 
@@ -2665,7 +2665,7 @@
       }
 
       .cine-scrim {
-                background: linear-gradient(0deg, rgba(var(--char-rgb), 0.97) 0%, rgba(var(--char-rgb), 0.8) -1%, rgba(var(--char-rgb), 0.3) -14%);
+        background: linear-gradient(0deg, rgba(var(--char-rgb), 0.97) 0%, rgba(var(--char-rgb), 0.8) -1%, rgba(var(--char-rgb), 0.3) -14%);
       }
 
       .cine-content {
@@ -2744,7 +2744,7 @@
         right: 18px;
       }
 
-      .hero-slope svg{
+      .hero-slope svg {
         width: 115%;
       }
 
@@ -2794,7 +2794,7 @@
         justify-content: center;
       }
 
-       .cine-mute {
+      .cine-mute {
 
         display: none;
 
@@ -4661,10 +4661,11 @@
     }
 
     @media(max-width:520px) {
-      .footer-brand .logo{
+      .footer-brand .logo {
         display: flex;
         justify-content: center;
       }
+
       .footer-top {
         grid-template-columns: 1fr;
         padding: 40px 22px 30px;
@@ -4672,7 +4673,7 @@
         text-align: center;
       }
 
-      .footer-social-row{
+      .footer-social-row {
         justify-content: center;
       }
     }
@@ -4722,7 +4723,7 @@
       color: var(--bone-dim);
       line-height: 1.75;
       font-size: .92rem;
-      
+
     }
 
     .footer-brand .logo {
@@ -5183,6 +5184,7 @@
     }
 
     @media(max-width:520px) {
+
       header,
       header.scrolled {
         padding: 14px 16px;
@@ -5244,108 +5246,111 @@
     }
 
     .vapour {
-    position: relative;
-    display: flex;
-    z-index: 1;
-    padding: 0 20px;
-    justify-content: center;
-}
+      position: relative;
+      display: flex;
+      z-index: 1;
+      padding: 0 20px;
+      justify-content: center;
+    }
+
     .vapour-left {
-position: absolute;
-    bottom: -250px;
-    left: 110px;
-    display: flex;
-    z-index: 1;
-    padding: 0 20px;
-    justify-content: center;
-}
+      position: absolute;
+      bottom: -250px;
+      left: 110px;
+      display: flex;
+      z-index: 1;
+      padding: 0 20px;
+      justify-content: center;
+    }
 
     .vapour-center {
-position: absolute;
-    bottom: -20px;
-    left: 40%;
-    display: flex;
-    z-index: 1;
-    padding: 0 20px;
-    justify-content: center;
-}
+      position: absolute;
+      bottom: -20px;
+      left: 40%;
+      display: flex;
+      z-index: 1;
+      padding: 0 20px;
+      justify-content: center;
+    }
 
-.vapour span {
-    position: relative;
-    bottom: 0;
-    display: block;
-    margin: 0 2px 50px;
-    min-width: 5px;
-    height: 120px;
-    background: #fff;
-    border-radius: 50%;
-    animation: animate 5s linear infinite;
-    opacity: 0;
-    filter: blur(10px);
-    animation-delay: calc(var(--v) * -0.5s);
-}
+    .vapour span {
+      position: relative;
+      bottom: 0;
+      display: block;
+      margin: 0 2px 50px;
+      min-width: 5px;
+      height: 120px;
+      background: #fff;
+      border-radius: 50%;
+      animation: animate 5s linear infinite;
+      opacity: 0;
+      filter: blur(10px);
+      animation-delay: calc(var(--v) * -0.5s);
+    }
 
-.vapour-left span {
-    position: relative;
-    bottom: 0;
-    display: block;
-    margin: 0 2px 50px;
-    min-width: 5px;
-    height: 120px;
-    background: #fff;
-    border-radius: 50%;
-    animation: animate 5s linear infinite;
-    opacity: 0;
-    filter: blur(10px);
-    animation-delay: calc(var(--v) * -0.5s);
-}
-.vapour-center span {
-    position: relative;
-    bottom: 0;
-    display: block;
-    margin: 0 2px 50px;
-    min-width: 5px;
-    height: 120px;
-    background: #fff;
-    border-radius: 50%;
-    animation: animate 5s linear infinite;
-    opacity: 0;
-    filter: blur(10px);
-    animation-delay: calc(var(--v) * -0.5s);
-}
-@keyframes animate {
-    0% {
+    .vapour-left span {
+      position: relative;
+      bottom: 0;
+      display: block;
+      margin: 0 2px 50px;
+      min-width: 5px;
+      height: 120px;
+      background: #fff;
+      border-radius: 50%;
+      animation: animate 5s linear infinite;
+      opacity: 0;
+      filter: blur(10px);
+      animation-delay: calc(var(--v) * -0.5s);
+    }
+
+    .vapour-center span {
+      position: relative;
+      bottom: 0;
+      display: block;
+      margin: 0 2px 50px;
+      min-width: 5px;
+      height: 120px;
+      background: #fff;
+      border-radius: 50%;
+      animation: animate 5s linear infinite;
+      opacity: 0;
+      filter: blur(10px);
+      animation-delay: calc(var(--v) * -0.5s);
+    }
+
+    @keyframes animate {
+      0% {
         transform: translateY(0) scaleX(1);
         opacity: 0;
-    }
-    15% {
+      }
+
+      15% {
         opacity: 1;
-    }
-    50% {
+      }
+
+      50% {
         transform: translateY(-150px) scaleX(5);
-    }
-    95% {
+      }
+
+      95% {
         opacity: 0;
-    }
-    100% {
+      }
+
+      100% {
         transform: translateY(-300px) scaleX(10);
+      }
     }
-}
 
-/* ---------- steam wisp behind the hero logo, reusing the .vapour banner technique at a smaller scale ---------- */
-.hero-logo-stack {
-  position: relative;
-  width: 135px;
-  margin-bottom: 26px;
-}
+    /* ---------- steam wisp behind the hero logo, reusing the .vapour banner technique at a smaller scale ---------- */
+    .hero-logo-stack {
+      position: relative;
+      width: 135px;
+      margin-bottom: 26px;
+    }
 
-.hero-logo-stack .hero-logo {
-  margin-bottom: 0;
-}
-
-
-
-
+    .hero-logo-stack .hero-logo {
+      margin-bottom: 0;
+    }
   </style>
 </head>
 
@@ -5355,7 +5360,7 @@ position: absolute;
     <a href="#" class="logo">
       <span class="logo-mark">
         <img
-          src="https://d1ph6a2qqb4pcd.cloudfront.net/fit-in/filters:format(webp):/uploads/website/website/2026/02/01/083621498/logo/MIy3LJQAGWmXbjUwkHAHt0mEWNpGLccEaADW6xdW.png"
+          src="https://d1ph6a2qqb4pcd.cloudfront.net/fit-in/filters:format(webp):/uploads/website/website/2026/05/25/174233548/logo/w7kayfc3V1k58nsPiCKOwG0vlYfUEx6cDGD9uPz8.png"
           alt="Oviq African Market and Foods logo">
       </span>
     </a>
@@ -5380,24 +5385,24 @@ position: absolute;
         <li><a href="#">Events</a></li>
         <li><a href="#contact">Contact</a></li>
         <a href="#" class="btn-grill nav-order-btn">
-        <svg class="grill-lines" viewBox="0 0 260 76" preserveAspectRatio="none" aria-hidden="true">
-          <line class="rail" x1="0" y1="6" x2="260" y2="6" />
-          <line class="rail" x1="0" y1="70" x2="260" y2="70" />
-          <line class="bar" x1="0" y1="22" x2="260" y2="22" />
-          <line class="bar" x1="0" y1="38" x2="260" y2="38" />
-          <line class="bar" x1="0" y1="54" x2="260" y2="54" />
-          <line class="glow" x1="0" y1="38" x2="260" y2="38" />
-        </svg>
-        <span class="label">
-          <svg class="flame" viewBox="0 0 64 64" fill="currentColor" aria-hidden="true">
-            <path
-              d="M32 6c6 8-2 12-2 19a8 8 0 0 0 16 0c0-3-1-5-1-5 6 4 9 11 9 17 0 12.7-10.3 21-22 21S10 49.7 10 37c0-9 4-16 10-21-1 4 0 7 3 9 0-9 3-13 9-19Z" />
+          <svg class="grill-lines" viewBox="0 0 260 76" preserveAspectRatio="none" aria-hidden="true">
+            <line class="rail" x1="0" y1="6" x2="260" y2="6" />
+            <line class="rail" x1="0" y1="70" x2="260" y2="70" />
+            <line class="bar" x1="0" y1="22" x2="260" y2="22" />
+            <line class="bar" x1="0" y1="38" x2="260" y2="38" />
+            <line class="bar" x1="0" y1="54" x2="260" y2="54" />
+            <line class="glow" x1="0" y1="38" x2="260" y2="38" />
           </svg>
-          Order Online
-        </span>
-      </a>
+          <span class="label">
+            <svg class="flame" viewBox="0 0 64 64" fill="currentColor" aria-hidden="true">
+              <path
+                d="M32 6c6 8-2 12-2 19a8 8 0 0 0 16 0c0-3-1-5-1-5 6 4 9 11 9 17 0 12.7-10.3 21-22 21S10 49.7 10 37c0-9 4-16 10-21-1 4 0 7 3 9 0-9 3-13 9-19Z" />
+            </svg>
+            Order Online
+          </span>
+        </a>
       </ul>
-      
+
     </nav>
 
     <a href="#" class="btn-grill header-order-btn">
@@ -5418,38 +5423,14 @@ position: absolute;
       </span>
     </a>
 
-    <canvas class="nav-embers" id="navEmbers" aria-hidden="true"></canvas>
-    <div class="nav-grill" aria-hidden="true">
-      <svg viewBox="0 0 1440 18" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-        <line x1="0" y1="5" x2="1440" y2="5" />
-        <line x1="0" y1="13" x2="1440" y2="13" />
-        <line x1="90" y1="0" x2="90" y2="18" />
-        <line x1="270" y1="0" x2="270" y2="18" />
-        <line x1="450" y1="0" x2="450" y2="18" />
-        <line x1="630" y1="0" x2="630" y2="18" />
-        <line x1="810" y1="0" x2="810" y2="18" />
-        <line x1="990" y1="0" x2="990" y2="18" />
-        <line x1="1170" y1="0" x2="1170" y2="18" />
-        <line x1="1350" y1="0" x2="1350" y2="18" />
-        <line class="bar-glow" x1="0" y1="5" x2="1440" y2="5" style="animation-delay:0s" />
-        <line class="bar-glow" x1="0" y1="13" x2="1440" y2="13" style="animation-delay:1.4s" />
-        <line class="bar-glow" x1="90" y1="0" x2="90" y2="18" style="animation-delay:.4s" />
-        <line class="bar-glow" x1="270" y1="0" x2="270" y2="18" style="animation-delay:1.2s" />
-        <line class="bar-glow" x1="450" y1="0" x2="450" y2="18" style="animation-delay:2s" />
-        <line class="bar-glow" x1="630" y1="0" x2="630" y2="18" style="animation-delay:2.8s" />
-        <line class="bar-glow" x1="810" y1="0" x2="810" y2="18" style="animation-delay:.6s" />
-        <line class="bar-glow" x1="990" y1="0" x2="990" y2="18" style="animation-delay:1.4s" />
-        <line class="bar-glow" x1="1170" y1="0" x2="1170" y2="18" style="animation-delay:2.2s" />
-        <line class="bar-glow" x1="1350" y1="0" x2="1350" y2="18" style="animation-delay:3s" />
-      </svg>
-    </div>
+
   </header>
 
   <section class="hero">
     <div class="hero-bg">
-      <img
-        src="https://d1ph6a2qqb4pcd.cloudfront.net/uploads/website/website/2026/06/29/072651273/banner_image/fmkKzlIhrTsFITf6wMcsFvsYBrmjAGmgDTc8ahp1.webp"
-        alt="Fire-cooked steak on the grill">
+        <img
+    src="https://images.unsplash.com/photo-1559847844-5315695dadae?w=1920&q=85"
+    alt="Thai dishes served family style">
     </div>
     <canvas id="embers"></canvas>
     <div class="social-rail">
@@ -5469,14 +5450,14 @@ position: absolute;
     </div>
     <div style="width:100%;">
       <div class="hero-logo-stack">
-        
+
         <div class="hero-logo">
           <img
-            src="https://d1ph6a2qqb4pcd.cloudfront.net/fit-in/filters:format(webp):/uploads/website/website/2026/02/01/083621498/logo/MIy3LJQAGWmXbjUwkHAHt0mEWNpGLccEaADW6xdW.png"
+            src="https://d1ph6a2qqb4pcd.cloudfront.net/fit-in/filters:format(webp):/uploads/website/website/2026/05/25/174233548/logo/w7kayfc3V1k58nsPiCKOwG0vlYfUEx6cDGD9uPz8.png"
             alt="Oviq African Market and Foods logo">
         </div>
       </div>
-      <h1>Oviq African Market and Foods</h1>
+      <h1>Guatemex Restaurant</h1>
       <div class="hero-row">
         <p class="desc">A neighborhood grill &amp; bar serving fire-cooked classics, seasonal sides, and a warm room for
           every occasion.</p>
@@ -5486,39 +5467,39 @@ position: absolute;
 
     <div class="hero-vapor" id="heroVapor" aria-hidden="true">
       <div class="vapour-left">
-                <span style="--v:3;"></span>
-                <span style="--v:12;"></span>
-                <span style="--v:14;"></span>
-                <span style="--v:16;"></span>
-                <span style="--v:17;"></span>
-                <span style="--v:13;"></span>
-                <span style="--v:15;"></span>
-            </div>
+        <span style="--v:3;"></span>
+        <span style="--v:12;"></span>
+        <span style="--v:14;"></span>
+        <span style="--v:16;"></span>
+        <span style="--v:17;"></span>
+        <span style="--v:13;"></span>
+        <span style="--v:15;"></span>
+      </div>
       <div class="vapour-center">
-                <span style="--v:1;"></span>
-                <span style="--v:2;"></span>
-                <span style="--v:5;"></span>
-                <span style="--v:4;"></span>
-                <span style="--v:6;"></span>
-                <span style="--v:19;"></span>
-                <span style="--v:7;"></span>
-                <span style="--v:8;"></span>
-                <span style="--v:9;"></span>
-                <span style="--v:10;"></span>
-                <span style="--v:11;"></span>
-                <span style="--v:18;"></span>
-            </div>
+        <span style="--v:1;"></span>
+        <span style="--v:2;"></span>
+        <span style="--v:5;"></span>
+        <span style="--v:4;"></span>
+        <span style="--v:6;"></span>
+        <span style="--v:19;"></span>
+        <span style="--v:7;"></span>
+        <span style="--v:8;"></span>
+        <span style="--v:9;"></span>
+        <span style="--v:10;"></span>
+        <span style="--v:11;"></span>
+        <span style="--v:18;"></span>
+      </div>
       <div class="vapour">
-                <span style="--v:20;"></span>
-                <span style="--v:21;"></span>
-                <span style="--v:22;"></span>
-                <span style="--v:23;"></span>
-                <span style="--v:24;"></span>
-                <span style="--v:25;"></span>
-                <span style="--v:26;"></span>
-            </div>
+        <span style="--v:20;"></span>
+        <span style="--v:21;"></span>
+        <span style="--v:22;"></span>
+        <span style="--v:23;"></span>
+        <span style="--v:24;"></span>
+        <span style="--v:25;"></span>
+        <span style="--v:26;"></span>
+      </div>
     </div>
-    
+
 
     <div class="hero-slope" aria-hidden="true">
       <svg viewBox="0 0 1000 1000" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
@@ -5544,16 +5525,16 @@ position: absolute;
   <section class="about" id="about">
     <canvas class="about-embers" id="aboutEmbers" aria-hidden="true"></canvas>
     <div class="about-copy reveal" id="aboutCopy">
-     
-      <h2> Welcome to Oviq African Market and Foods</h2>
-        <div class="about-tag"><span class="line"></span></div>
 
-      <p class="body-copy">At Oviq African Market and Foods, we are more than just a place to shop and dine we are a
-        vibrant community hub where cultures, traditions, and flavors come together. Our mission is to provide an
-        authentic experience that brings the richness of diverse cultures to life, whether you're seeking quality
-        products, exceptional food, or a welcoming environment. We are committed to offering only the finest selection,
-        sourced with care to ensure that our guests enjoy freshness and quality in everything we offer. At Oviq, our
-        dedication to service and passion for creating connections makes every visit special.</p>
+      <h2>About Us</h2>
+      <div class="about-tag"><span class="line"></span></div>
+
+      <p class="body-copy">Guatemex Restaurant brings together the vibrant flavors of Mexican cuisine in a warm and
+        welcoming setting. We are passionate about serving authentic dishes made with fresh ingredients and traditional
+        recipes. Our menu features a delicious variety of tacos, burritos, savory specialties, and flavorful house-made
+        salsas. Every dish is prepared with care to deliver a true taste of Latin culture. Whether you're dining with
+        family or friends, we strive to provide great food and friendly service. At Guatemex Restaurant, every visit is
+        a celebration of bold flavors and genuine hospitality</p>
       <a href="#" class="btn-grill">
         <svg class="grill-lines" viewBox="0 0 260 76" preserveAspectRatio="none" aria-hidden="true">
           <line class="rail" x1="0" y1="6" x2="260" y2="6" />
@@ -5575,9 +5556,9 @@ position: absolute;
     <div class="about-img reveal">
       <div class="about-img-frame">
         <img
-          src="https://clubmahindra.gumlet.io/blog/images/Telangana--Biryani-resized.jpg?w=376&dpr=2.6"
-          alt="Comfort food plated at Grill House" loading="lazy">
-     
+          src="https://d1ph6a2qqb4pcd.cloudfront.net/fit-in/filters:format(webp):/uploads/website/website/2026/07/16/103145126/specialities_image/MwwiTGcliFAmqtGQXYql6L15nUwfuaO7wV9XgMmH.webp"
+          alt="Comfort food plated at Guatemex Restaurant" loading="lazy">
+
       </div>
       <div class="about-img-grate" aria-hidden="true">
         <svg viewBox="0 0 150 120" xmlns="http://www.w3.org/2000/svg">
@@ -5605,7 +5586,7 @@ position: absolute;
     <div class="parallax-overlay" aria-hidden="true"></div>
     <div class="section-head reveal">
       <div>
-        
+
         <h2>Contact &amp; Social</h2>
         <div class="about-tag"><span class="line"></span></div>
 
@@ -5646,11 +5627,11 @@ position: absolute;
 
       <div class="cs-card cs-social reveal">
         <div class="v-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <path d="M10 13a5 5 0 0 1 0-7l2-2a5 5 0 1 1 7 7l-1 1"/>
-  <path d="M14 11a5 5 0 0 1 0 7l-2 2a5 5 0 1 1-7-7l1-1"/>
-</svg>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10 13a5 5 0 0 1 0-7l2-2a5 5 0 1 1 7 7l-1 1" />
+            <path d="M14 11a5 5 0 0 1 0 7l-2 2a5 5 0 1 1-7-7l1-1" />
+          </svg>
         </div>
         <h3>Follow Us</h3>
         <div class="cs-sub">Behind-the-scenes fire &amp; weekend events</div>
@@ -5709,8 +5690,9 @@ position: absolute;
           fire, not shortcuts. We source seasonally from trusted regional farms, cook with time-honored technique, and
           welcome every guest like family.</p>
         <div class="spec-photo-wide spec-in-left">
-          <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900&q=80"
-            alt="Warm dining room at Grill House" loading="lazy">
+<img
+  src="https://images.unsplash.com/photo-1552332386-f8dd00dc2f85?w=800&q=80"
+  alt="Enchiladas with red sauce and melted cheese" loading="lazy">
           <div class="corner-grate br" aria-hidden="true">
             <svg viewBox="0 0 120 96" xmlns="http://www.w3.org/2000/svg">
               <defs>
@@ -5734,8 +5716,9 @@ position: absolute;
       </div>
       <div class="spec-media-col">
         <div class="spec-photo-tall spec-in-right">
-          <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=900&q=80"
-            alt="Wood-fired grilling over open flame" loading="lazy">
+<img
+  src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800&q=80"
+  alt="Street tacos with cilantro, onion, and lime" loading="lazy">
           <div class="corner-grate br" aria-hidden="true">
             <svg viewBox="0 0 120 96" xmlns="http://www.w3.org/2000/svg">
               <defs>
@@ -5757,7 +5740,7 @@ position: absolute;
           </div>
         </div>
         <div class="spec-badge-card spec-in-bottom">
-          
+
           <svg class="spec-badge-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"
             aria-hidden="true">
             <path
@@ -5773,376 +5756,383 @@ position: absolute;
   </section>
 
   <section class="menu-section" id="menu">
-    <div class="parallax-layer" aria-hidden="true"></div>
-    <div class="parallax-overlay" aria-hidden="true"></div>
-    <div class="section-head reveal">
-      <div>
-        
-        <h2>Enjoy Delicious Dishes</h2>
-        <div class="about-tag"><span class="line"></span></div>
-
-      </div>
+  <div class="parallax-layer" aria-hidden="true"></div>
+  <div class="parallax-overlay" aria-hidden="true"></div>
+  <div class="section-head reveal">
+    <div>
+      <h2>Enjoy Delicious Dishes</h2>
+      <div class="about-tag"><span class="line"></span></div>
     </div>
+  </div>
 
-    <div class="ms-strip" id="dishGrid">
-      <div class="ms-pair">
-        <div class="ms-item ms-photo reveal">
-          <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&h=760&fit=crop&q=80"
-            alt="Charred Heirloom Salad" loading="lazy">
-        </div>
-        <span class="ms-seam" aria-hidden="true">
-          <i class="dot-line"></i>
-          <i class="dot-line"></i>
-          <i class="dot-line"></i>
-        </span>
-        <div class="ms-item ms-content reveal">
-          <span class="ms-tag">
-            <svg viewBox="0 0 64 64" fill="currentColor" aria-hidden="true">
-              <path
-                d="M32 6c6 8-2 12-2 19a8 8 0 0 0 16 0c0-3-1-5-1-5 6 4 9 11 9 17 0 12.7-10.3 21-22 21S10 49.7 10 37c0-9 4-16 10-21-1 4 0 7 3 9 0-9 3-13 9-19Z" />
-            </svg>
-            Chef's Choice
-          </span>
-          <div class="ms-body">
-            <h3>Cedar Plank Salmon</h3>
-            <p>Slow-smoked on cedar, citrus glaze, charred asparagus, served with a bright lemon crème.</p>
-          </div>
-          <span class="ms-chip">
-            <svg class="grill-lines" viewBox="0 0 260 76" preserveAspectRatio="none" aria-hidden="true">
-              <line class="rail" x1="0" y1="6" x2="260" y2="6" />
-              <line class="rail" x1="0" y1="70" x2="260" y2="70" />
-              <line class="bar" x1="0" y1="22" x2="260" y2="22" />
-              <line class="bar" x1="0" y1="38" x2="260" y2="38" />
-              <line class="bar" x1="0" y1="54" x2="260" y2="54" />
-              <line class="glow" x1="0" y1="38" x2="260" y2="38" />
-            </svg>
-            <span class="label">
-              <svg class="flame" viewBox="0 0 64 64" fill="currentColor" aria-hidden="true">
-                <path
-                  d="M32 6c6 8-2 12-2 19a8 8 0 0 0 16 0c0-3-1-5-1-5 6 4 9 11 9 17 0 12.7-10.3 21-22 21S10 49.7 10 37c0-9 4-16 10-21-1 4 0 7 3 9 0-9 3-13 9-19Z" />
-              </svg>
-              View More
-            </span>
-          </span>
-        </div>
+  <!-- ---------- strip 1 ---------- -->
+  <div class="ms-strip dish-grid">
+    <div class="ms-pair">
+      <div class="ms-item ms-photo reveal">
+        <img
+          src="https://d1ph6a2qqb4pcd.cloudfront.net/fit-in/filters:format(webp):/uploads/website/website/2026/07/16/103229695/website_gallery/eejWggyZJ5ExohBtxiIqkii9AtdYwltqQ1iqv0mt.webp"
+          alt="Churrasco skirt steak grilled over open flame" loading="lazy">
       </div>
-
-      <div class="ms-pair">
-        <div class="ms-item ms-content reveal">
-          <span class="ms-tag">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-              <path d="M8 5v14l11-7Z" />
-            </svg>
-            Guest Favorite
-          </span>
-          <div class="ms-body">
-            <h3>Brown Butter Pappardelle</h3>
-            <p>Hand-cut pasta, sage brown butter, wild mushroom, and aged parmesan.</p>
-          </div>
-          <span class="ms-chip">
-            <svg class="grill-lines" viewBox="0 0 260 76" preserveAspectRatio="none" aria-hidden="true">
-              <line class="rail" x1="0" y1="6" x2="260" y2="6" />
-              <line class="rail" x1="0" y1="70" x2="260" y2="70" />
-              <line class="bar" x1="0" y1="22" x2="260" y2="22" />
-              <line class="bar" x1="0" y1="38" x2="260" y2="38" />
-              <line class="bar" x1="0" y1="54" x2="260" y2="54" />
-              <line class="glow" x1="0" y1="38" x2="260" y2="38" />
-            </svg>
-            <span class="label">
-              <svg class="flame" viewBox="0 0 64 64" fill="currentColor" aria-hidden="true">
-                <path
-                  d="M32 6c6 8-2 12-2 19a8 8 0 0 0 16 0c0-3-1-5-1-5 6 4 9 11 9 17 0 12.7-10.3 21-22 21S10 49.7 10 37c0-9 4-16 10-21-1 4 0 7 3 9 0-9 3-13 9-19Z" />
-              </svg>
-              View More
-            </span>
-          </span>
-        </div>
-        <span class="ms-seam" aria-hidden="true">
-          <i class="dot-line"></i>
-          <i class="dot-line"></i>
-          <i class="dot-line"></i>
-        </span>
-        <div class="ms-item ms-photo reveal">
-          <img src="https://images.unsplash.com/photo-1598103442097-8b74394b95c6?w=600&h=760&fit=crop&q=80"
-            alt="Herb-Crusted Chicken" loading="lazy">
-        </div>
-      </div>
-    </div>
-        <div class="ms-strip" id="dishGrid">
-      <div class="ms-pair">
-        <div class="ms-item ms-photo reveal">
-          <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&h=760&fit=crop&q=80"
-            alt="Charred Heirloom Salad" loading="lazy">
-        </div>
-        <span class="ms-seam" aria-hidden="true">
-          <i class="dot-line"></i>
-          <i class="dot-line"></i>
-          <i class="dot-line"></i>
-        </span>
-        <div class="ms-item ms-content reveal">
-          <span class="ms-tag">
-            <svg viewBox="0 0 64 64" fill="currentColor" aria-hidden="true">
-              <path
-                d="M32 6c6 8-2 12-2 19a8 8 0 0 0 16 0c0-3-1-5-1-5 6 4 9 11 9 17 0 12.7-10.3 21-22 21S10 49.7 10 37c0-9 4-16 10-21-1 4 0 7 3 9 0-9 3-13 9-19Z" />
-            </svg>
-            Chef's Choice
-          </span>
-          <div class="ms-body">
-            <h3>Cedar Plank Salmon</h3>
-            <p>Slow-smoked on cedar, citrus glaze, charred asparagus, served with a bright lemon crème.</p>
-          </div>
-          <span class="ms-chip">
-            <svg class="grill-lines" viewBox="0 0 260 76" preserveAspectRatio="none" aria-hidden="true">
-              <line class="rail" x1="0" y1="6" x2="260" y2="6" />
-              <line class="rail" x1="0" y1="70" x2="260" y2="70" />
-              <line class="bar" x1="0" y1="22" x2="260" y2="22" />
-              <line class="bar" x1="0" y1="38" x2="260" y2="38" />
-              <line class="bar" x1="0" y1="54" x2="260" y2="54" />
-              <line class="glow" x1="0" y1="38" x2="260" y2="38" />
-            </svg>
-            <span class="label">
-              <svg class="flame" viewBox="0 0 64 64" fill="currentColor" aria-hidden="true">
-                <path
-                  d="M32 6c6 8-2 12-2 19a8 8 0 0 0 16 0c0-3-1-5-1-5 6 4 9 11 9 17 0 12.7-10.3 21-22 21S10 49.7 10 37c0-9 4-16 10-21-1 4 0 7 3 9 0-9 3-13 9-19Z" />
-              </svg>
-              View More
-            </span>
-          </span>
-        </div>
-      </div>
-
-      <div class="ms-pair">
-        <div class="ms-item ms-content reveal">
-          <span class="ms-tag">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-              <path d="M8 5v14l11-7Z" />
-            </svg>
-            Guest Favorite
-          </span>
-          <div class="ms-body">
-            <h3>Brown Butter Pappardelle</h3>
-            <p>Hand-cut pasta, sage brown butter, wild mushroom, and aged parmesan.</p>
-          </div>
-          <span class="ms-chip">
-            <svg class="grill-lines" viewBox="0 0 260 76" preserveAspectRatio="none" aria-hidden="true">
-              <line class="rail" x1="0" y1="6" x2="260" y2="6" />
-              <line class="rail" x1="0" y1="70" x2="260" y2="70" />
-              <line class="bar" x1="0" y1="22" x2="260" y2="22" />
-              <line class="bar" x1="0" y1="38" x2="260" y2="38" />
-              <line class="bar" x1="0" y1="54" x2="260" y2="54" />
-              <line class="glow" x1="0" y1="38" x2="260" y2="38" />
-            </svg>
-            <span class="label">
-              <svg class="flame" viewBox="0 0 64 64" fill="currentColor" aria-hidden="true">
-                <path
-                  d="M32 6c6 8-2 12-2 19a8 8 0 0 0 16 0c0-3-1-5-1-5 6 4 9 11 9 17 0 12.7-10.3 21-22 21S10 49.7 10 37c0-9 4-16 10-21-1 4 0 7 3 9 0-9 3-13 9-19Z" />
-              </svg>
-              View More
-            </span>
-          </span>
-        </div>
-        <span class="ms-seam" aria-hidden="true">
-          <i class="dot-line"></i>
-          <i class="dot-line"></i>
-          <i class="dot-line"></i>
-        </span>
-        <div class="ms-item ms-photo reveal">
-          <img src="https://images.unsplash.com/photo-1598103442097-8b74394b95c6?w=600&h=760&fit=crop&q=80"
-            alt="Herb-Crusted Chicken" loading="lazy">
-        </div>
-      </div>
-    </div>
-        <div class="ms-strip" id="dishGrid">
-      <div class="ms-pair">
-        <div class="ms-item ms-photo reveal">
-          <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&h=760&fit=crop&q=80"
-            alt="Charred Heirloom Salad" loading="lazy">
-        </div>
-        <span class="ms-seam" aria-hidden="true">
-          <i class="dot-line"></i>
-          <i class="dot-line"></i>
-          <i class="dot-line"></i>
-        </span>
-        <div class="ms-item ms-content reveal">
-          <span class="ms-tag">
-            <svg viewBox="0 0 64 64" fill="currentColor" aria-hidden="true">
-              <path
-                d="M32 6c6 8-2 12-2 19a8 8 0 0 0 16 0c0-3-1-5-1-5 6 4 9 11 9 17 0 12.7-10.3 21-22 21S10 49.7 10 37c0-9 4-16 10-21-1 4 0 7 3 9 0-9 3-13 9-19Z" />
-            </svg>
-            Chef's Choice
-          </span>
-          <div class="ms-body">
-            <h3>Cedar Plank Salmon</h3>
-            <p>Slow-smoked on cedar, citrus glaze, charred asparagus, served with a bright lemon crème.</p>
-          </div>
-          <span class="ms-chip">
-            <svg class="grill-lines" viewBox="0 0 260 76" preserveAspectRatio="none" aria-hidden="true">
-              <line class="rail" x1="0" y1="6" x2="260" y2="6" />
-              <line class="rail" x1="0" y1="70" x2="260" y2="70" />
-              <line class="bar" x1="0" y1="22" x2="260" y2="22" />
-              <line class="bar" x1="0" y1="38" x2="260" y2="38" />
-              <line class="bar" x1="0" y1="54" x2="260" y2="54" />
-              <line class="glow" x1="0" y1="38" x2="260" y2="38" />
-            </svg>
-            <span class="label">
-              <svg class="flame" viewBox="0 0 64 64" fill="currentColor" aria-hidden="true">
-                <path
-                  d="M32 6c6 8-2 12-2 19a8 8 0 0 0 16 0c0-3-1-5-1-5 6 4 9 11 9 17 0 12.7-10.3 21-22 21S10 49.7 10 37c0-9 4-16 10-21-1 4 0 7 3 9 0-9 3-13 9-19Z" />
-              </svg>
-              View More
-            </span>
-          </span>
-        </div>
-      </div>
-
-      <div class="ms-pair">
-        <div class="ms-item ms-content reveal">
-          <span class="ms-tag">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-              <path d="M8 5v14l11-7Z" />
-            </svg>
-            Guest Favorite
-          </span>
-          <div class="ms-body">
-            <h3>Brown Butter Pappardelle</h3>
-            <p>Hand-cut pasta, sage brown butter, wild mushroom, and aged parmesan.</p>
-          </div>
-          <span class="ms-chip">
-            <svg class="grill-lines" viewBox="0 0 260 76" preserveAspectRatio="none" aria-hidden="true">
-              <line class="rail" x1="0" y1="6" x2="260" y2="6" />
-              <line class="rail" x1="0" y1="70" x2="260" y2="70" />
-              <line class="bar" x1="0" y1="22" x2="260" y2="22" />
-              <line class="bar" x1="0" y1="38" x2="260" y2="38" />
-              <line class="bar" x1="0" y1="54" x2="260" y2="54" />
-              <line class="glow" x1="0" y1="38" x2="260" y2="38" />
-            </svg>
-            <span class="label">
-              <svg class="flame" viewBox="0 0 64 64" fill="currentColor" aria-hidden="true">
-                <path
-                  d="M32 6c6 8-2 12-2 19a8 8 0 0 0 16 0c0-3-1-5-1-5 6 4 9 11 9 17 0 12.7-10.3 21-22 21S10 49.7 10 37c0-9 4-16 10-21-1 4 0 7 3 9 0-9 3-13 9-19Z" />
-              </svg>
-              View More
-            </span>
-          </span>
-        </div>
-        <span class="ms-seam" aria-hidden="true">
-          <i class="dot-line"></i>
-          <i class="dot-line"></i>
-          <i class="dot-line"></i>
-        </span>
-        <div class="ms-item ms-photo reveal">
-          <img src="https://images.unsplash.com/photo-1598103442097-8b74394b95c6?w=600&h=760&fit=crop&q=80"
-            alt="Herb-Crusted Chicken" loading="lazy">
-        </div>
-      </div>
-    </div>
-
- 
-
-  </section>
-
-  <section class="cine-gallery" id="gallery">
-    <div class="cine-stage" id="cineStage">
-
-      <div class="cine-slides" id="cineSlides">
-        <div class="cine-slide active"
-          style="background-image:url('https://t3.ftcdn.net/jpg/01/56/33/54/360_F_156335406_a865b1B2DhtwrMup69BcB32uCUMp8cOY.jpg')">
-        </div>
-        <div class="cine-slide"
-          style="background-image:url('https://cdn.pixabay.com/photo/2021/07/19/16/04/pizza-6478478_1280.jpg')"></div>
-        <div class="cine-slide"
-          style="background-image:url('https://t3.ftcdn.net/jpg/20/61/35/70/360_F_2061357093_CtbOOUbTSMDLBvanqh2XMMbhlM3XuvwC.jpg')">
-        </div>
-        <div class="cine-slide"
-          style="background-image:url('https://img.magnific.com/premium-photo/assorted-traditional-african-dishes-with-jollof-rice-collard-greens-barbecued-meat-served_996993-8679.jpg')">
-        </div>
-
-      </div>
-
-      <div class="cine-scrim"></div>
-
-      <div class="cine-content">
-        <h2 class="cine-title">Our Gallery</h2>
-        <div class="about-tag"><span class="line"></span></div>
-
-        
-      </div>
-
-      <div class="cine-footer">
-        <button class="cine-play-toggle" id="cinePlayToggle" aria-label="Pause">
-          <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M7 5h4v14H7zM13 5h4v14h-4z" />
+      <span class="ms-seam" aria-hidden="true">
+        <i class="dot-line"></i>
+        <i class="dot-line"></i>
+        <i class="dot-line"></i>
+      </span>
+      <div class="ms-item ms-content reveal">
+        <span class="ms-tag">
+          <svg viewBox="0 0 64 64" fill="currentColor" aria-hidden="true">
+            <path
+              d="M32 6c6 8-2 12-2 19a8 8 0 0 0 16 0c0-3-1-5-1-5 6 4 9 11 9 17 0 12.7-10.3 21-22 21S10 49.7 10 37c0-9 4-16 10-21-1 4 0 7 3 9 0-9 3-13 9-19Z" />
           </svg>
-          <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" style="display:none;">
+          Chef's Choice
+        </span>
+        <div class="ms-body">
+          <h3>Churrasco / Skirt Steak</h3>
+          <p>Marinated skirt steak grilled over open flame, served with rice, beans, and fresh pico de gallo.</p>
+        </div>
+        <span class="ms-chip">
+          <svg class="grill-lines" viewBox="0 0 260 76" preserveAspectRatio="none" aria-hidden="true">
+            <line class="rail" x1="0" y1="6" x2="260" y2="6" />
+            <line class="rail" x1="0" y1="70" x2="260" y2="70" />
+            <line class="bar" x1="0" y1="22" x2="260" y2="22" />
+            <line class="bar" x1="0" y1="38" x2="260" y2="38" />
+            <line class="bar" x1="0" y1="54" x2="260" y2="54" />
+            <line class="glow" x1="0" y1="38" x2="260" y2="38" />
+          </svg>
+          <span class="label">
+            <svg class="flame" viewBox="0 0 64 64" fill="currentColor" aria-hidden="true">
+              <path
+                d="M32 6c6 8-2 12-2 19a8 8 0 0 0 16 0c0-3-1-5-1-5 6 4 9 11 9 17 0 12.7-10.3 21-22 21S10 49.7 10 37c0-9 4-16 10-21-1 4 0 7 3 9 0-9 3-13 9-19Z" />
+            </svg>
+            View More
+          </span>
+        </span>
+      </div>
+    </div>
+
+    <div class="ms-pair">
+      <div class="ms-item ms-content reveal">
+        <span class="ms-tag">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
             <path d="M8 5v14l11-7Z" />
           </svg>
-        </button>
-        <div class="cine-progress-track" id="cineProgressTrack">
-          <div class="cine-progress-fill" id="cineProgressFill"></div>
+          Guest Favorite
+        </span>
+        <div class="ms-body">
+          <h3>Tacos de Camarón</h3>
+          <p>Grilled shrimp tucked into warm corn tortillas with crisp cabbage, cilantro, and a creamy chipotle drizzle.</p>
         </div>
-        <span class="cine-time" id="cineTime">0:00 / 0:06</span>
-        <span class="cine-counter" id="cineCounter">01</span>
-        <button class="cine-mute" id="cineMute" aria-label="Mute">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-            <path d="M5 9v6h4l5 5V4L9 9H5Z" />
-            <path d="M16 8.5c1 1 1 6 0 7" />
+        <span class="ms-chip">
+          <svg class="grill-lines" viewBox="0 0 260 76" preserveAspectRatio="none" aria-hidden="true">
+            <line class="rail" x1="0" y1="6" x2="260" y2="6" />
+            <line class="rail" x1="0" y1="70" x2="260" y2="70" />
+            <line class="bar" x1="0" y1="22" x2="260" y2="22" />
+            <line class="bar" x1="0" y1="38" x2="260" y2="38" />
+            <line class="bar" x1="0" y1="54" x2="260" y2="54" />
+            <line class="glow" x1="0" y1="38" x2="260" y2="38" />
           </svg>
-        </button>
+          <span class="label">
+            <svg class="flame" viewBox="0 0 64 64" fill="currentColor" aria-hidden="true">
+              <path
+                d="M32 6c6 8-2 12-2 19a8 8 0 0 0 16 0c0-3-1-5-1-5 6 4 9 11 9 17 0 12.7-10.3 21-22 21S10 49.7 10 37c0-9 4-16 10-21-1 4 0 7 3 9 0-9 3-13 9-19Z" />
+            </svg>
+            View More
+          </span>
+        </span>
+      </div>
+      <span class="ms-seam" aria-hidden="true">
+        <i class="dot-line"></i>
+        <i class="dot-line"></i>
+        <i class="dot-line"></i>
+      </span>
+      <div class="ms-item ms-photo reveal">
+        <img
+          src="https://d1ph6a2qqb4pcd.cloudfront.net/fit-in/filters:format(webp):/uploads/website/website/2026/07/16/103229695/website_gallery/hjtbU37ZEYN2pxikZehJCMF8qoJxR768wIrgK2Hk.webp"
+          alt="Tacos de camarón with cabbage and chipotle" loading="lazy">
+      </div>
+    </div>
+  </div>
+
+  <!-- ---------- strip 2 ---------- -->
+  <div class="ms-strip dish-grid">
+    <div class="ms-pair">
+      <div class="ms-item ms-photo reveal">
+        <img
+          src="https://d1ph6a2qqb4pcd.cloudfront.net/fit-in/filters:format(webp):/uploads/website/website/2026/07/16/103229695/website_gallery/xfFGd4sWoZCzgtSXgX9UNSQL9yCdxyPo4U78j6Il.webp"
+          alt="Street-style tacos on corn tortillas" loading="lazy">
+      </div>
+      <span class="ms-seam" aria-hidden="true">
+        <i class="dot-line"></i>
+        <i class="dot-line"></i>
+        <i class="dot-line"></i>
+      </span>
+      <div class="ms-item ms-content reveal">
+        <span class="ms-tag">
+          <svg viewBox="0 0 64 64" fill="currentColor" aria-hidden="true">
+            <path
+              d="M32 6c6 8-2 12-2 19a8 8 0 0 0 16 0c0-3-1-5-1-5 6 4 9 11 9 17 0 12.7-10.3 21-22 21S10 49.7 10 37c0-9 4-16 10-21-1 4 0 7 3 9 0-9 3-13 9-19Z" />
+          </svg>
+          Chef's Choice
+        </span>
+        <div class="ms-body">
+          <h3>Tacos</h3>
+          <p>Three street-style tacos on soft corn tortillas — choice of meat, finished with onion, cilantro, and lime.</p>
+        </div>
+        <span class="ms-chip">
+          <svg class="grill-lines" viewBox="0 0 260 76" preserveAspectRatio="none" aria-hidden="true">
+            <line class="rail" x1="0" y1="6" x2="260" y2="6" />
+            <line class="rail" x1="0" y1="70" x2="260" y2="70" />
+            <line class="bar" x1="0" y1="22" x2="260" y2="22" />
+            <line class="bar" x1="0" y1="38" x2="260" y2="38" />
+            <line class="bar" x1="0" y1="54" x2="260" y2="54" />
+            <line class="glow" x1="0" y1="38" x2="260" y2="38" />
+          </svg>
+          <span class="label">
+            <svg class="flame" viewBox="0 0 64 64" fill="currentColor" aria-hidden="true">
+              <path
+                d="M32 6c6 8-2 12-2 19a8 8 0 0 0 16 0c0-3-1-5-1-5 6 4 9 11 9 17 0 12.7-10.3 21-22 21S10 49.7 10 37c0-9 4-16 10-21-1 4 0 7 3 9 0-9 3-13 9-19Z" />
+            </svg>
+            View More
+          </span>
+        </span>
+      </div>
+    </div>
+
+    <div class="ms-pair">
+      <div class="ms-item ms-content reveal">
+        <span class="ms-tag">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path d="M8 5v14l11-7Z" />
+          </svg>
+          Guest Favorite
+        </span>
+        <div class="ms-body">
+          <h3>Chimichanga de Bistec</h3>
+          <p>Golden-fried flour tortilla stuffed with seasoned steak, topped with queso, lettuce, and sour cream.</p>
+        </div>
+        <span class="ms-chip">
+          <svg class="grill-lines" viewBox="0 0 260 76" preserveAspectRatio="none" aria-hidden="true">
+            <line class="rail" x1="0" y1="6" x2="260" y2="6" />
+            <line class="rail" x1="0" y1="70" x2="260" y2="70" />
+            <line class="bar" x1="0" y1="22" x2="260" y2="22" />
+            <line class="bar" x1="0" y1="38" x2="260" y2="38" />
+            <line class="bar" x1="0" y1="54" x2="260" y2="54" />
+            <line class="glow" x1="0" y1="38" x2="260" y2="38" />
+          </svg>
+          <span class="label">
+            <svg class="flame" viewBox="0 0 64 64" fill="currentColor" aria-hidden="true">
+              <path
+                d="M32 6c6 8-2 12-2 19a8 8 0 0 0 16 0c0-3-1-5-1-5 6 4 9 11 9 17 0 12.7-10.3 21-22 21S10 49.7 10 37c0-9 4-16 10-21-1 4 0 7 3 9 0-9 3-13 9-19Z" />
+            </svg>
+            View More
+          </span>
+        </span>
+      </div>
+      <span class="ms-seam" aria-hidden="true">
+        <i class="dot-line"></i>
+        <i class="dot-line"></i>
+        <i class="dot-line"></i>
+      </span>
+      <div class="ms-item ms-photo reveal">
+        <img
+          src="https://d1ph6a2qqb4pcd.cloudfront.net/fit-in/filters:format(webp):/uploads/website/website/2026/07/16/103229695/website_gallery/DHMYzqjqOzWODe6ZUPlBNhuhP4y4cJAQ3ByvtwfP.webp"
+          alt="Chimichanga de bistec with queso and sour cream" loading="lazy">
+      </div>
+    </div>
+  </div>
+
+  <!-- ---------- strip 3 ---------- -->
+  <div class="ms-strip dish-grid">
+    <div class="ms-pair">
+      <div class="ms-item ms-photo reveal">
+        <img
+          src="https://d1ph6a2qqb4pcd.cloudfront.net/fit-in/filters:format(webp):/uploads/website/website/2026/07/16/103229695/website_gallery/6BK6g43L1HW5loN1KEDUzLVvJ4Ex8kKb6Q73tazP.webp"
+          alt="Burrito supremo smothered in red sauce and cheese" loading="lazy">
+      </div>
+      <span class="ms-seam" aria-hidden="true">
+        <i class="dot-line"></i>
+        <i class="dot-line"></i>
+        <i class="dot-line"></i>
+      </span>
+      <div class="ms-item ms-content reveal">
+        <span class="ms-tag">
+          <svg viewBox="0 0 64 64" fill="currentColor" aria-hidden="true">
+            <path
+              d="M32 6c6 8-2 12-2 19a8 8 0 0 0 16 0c0-3-1-5-1-5 6 4 9 11 9 17 0 12.7-10.3 21-22 21S10 49.7 10 37c0-9 4-16 10-21-1 4 0 7 3 9 0-9 3-13 9-19Z" />
+          </svg>
+          Chef's Choice
+        </span>
+        <div class="ms-body">
+          <h3>Burrito Supremo</h3>
+          <p>Oversized flour tortilla packed with meat, rice, and beans, smothered in red sauce and melted cheese.</p>
+        </div>
+        <span class="ms-chip">
+          <svg class="grill-lines" viewBox="0 0 260 76" preserveAspectRatio="none" aria-hidden="true">
+            <line class="rail" x1="0" y1="6" x2="260" y2="6" />
+            <line class="rail" x1="0" y1="70" x2="260" y2="70" />
+            <line class="bar" x1="0" y1="22" x2="260" y2="22" />
+            <line class="bar" x1="0" y1="38" x2="260" y2="38" />
+            <line class="bar" x1="0" y1="54" x2="260" y2="54" />
+            <line class="glow" x1="0" y1="38" x2="260" y2="38" />
+          </svg>
+          <span class="label">
+            <svg class="flame" viewBox="0 0 64 64" fill="currentColor" aria-hidden="true">
+              <path
+                d="M32 6c6 8-2 12-2 19a8 8 0 0 0 16 0c0-3-1-5-1-5 6 4 9 11 9 17 0 12.7-10.3 21-22 21S10 49.7 10 37c0-9 4-16 10-21-1 4 0 7 3 9 0-9 3-13 9-19Z" />
+            </svg>
+            View More
+          </span>
+        </span>
+      </div>
+    </div>
+
+    <div class="ms-pair">
+      <div class="ms-item ms-content reveal">
+        <span class="ms-tag">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path d="M8 5v14l11-7Z" />
+          </svg>
+          Guest Favorite
+        </span>
+        <div class="ms-body">
+          <h3>Tex-Mex Fajitas</h3>
+          <p>Sizzling steak and chicken with grilled peppers and onions, served with warm tortillas and all the fixings.</p>
+        </div>
+        <span class="ms-chip">
+          <svg class="grill-lines" viewBox="0 0 260 76" preserveAspectRatio="none" aria-hidden="true">
+            <line class="rail" x1="0" y1="6" x2="260" y2="6" />
+            <line class="rail" x1="0" y1="70" x2="260" y2="70" />
+            <line class="bar" x1="0" y1="22" x2="260" y2="22" />
+            <line class="bar" x1="0" y1="38" x2="260" y2="38" />
+            <line class="bar" x1="0" y1="54" x2="260" y2="54" />
+            <line class="glow" x1="0" y1="38" x2="260" y2="38" />
+          </svg>
+          <span class="label">
+            <svg class="flame" viewBox="0 0 64 64" fill="currentColor" aria-hidden="true">
+              <path
+                d="M32 6c6 8-2 12-2 19a8 8 0 0 0 16 0c0-3-1-5-1-5 6 4 9 11 9 17 0 12.7-10.3 21-22 21S10 49.7 10 37c0-9 4-16 10-21-1 4 0 7 3 9 0-9 3-13 9-19Z" />
+            </svg>
+            View More
+          </span>
+        </span>
+      </div>
+      <span class="ms-seam" aria-hidden="true">
+        <i class="dot-line"></i>
+        <i class="dot-line"></i>
+        <i class="dot-line"></i>
+      </span>
+      <div class="ms-item ms-photo reveal">
+        <img
+          src="https://d1ph6a2qqb4pcd.cloudfront.net/fit-in/filters:format(webp):/uploads/website/website/2026/07/16/103229695/website_gallery/dBpsYNT6tbplb3ZJJOOmOwekwm275FFEV4SbM120.webp"
+          alt="Tex-Mex fajitas with grilled peppers and onions" loading="lazy">
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<section class="cine-gallery" id="gallery">
+  <div class="cine-stage" id="cineStage">
+
+    <div class="cine-slides" id="cineSlides">
+      <div class="cine-slide active"
+        style="background-image:url('https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=1920&q=80')">
+      </div>
+      <div class="cine-slide"
+        style="background-image:url('https://images.unsplash.com/photo-1552332386-f8dd00dc2f85?w=1920&q=80')">
+      </div>
+      <div class="cine-slide"
+        style="background-image:url('https://images.unsplash.com/photo-1613514785940-daed07799d9b?w=1920&q=80')">
+      </div>
+      <div class="cine-slide"
+        style="background-image:url('https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=1920&q=80')">
       </div>
 
     </div>
 
-    <div class="cine-cards-wrap">
-      <button class="cine-arrow prev" id="cinePrev" aria-label="Previous">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M15 18l-6-6 6-6" />
+    <div class="cine-scrim"></div>
+
+    <div class="cine-content">
+      <h2 class="cine-title">Our Gallery</h2>
+      <div class="about-tag"><span class="line"></span></div>
+
+
+    </div>
+
+    <div class="cine-footer">
+      <button class="cine-play-toggle" id="cinePlayToggle" aria-label="Pause">
+        <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M7 5h4v14H7zM13 5h4v14h-4z" />
+        </svg>
+        <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" style="display:none;">
+          <path d="M8 5v14l11-7Z" />
         </svg>
       </button>
-
-      <div class="cine-cards" id="cineCards">
-        <div class="cine-card active" data-index="0">
-          <img src="https://t3.ftcdn.net/jpg/01/56/33/54/360_F_156335406_a865b1B2DhtwrMup69BcB32uCUMp8cOY.jpg"
-            alt="Plated & Fired">
-          <span class="cine-play"><svg viewBox="0 0 24 24" fill="currentColor">
-              <path d="M8 5v14l11-7Z" />
-            </svg></span>
-
-        </div>
-        <div class="cine-card" data-index="1">
-          <img src="https://cdn.pixabay.com/photo/2021/07/19/16/04/pizza-6478478_1280.jpg" alt="Cedar Plank Salmon">
-          <span class="cine-play"><svg viewBox="0 0 24 24" fill="currentColor">
-              <path d="M8 5v14l11-7Z" />
-            </svg></span>
-
-        </div>
-        <div class="cine-card" data-index="2">
-          <img src="https://t3.ftcdn.net/jpg/20/61/35/70/360_F_2061357093_CtbOOUbTSMDLBvanqh2XMMbhlM3XuvwC.jpg"
-            alt="Char &amp; Sear">
-          <span class="cine-play"><svg viewBox="0 0 24 24" fill="currentColor">
-              <path d="M8 5v14l11-7Z" />
-            </svg></span>
-
-        </div>
-        <div class="cine-card" data-index="3">
-          <img
-            src="https://img.magnific.com/premium-photo/assorted-traditional-african-dishes-with-jollof-rice-collard-greens-barbecued-meat-served_996993-8679.jpg"
-            alt="Garden Fresh">
-          <span class="cine-play"><svg viewBox="0 0 24 24" fill="currentColor">
-              <path d="M8 5v14l11-7Z" />
-            </svg></span>
-
-        </div>
-
-
+      <div class="cine-progress-track" id="cineProgressTrack">
+        <div class="cine-progress-fill" id="cineProgressFill"></div>
       </div>
-
-      <button class="cine-arrow next" id="cineNext" aria-label="Next">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M9 18l6-6-6-6" />
+      <span class="cine-time" id="cineTime">0:00 / 0:06</span>
+      <span class="cine-counter" id="cineCounter">01</span>
+      <button class="cine-mute" id="cineMute" aria-label="Mute">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M5 9v6h4l5 5V4L9 9H5Z" />
+          <path d="M16 8.5c1 1 1 6 0 7" />
         </svg>
       </button>
     </div>
-  </section>
+
+  </div>
+
+  <div class="cine-cards-wrap">
+    <button class="cine-arrow prev" id="cinePrev" aria-label="Previous">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M15 18l-6-6 6-6" />
+      </svg>
+    </button>
+
+    <div class="cine-cards" id="cineCards">
+      <div class="cine-card active" data-index="0">
+        <img
+          src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400&q=80"
+          alt="Street tacos with cilantro, onion, and lime" loading="lazy">
+        <span class="cine-play"><svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M8 5v14l11-7Z" />
+          </svg></span>
+      </div>
+      <div class="cine-card" data-index="1">
+        <img
+          src="https://images.unsplash.com/photo-1552332386-f8dd00dc2f85?w=400&q=80"
+          alt="Enchiladas with red sauce and melted cheese" loading="lazy">
+        <span class="cine-play"><svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M8 5v14l11-7Z" />
+          </svg></span>
+      </div>
+      <div class="cine-card" data-index="2">
+        <img
+          src="https://images.unsplash.com/photo-1613514785940-daed07799d9b?w=400&q=80"
+          alt="Loaded burrito with rice, beans, and salsa" loading="lazy">
+        <span class="cine-play"><svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M8 5v14l11-7Z" />
+          </svg></span>
+      </div>
+      <div class="cine-card" data-index="3">
+        <img
+          src="https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=400&q=80"
+          alt="Sizzling fajitas with grilled peppers and onions" loading="lazy">
+        <span class="cine-play"><svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M8 5v14l11-7Z" />
+          </svg></span>
+      </div>
+
+    </div>
+
+    <button class="cine-arrow next" id="cineNext" aria-label="Next">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M9 18l6-6-6-6" />
+      </svg>
+    </button>
+  </div>
+</section>
 
   <section class="chat-section" id="testimonials">
     <div class="section-head reveal">
@@ -6157,7 +6147,8 @@ position: absolute;
       <div class="chat-header">
         <div class="c-avatar">GH</div>
         <div class="c-info">
-          <div class="c-name">Grill House Reviews</div>
+          <div class="c-name">Guatemex
+Restaurant Reviews</div>
           <div class="c-status">Verified Guests</div>
         </div>
       </div>
@@ -6307,16 +6298,17 @@ position: absolute;
 
         <iframe class="loc-map-frame"
           src="https://www.google.com/maps?q=2011+Eleventh+Avenue+South,+Birmingham,+AL+35300&output=embed"
-          loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Grill House location map"></iframe>
-        
+          loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Guatemex Restaurant location map"></iframe>
+
       </div>
       <div class="loc-photo-card reveal">
-        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900&q=80" alt="Grill House storefront"
+        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900&q=80" alt="Guatemex Restaurant storefront"
           loading="lazy">
-        
+
         <div class="loc-photo-overlay">
           <span class="loc-photo-tag">Our Location</span>
-          <h3>Grill House</h3>
+          <h3>Guatemex
+Restaurant</h3>
           <p>2011 Eleventh Avenue South<br>Birmingham, AL 35300</p>
           <a href="#contact-social" class="btn-grill">
             <svg class="grill-lines" viewBox="0 0 260 76" preserveAspectRatio="none" aria-hidden="true">
@@ -6353,10 +6345,10 @@ position: absolute;
         <div class="logo">
           <span class="logo-mark">
             <img
-              src="https://d1ph6a2qqb4pcd.cloudfront.net/fit-in/filters:format(webp):/uploads/website/website/2026/02/01/083621498/logo/MIy3LJQAGWmXbjUwkHAHt0mEWNpGLccEaADW6xdW.png"
+              src="https://d1ph6a2qqb4pcd.cloudfront.net/fit-in/filters:format(webp):/uploads/website/website/2026/05/25/174233548/logo/w7kayfc3V1k58nsPiCKOwG0vlYfUEx6cDGD9uPz8.png"
               alt="Oviq African Market and Foods logo">
           </span>
-          
+
         </div>
         <p>A neighborhood grill &amp; bar serving fire-cooked classics, seasonal sides, and a warm room for every
           occasion.</p>
@@ -6406,7 +6398,8 @@ position: absolute;
     </div>
 
     <div class="footer-bottom">
-      <span>&copy; 2026 Grill House. All Rights Reserved. Powered by Zingmyorder</span>
+      <span>&copy; 2026 Guatemex
+Restaurant. All Rights Reserved. Powered by Zingmyorder</span>
       <span>Tuesday – Saturday · Dinner 5:30–10:00 PM · Bar 4:00 PM (5:00 PM Sat)</span>
     </div>
   </footer>
@@ -6669,281 +6662,39 @@ position: absolute;
 
     (function () {
       try {
-      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (reduced) return;
-      var canvas = document.getElementById('embers');
-      if (!canvas) return;
-      var ctx = canvas.getContext && canvas.getContext('2d');
-      if (!ctx) return;
-      var hero = document.querySelector('.hero');
-      var particles = [];
-      var W, H;
+        var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (reduced) return;
+        var canvas = document.getElementById('embers');
+        if (!canvas) return;
+        var ctx = canvas.getContext && canvas.getContext('2d');
+        if (!ctx) return;
+        var hero = document.querySelector('.hero');
+        var particles = [];
+        var W, H;
 
-      function resize() {
-        W = canvas.width = hero.offsetWidth;
-        H = canvas.height = hero.offsetHeight;
-      }
-      resize();
-      window.addEventListener('resize', resize);
+        function resize() {
+          W = canvas.width = hero.offsetWidth;
+          H = canvas.height = hero.offsetHeight;
+        }
+        resize();
+        window.addEventListener('resize', resize);
 
-      function spawn() {
-        particles.push({
-          x: Math.random() * W,
-          y: H + 10,
-          r: Math.random() * 2 + 0.6,
-          vy: Math.random() * 0.6 + 0.35,
-          vx: (Math.random() - 0.5) * 0.4,
-          life: 0,
-          maxLife: Math.random() * 200 + 160,
-          hue: Math.random() > 0.5 ? '200,84,46' : '227,122,63'
-        });
-      }
-
-      function tick() {
-        ctx.clearRect(0, 0, W, H);
-        if (particles.length < 70 && Math.random() > 0.55) spawn();
-        particles.forEach(function (p, i) {
-          p.life++;
-          p.y -= p.vy;
-          p.x += p.vx + Math.sin(p.life * 0.02) * 0.3;
-          var t = p.life / p.maxLife;
-          var alpha = t < 0.15 ? t / 0.15 : 1 - (t - 0.15) / 0.85;
-          if (alpha < 0) alpha = 0;
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-          ctx.fillStyle = 'rgba(' + p.hue + ',' + (alpha * 0.85) + ')';
-          ctx.shadowBlur = 6;
-          ctx.shadowColor = 'rgba(' + p.hue + ',0.8)';
-          ctx.fill();
-          if (p.life >= p.maxLife || p.y < -10) particles.splice(i, 1);
-        });
-        requestAnimationFrame(tick);
-      }
-      tick();
-      } catch (e) { /* animation init failed, skip silently */ }
-    })();
-
-    (function () {
-      try {
-      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (reduced) return;
-      var canvas = document.getElementById('navEmbers');
-      if (!canvas) return;
-      var ctx = canvas.getContext && canvas.getContext('2d');
-      if (!ctx) return;
-      var header = document.getElementById('siteHeader');
-      if (!header) return;
-      var particles = [];
-      var W, H, DPR = Math.min(window.devicePixelRatio || 1, 2);
-
-      function resize() {
-        W = header.offsetWidth;
-        H = canvas.offsetHeight || 40;
-        canvas.width = W * DPR;
-        canvas.height = H * DPR;
-        canvas.style.width = W + 'px';
-        canvas.style.height = H + 'px';
-        ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-      }
-      resize();
-      window.addEventListener('resize', resize);
-
-      function spawn() {
-        particles.push({
-          x: Math.random() * W,
-          y: H - 6,
-          r: Math.random() * 1.5 + 0.5,
-          vy: Math.random() * 0.5 + 0.3,
-          vx: (Math.random() - 0.5) * 0.3,
-          life: 0,
-          maxLife: Math.random() * 110 + 90,
-          hue: Math.random() > 0.5 ? '200,84,46' : '229,118,30'
-        });
-      }
-
-      function tick() {
-        ctx.clearRect(0, 0, W, H);
-        if (header.classList.contains('scrolled') && particles.length < 24 && Math.random() > 0.62) spawn();
-        particles.forEach(function (p, i) {
-          p.life++;
-          p.y -= p.vy;
-          p.x += p.vx + Math.sin(p.life * 0.03) * 0.2;
-          var t = p.life / p.maxLife;
-          var alpha = t < 0.2 ? t / 0.2 : 1 - (t - 0.2) / 0.8;
-          if (alpha < 0) alpha = 0;
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-          ctx.fillStyle = 'rgba(' + p.hue + ',' + (alpha * 0.9) + ')';
-          ctx.shadowBlur = 5;
-          ctx.shadowColor = 'rgba(' + p.hue + ',0.8)';
-          ctx.fill();
-          if (p.life >= p.maxLife || p.y < -6) particles.splice(i, 1);
-        });
-        requestAnimationFrame(tick);
-      }
-      tick();
-      } catch (e) { /* animation init failed, skip silently */ }
-    })();
-
-    (function () {
-      try {
-      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      var canvas = document.getElementById('heroVapor');
-      if (!canvas || reduced) return;
-      var ctx = canvas.getContext && canvas.getContext('2d');
-      if (!ctx) return;
-      var W, H, DPR = Math.min(window.devicePixelRatio || 1, 2);
-
-      function random(min, max) { return min + Math.random() * (max - min); }
-
-      function resize() {
-        W = canvas.offsetWidth;
-        H = canvas.offsetHeight;
-        canvas.width = W * DPR;
-        canvas.height = H * DPR;
-        canvas.style.width = W + 'px';
-        canvas.style.height = H + 'px';
-        ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-      }
-      resize();
-      window.addEventListener('resize', resize);
-
-      // Steam sprite: four overlapping soft blobs baked into one blurred
-      // texture so each puff reads as a rounded wisp rather than a flat haze.
-      var spriteSize = 180;
-      var sprite = document.createElement('canvas');
-      sprite.width = sprite.height = spriteSize;
-      var sctx = sprite.getContext('2d');
-      sctx.filter = 'blur(12px)';
-      [
-        { x: 0.5, y: 0.55, r: 0.32 },
-        { x: 0.36, y: 0.6, r: 0.22 },
-        { x: 0.64, y: 0.58, r: 0.24 },
-        { x: 0.5, y: 0.42, r: 0.2 }
-      ].forEach(function (b) {
-        var cx = b.x * spriteSize, cy = b.y * spriteSize, r = b.r * spriteSize;
-        var g = sctx.createRadialGradient(cx, cy, 0, cx, cy, r);
-        g.addColorStop(0, 'rgba(239,230,216,0.55)');
-        g.addColorStop(0.55, 'rgba(239,230,216,0.22)');
-        g.addColorStop(1, 'rgba(239,230,216,0)');
-        sctx.fillStyle = g;
-        sctx.beginPath();
-        sctx.arc(cx, cy, r, 0, Math.PI * 2);
-        sctx.fill();
-      });
-
-      // Fixed emitters spread across the banner width, so steam lifts evenly
-      // along the whole hero instead of from one central column.
-      var spawnPoints = [0.10, 0.24, 0.38, 0.52, 0.66, 0.80, 0.92];
-      var puffs = [];
-
-      function spawn() {
-        var baseX = spawnPoints[Math.floor(Math.random() * spawnPoints.length)] * W;
-        puffs.push({
-          x0: baseX + random(-12, 12),
-          age: 0,
-          life: random(4200, 6800),
-          size: random(34, 56),
-          maxSize: random(100, 160),
-          rot: random(0, Math.PI * 2),
-          rotSpeed: random(-0.08, 0.08),
-          driftAmp: random(10, 22),
-          driftFreq: random(0.0006, 0.001),
-          driftPhase: random(0, Math.PI * 2),
-          rise: random(70, 120),
-          peak: random(0.3, 0.45)
-        });
-      }
-
-      var lastSpawn = 0;
-      var lastTime = null;
-
-      function tick(ts) {
-        if (lastTime === null) lastTime = ts;
-        var dt = ts - lastTime;
-        lastTime = ts;
-
-        if (ts - lastSpawn > random(500, 900) && puffs.length < 12) {
-          spawn();
-          lastSpawn = ts;
+        function spawn() {
+          particles.push({
+            x: Math.random() * W,
+            y: H + 10,
+            r: Math.random() * 2 + 0.6,
+            vy: Math.random() * 0.6 + 0.35,
+            vx: (Math.random() - 0.5) * 0.4,
+            life: 0,
+            maxLife: Math.random() * 200 + 160,
+            hue: Math.random() > 0.5 ? '200,84,46' : '227,122,63'
+          });
         }
 
-        ctx.clearRect(0, 0, W, H);
-        ctx.globalCompositeOperation = 'screen';
-
-        for (var i = puffs.length - 1; i >= 0; i--) {
-          var p = puffs[i];
-          p.age += dt;
-          var t = p.age / p.life;
-          if (t >= 1) { puffs.splice(i, 1); continue; }
-
-          var drift = Math.sin(p.age * p.driftFreq + p.driftPhase) * p.driftAmp;
-          var x = p.x0 + drift * t;
-          var y = (H + 12) - t * (H * 0.75 + p.rise * 0.3);
-          var scale = (p.size + (p.maxSize - p.size) * t) / spriteSize;
-          var alpha = t < p.peak ? (t / p.peak) : (1 - (t - p.peak) / (1 - p.peak));
-          if (alpha < 0) alpha = 0;
-          alpha *= 0.3;
-
-          p.rot += p.rotSpeed * (dt / 1000);
-
-          ctx.save();
-          ctx.globalAlpha = alpha;
-          ctx.translate(x, y);
-          ctx.rotate(p.rot);
-          ctx.scale(scale, scale * 1.1);
-          ctx.drawImage(sprite, -spriteSize / 2, -spriteSize / 2);
-          ctx.restore();
-        }
-
-        ctx.globalCompositeOperation = 'source-over';
-        requestAnimationFrame(tick);
-      }
-      requestAnimationFrame(tick);
-      } catch (e) { /* animation init failed, skip silently */ }
-    })();
-
-    (function () {
-      try {
-      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      var canvas = document.getElementById('aboutEmbers');
-      var section = document.querySelector('.about');
-      if (!canvas || !section || reduced) return;
-      var ctx = canvas.getContext && canvas.getContext('2d');
-      if (!ctx) return;
-      var particles = [];
-      var W, H, DPR = Math.min(window.devicePixelRatio || 1, 2);
-      var active = false;
-
-      function resize() {
-        W = section.offsetWidth;
-        H = section.offsetHeight;
-        canvas.width = W * DPR;
-        canvas.height = H * DPR;
-        canvas.style.width = W + 'px';
-        canvas.style.height = H + 'px';
-        ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-      }
-      resize();
-      window.addEventListener('resize', resize);
-
-      function spawn() {
-        particles.push({
-          x: Math.random() * W,
-          y: H + 10,
-          r: Math.random() * 1.8 + 0.5,
-          vy: Math.random() * 0.45 + 0.25,
-          vx: (Math.random() - 0.5) * 0.35,
-          life: 0,
-          maxLife: Math.random() * 260 + 200,
-          hue: Math.random() > 0.5 ? '200,84,46' : '229,118,30'
-        });
-      }
-
-      function tick() {
-        if (active) {
+        function tick() {
           ctx.clearRect(0, 0, W, H);
-          if (particles.length < 34 && Math.random() > 0.6) spawn();
+          if (particles.length < 70 && Math.random() > 0.55) spawn();
           particles.forEach(function (p, i) {
             p.life++;
             p.y -= p.vy;
@@ -6953,109 +6704,158 @@ position: absolute;
             if (alpha < 0) alpha = 0;
             ctx.beginPath();
             ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-            ctx.fillStyle = 'rgba(' + p.hue + ',' + (alpha * 0.7) + ')';
-            ctx.shadowBlur = 5;
-            ctx.shadowColor = 'rgba(' + p.hue + ',0.7)';
+            ctx.fillStyle = 'rgba(' + p.hue + ',' + (alpha * 0.85) + ')';
+            ctx.shadowBlur = 6;
+            ctx.shadowColor = 'rgba(' + p.hue + ',0.8)';
             ctx.fill();
             if (p.life >= p.maxLife || p.y < -10) particles.splice(i, 1);
           });
-        } else if (particles.length) {
-          ctx.clearRect(0, 0, W, H);
-          particles = [];
+          requestAnimationFrame(tick);
         }
-        requestAnimationFrame(tick);
-      }
-
-      if ('IntersectionObserver' in window) {
-        var aboutEmberObserver = new IntersectionObserver(function (entries) {
-          entries.forEach(function (entry) {
-            active = entry.isIntersecting;
-          });
-        }, { threshold: 0.05 });
-        aboutEmberObserver.observe(section);
-      } else {
-        active = true;
-      }
-
-      tick();
+        tick();
       } catch (e) { /* animation init failed, skip silently */ }
     })();
 
     (function () {
       try {
-      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      var canvas = document.getElementById('aboutSmoke');
-      var section = document.querySelector('.about');
-      if (!canvas || !section || reduced) return;
-      var ctx = canvas.getContext && canvas.getContext('2d');
-      if (!ctx) return;
-      var W, H, DPR = Math.min(window.devicePixelRatio || 1, 2);
-      var active = false;
+        var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (reduced) return;
+        var canvas = document.getElementById('navEmbers');
+        if (!canvas) return;
+        var ctx = canvas.getContext && canvas.getContext('2d');
+        if (!ctx) return;
+        var header = document.getElementById('siteHeader');
+        if (!header) return;
+        var particles = [];
+        var W, H, DPR = Math.min(window.devicePixelRatio || 1, 2);
 
-      function random(min, max) { return min + Math.random() * (max - min); }
+        function resize() {
+          W = header.offsetWidth;
+          H = canvas.offsetHeight || 40;
+          canvas.width = W * DPR;
+          canvas.height = H * DPR;
+          canvas.style.width = W + 'px';
+          canvas.style.height = H + 'px';
+          ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+        }
+        resize();
+        window.addEventListener('resize', resize);
 
-      function resize() {
-        W = section.offsetWidth;
-        H = section.offsetHeight;
-        canvas.width = W * DPR;
-        canvas.height = H * DPR;
-        canvas.style.width = W + 'px';
-        canvas.style.height = H + 'px';
-        ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-      }
-      resize();
-      window.addEventListener('resize', resize);
+        function spawn() {
+          particles.push({
+            x: Math.random() * W,
+            y: H - 6,
+            r: Math.random() * 1.5 + 0.5,
+            vy: Math.random() * 0.5 + 0.3,
+            vx: (Math.random() - 0.5) * 0.3,
+            life: 0,
+            maxLife: Math.random() * 110 + 90,
+            hue: Math.random() > 0.5 ? '200,84,46' : '229,118,30'
+          });
+        }
 
-      var spriteSize = 180;
-      var sprite = document.createElement('canvas');
-      sprite.width = sprite.height = spriteSize;
-      var sctx = sprite.getContext('2d');
-      sctx.filter = 'blur(12px)';
-      [
-        { x: 0.5, y: 0.55, r: 0.32 },
-        { x: 0.36, y: 0.6, r: 0.22 },
-        { x: 0.64, y: 0.58, r: 0.24 },
-        { x: 0.5, y: 0.42, r: 0.2 }
-      ].forEach(function (b) {
-        var cx = b.x * spriteSize, cy = b.y * spriteSize, r = b.r * spriteSize;
-        var g = sctx.createRadialGradient(cx, cy, 0, cx, cy, r);
-        g.addColorStop(0, 'rgba(239,230,216,0.55)');
-        g.addColorStop(0.55, 'rgba(239,230,216,0.22)');
-        g.addColorStop(1, 'rgba(239,230,216,0)');
-        sctx.fillStyle = g;
-        sctx.beginPath();
-        sctx.arc(cx, cy, r, 0, Math.PI * 2);
-        sctx.fill();
-      });
+        function tick() {
+          ctx.clearRect(0, 0, W, H);
+          if (header.classList.contains('scrolled') && particles.length < 24 && Math.random() > 0.62) spawn();
+          particles.forEach(function (p, i) {
+            p.life++;
+            p.y -= p.vy;
+            p.x += p.vx + Math.sin(p.life * 0.03) * 0.2;
+            var t = p.life / p.maxLife;
+            var alpha = t < 0.2 ? t / 0.2 : 1 - (t - 0.2) / 0.8;
+            if (alpha < 0) alpha = 0;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(' + p.hue + ',' + (alpha * 0.9) + ')';
+            ctx.shadowBlur = 5;
+            ctx.shadowColor = 'rgba(' + p.hue + ',0.8)';
+            ctx.fill();
+            if (p.life >= p.maxLife || p.y < -6) particles.splice(i, 1);
+          });
+          requestAnimationFrame(tick);
+        }
+        tick();
+      } catch (e) { /* animation init failed, skip silently */ }
+    })();
 
-      var puffs = [];
+    (function () {
+      try {
+        var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var canvas = document.getElementById('heroVapor');
+        if (!canvas || reduced) return;
+        var ctx = canvas.getContext && canvas.getContext('2d');
+        if (!ctx) return;
+        var W, H, DPR = Math.min(window.devicePixelRatio || 1, 2);
 
-      function spawn() {
-        puffs.push({
-          x0: random(W * 0.08, W * 0.92),
-          age: 0,
-          life: random(4200, 6800),
-          size: random(34, 56),
-          maxSize: random(100, 160),
-          rot: random(0, Math.PI * 2),
-          rotSpeed: random(-0.08, 0.08),
-          driftAmp: random(10, 22),
-          driftFreq: random(0.0006, 0.001),
-          driftPhase: random(0, Math.PI * 2),
-          rise: random(70, 120),
-          peak: random(0.3, 0.45)
+        function random(min, max) { return min + Math.random() * (max - min); }
+
+        function resize() {
+          W = canvas.offsetWidth;
+          H = canvas.offsetHeight;
+          canvas.width = W * DPR;
+          canvas.height = H * DPR;
+          canvas.style.width = W + 'px';
+          canvas.style.height = H + 'px';
+          ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+        }
+        resize();
+        window.addEventListener('resize', resize);
+
+        // Steam sprite: four overlapping soft blobs baked into one blurred
+        // texture so each puff reads as a rounded wisp rather than a flat haze.
+        var spriteSize = 180;
+        var sprite = document.createElement('canvas');
+        sprite.width = sprite.height = spriteSize;
+        var sctx = sprite.getContext('2d');
+        sctx.filter = 'blur(12px)';
+        [
+          { x: 0.5, y: 0.55, r: 0.32 },
+          { x: 0.36, y: 0.6, r: 0.22 },
+          { x: 0.64, y: 0.58, r: 0.24 },
+          { x: 0.5, y: 0.42, r: 0.2 }
+        ].forEach(function (b) {
+          var cx = b.x * spriteSize, cy = b.y * spriteSize, r = b.r * spriteSize;
+          var g = sctx.createRadialGradient(cx, cy, 0, cx, cy, r);
+          g.addColorStop(0, 'rgba(239,230,216,0.55)');
+          g.addColorStop(0.55, 'rgba(239,230,216,0.22)');
+          g.addColorStop(1, 'rgba(239,230,216,0)');
+          sctx.fillStyle = g;
+          sctx.beginPath();
+          sctx.arc(cx, cy, r, 0, Math.PI * 2);
+          sctx.fill();
         });
-      }
 
-      var lastSpawn = 0;
-      var lastTime = null;
+        // Fixed emitters spread across the banner width, so steam lifts evenly
+        // along the whole hero instead of from one central column.
+        var spawnPoints = [0.10, 0.24, 0.38, 0.52, 0.66, 0.80, 0.92];
+        var puffs = [];
 
-      function tick(ts) {
-        if (lastTime === null) lastTime = ts;
-        var dt = ts - lastTime;
-        lastTime = ts;
+        function spawn() {
+          var baseX = spawnPoints[Math.floor(Math.random() * spawnPoints.length)] * W;
+          puffs.push({
+            x0: baseX + random(-12, 12),
+            age: 0,
+            life: random(4200, 6800),
+            size: random(34, 56),
+            maxSize: random(100, 160),
+            rot: random(0, Math.PI * 2),
+            rotSpeed: random(-0.08, 0.08),
+            driftAmp: random(10, 22),
+            driftFreq: random(0.0006, 0.001),
+            driftPhase: random(0, Math.PI * 2),
+            rise: random(70, 120),
+            peak: random(0.3, 0.45)
+          });
+        }
 
-        if (active) {
+        var lastSpawn = 0;
+        var lastTime = null;
+
+        function tick(ts) {
+          if (lastTime === null) lastTime = ts;
+          var dt = ts - lastTime;
+          lastTime = ts;
+
           if (ts - lastSpawn > random(500, 900) && puffs.length < 12) {
             spawn();
             lastSpawn = ts;
@@ -7090,313 +6890,506 @@ position: absolute;
           }
 
           ctx.globalCompositeOperation = 'source-over';
-        } else if (puffs.length) {
-          ctx.clearRect(0, 0, W, H);
-          puffs = [];
+          requestAnimationFrame(tick);
         }
-
         requestAnimationFrame(tick);
-      }
-
-      if ('IntersectionObserver' in window) {
-        var aboutSmokeObserver = new IntersectionObserver(function (entries) {
-          entries.forEach(function (entry) {
-            active = entry.isIntersecting;
-          });
-        }, { threshold: 0.05 });
-        aboutSmokeObserver.observe(section);
-      } else {
-        active = true;
-      }
-
-      requestAnimationFrame(tick);
       } catch (e) { /* animation init failed, skip silently */ }
     })();
 
     (function () {
       try {
-      var items = document.querySelectorAll('.spec-in-left, .spec-in-right, .spec-in-bottom');
-      if (!items.length) return;
-      if (!('IntersectionObserver' in window)) {
-        items.forEach(function (el) { el.classList.add('in-view'); });
-        return;
-      }
-      var observer = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry, i) {
-          if (entry.isIntersecting) {
-            setTimeout(function () { entry.target.classList.add('in-view'); }, i * 160);
-            observer.unobserve(entry.target);
+        var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var canvas = document.getElementById('aboutEmbers');
+        var section = document.querySelector('.about');
+        if (!canvas || !section || reduced) return;
+        var ctx = canvas.getContext && canvas.getContext('2d');
+        if (!ctx) return;
+        var particles = [];
+        var W, H, DPR = Math.min(window.devicePixelRatio || 1, 2);
+        var active = false;
+
+        function resize() {
+          W = section.offsetWidth;
+          H = section.offsetHeight;
+          canvas.width = W * DPR;
+          canvas.height = H * DPR;
+          canvas.style.width = W + 'px';
+          canvas.style.height = H + 'px';
+          ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+        }
+        resize();
+        window.addEventListener('resize', resize);
+
+        function spawn() {
+          particles.push({
+            x: Math.random() * W,
+            y: H + 10,
+            r: Math.random() * 1.8 + 0.5,
+            vy: Math.random() * 0.45 + 0.25,
+            vx: (Math.random() - 0.5) * 0.35,
+            life: 0,
+            maxLife: Math.random() * 260 + 200,
+            hue: Math.random() > 0.5 ? '200,84,46' : '229,118,30'
+          });
+        }
+
+        function tick() {
+          if (active) {
+            ctx.clearRect(0, 0, W, H);
+            if (particles.length < 34 && Math.random() > 0.6) spawn();
+            particles.forEach(function (p, i) {
+              p.life++;
+              p.y -= p.vy;
+              p.x += p.vx + Math.sin(p.life * 0.02) * 0.3;
+              var t = p.life / p.maxLife;
+              var alpha = t < 0.15 ? t / 0.15 : 1 - (t - 0.15) / 0.85;
+              if (alpha < 0) alpha = 0;
+              ctx.beginPath();
+              ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+              ctx.fillStyle = 'rgba(' + p.hue + ',' + (alpha * 0.7) + ')';
+              ctx.shadowBlur = 5;
+              ctx.shadowColor = 'rgba(' + p.hue + ',0.7)';
+              ctx.fill();
+              if (p.life >= p.maxLife || p.y < -10) particles.splice(i, 1);
+            });
+          } else if (particles.length) {
+            ctx.clearRect(0, 0, W, H);
+            particles = [];
           }
-        });
-      }, { threshold: 0.2 });
-      items.forEach(function (el) { observer.observe(el); });
-      } catch (e) { /* animation init failed, skip silently */ }
-    })();
-
-    (function () {
-      try {
-      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      var canvas = document.getElementById('specEmbers');
-      var section = document.getElementById('specialities');
-      if (!canvas || !section || reduced) return;
-      var ctx = canvas.getContext && canvas.getContext('2d');
-      if (!ctx) return;
-      var particles = [];
-      var W, H, DPR = Math.min(window.devicePixelRatio || 1, 2);
-      var active = false;
-
-      function resize() {
-        W = section.offsetWidth;
-        H = section.offsetHeight;
-        canvas.width = W * DPR;
-        canvas.height = H * DPR;
-        canvas.style.width = W + 'px';
-        canvas.style.height = H + 'px';
-        ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-      }
-      resize();
-      window.addEventListener('resize', resize);
-
-      function spawn() {
-        particles.push({
-          x: Math.random() * W,
-          y: H + 10,
-          r: Math.random() * 1.8 + 0.5,
-          vy: Math.random() * 0.42 + 0.24,
-          vx: (Math.random() - 0.5) * 0.35,
-          life: 0,
-          maxLife: Math.random() * 260 + 200,
-          hue: Math.random() > 0.5 ? '200,84,46' : '229,118,30'
-        });
-      }
-
-      function tick() {
-        if (active) {
-          ctx.clearRect(0, 0, W, H);
-          if (particles.length < 30 && Math.random() > 0.62) spawn();
-          particles.forEach(function (p, i) {
-            p.life++;
-            p.y -= p.vy;
-            p.x += p.vx + Math.sin(p.life * 0.02) * 0.3;
-            var t = p.life / p.maxLife;
-            var alpha = t < 0.15 ? t / 0.15 : 1 - (t - 0.15) / 0.85;
-            if (alpha < 0) alpha = 0;
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-            ctx.fillStyle = 'rgba(' + p.hue + ',' + (alpha * 0.7) + ')';
-            ctx.shadowBlur = 5;
-            ctx.shadowColor = 'rgba(' + p.hue + ',0.7)';
-            ctx.fill();
-            if (p.life >= p.maxLife || p.y < -10) particles.splice(i, 1);
-          });
-        } else if (particles.length) {
-          ctx.clearRect(0, 0, W, H);
-          particles = [];
+          requestAnimationFrame(tick);
         }
-        requestAnimationFrame(tick);
-      }
 
-      if ('IntersectionObserver' in window) {
-        var specEmberObserver = new IntersectionObserver(function (entries) {
-          entries.forEach(function (entry) {
-            active = entry.isIntersecting;
-          });
-        }, { threshold: 0.05 });
-        specEmberObserver.observe(section);
-      } else {
-        active = true;
-      }
-
-      tick();
-      } catch (e) { /* animation init failed, skip silently */ }
-    })();
-
-    (function () {
-      try {
-      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      var canvas = document.getElementById('footerEmbers');
-      var section = document.querySelector('footer');
-      if (!canvas || !section || reduced) return;
-      var ctx = canvas.getContext && canvas.getContext('2d');
-      if (!ctx) return;
-      var particles = [];
-      var W, H, DPR = Math.min(window.devicePixelRatio || 1, 2);
-      var active = false;
-
-      function resize() {
-        W = section.offsetWidth;
-        H = section.offsetHeight;
-        canvas.width = W * DPR;
-        canvas.height = H * DPR;
-        canvas.style.width = W + 'px';
-        canvas.style.height = H + 'px';
-        ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-      }
-      resize();
-      window.addEventListener('resize', resize);
-
-      function spawn() {
-        particles.push({
-          x: Math.random() * W,
-          y: H + 10,
-          r: Math.random() * 1.8 + 0.5,
-          vy: Math.random() * 0.42 + 0.24,
-          vx: (Math.random() - 0.5) * 0.35,
-          life: 0,
-          maxLife: Math.random() * 260 + 200,
-          hue: Math.random() > 0.5 ? '200,84,46' : '229,118,30'
-        });
-      }
-
-      function tick() {
-        if (active) {
-          ctx.clearRect(0, 0, W, H);
-          if (particles.length < 30 && Math.random() > 0.62) spawn();
-          particles.forEach(function (p, i) {
-            p.life++;
-            p.y -= p.vy;
-            p.x += p.vx + Math.sin(p.life * 0.02) * 0.3;
-            var t = p.life / p.maxLife;
-            var alpha = t < 0.15 ? t / 0.15 : 1 - (t - 0.15) / 0.85;
-            if (alpha < 0) alpha = 0;
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-            ctx.fillStyle = 'rgba(' + p.hue + ',' + (alpha * 0.7) + ')';
-            ctx.shadowBlur = 5;
-            ctx.shadowColor = 'rgba(' + p.hue + ',0.7)';
-            ctx.fill();
-            if (p.life >= p.maxLife || p.y < -10) particles.splice(i, 1);
-          });
-        } else if (particles.length) {
-          ctx.clearRect(0, 0, W, H);
-          particles = [];
-        }
-        requestAnimationFrame(tick);
-      }
-
-      if ('IntersectionObserver' in window) {
-        var footerEmberObserver = new IntersectionObserver(function (entries) {
-          entries.forEach(function (entry) {
-            active = entry.isIntersecting;
-          });
-        }, { threshold: 0.05 });
-        footerEmberObserver.observe(section);
-      } else {
-        active = true;
-      }
-
-      tick();
-      } catch (e) { /* animation init failed, skip silently */ }
-    })();
-
-    (function () {
-      try {
-      var stage = document.getElementById('cineStage');
-      if (!stage) return;
-      var slides = Array.from(document.querySelectorAll('.cine-slide'));
-      var cards = Array.from(document.querySelectorAll('.cine-card'));
-      var prevBtn = document.getElementById('cinePrev');
-      var nextBtn = document.getElementById('cineNext');
-      var playToggle = document.getElementById('cinePlayToggle');
-      var progressTrack = document.getElementById('cineProgressTrack');
-      var progressFill = document.getElementById('cineProgressFill');
-      var timeEl = document.getElementById('cineTime');
-      var counterEl = document.getElementById('cineCounter');
-      var muteBtn = document.getElementById('cineMute');
-
-      if (!slides.length || !cards.length) return;
-
-      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      var total = slides.length;
-      var current = 0;
-      var duration = 6000; // ms per slide (matches the "0:06" label)
-      var elapsed = 0;
-      var playing = !reduced;
-      var lastTs = null;
-      var rafId = null;
-
-      function pad(n) { return n < 10 ? '0' + n : '' + n; }
-      function formatTime(ms) { return '0:' + pad(Math.floor(ms / 1000)); }
-
-      function updateTimeDisplay() {
-        if (timeEl) timeEl.textContent = formatTime(elapsed) + ' / 0:' + pad(Math.floor(duration / 1000));
-      }
-
-      function goTo(index, resetElapsed) {
-        current = ((index % total) + total) % total;
-        slides.forEach(function (s, i) { s.classList.toggle('active', i === current); });
-        cards.forEach(function (c, i) { c.classList.toggle('active', i === current); });
-        if (counterEl) counterEl.textContent = pad(current + 1);
-        if (resetElapsed !== false) elapsed = 0;
-        updateTimeDisplay();
-        if (progressFill) progressFill.style.width = (elapsed / duration * 100) + '%';
-      }
-
-      function next() { goTo(current + 1); }
-      function prev() { goTo(current - 1); }
-
-      if (prevBtn) prevBtn.addEventListener('click', function () { prev(); });
-      if (nextBtn) nextBtn.addEventListener('click', function () { next(); });
-
-      cards.forEach(function (card, i) {
-        card.addEventListener('click', function () { goTo(i); });
-      });
-
-      if (progressTrack) {
-        progressTrack.addEventListener('click', function (e) {
-          var rect = progressTrack.getBoundingClientRect();
-          var pct = Math.min(Math.max((e.clientX - rect.left) / rect.width, 0), 1);
-          elapsed = pct * duration;
-          updateTimeDisplay();
-          if (progressFill) progressFill.style.width = (pct * 100) + '%';
-        });
-      }
-
-      var iconPause, iconPlay;
-      if (playToggle) {
-        iconPause = playToggle.querySelector('.icon-pause');
-        iconPlay = playToggle.querySelector('.icon-play');
-        playToggle.addEventListener('click', function () {
-          playing = !playing;
-          updatePlayIcon();
-          if (playing) { lastTs = null; rafId = requestAnimationFrame(tick); }
-        });
-      }
-
-      function updatePlayIcon() {
-        if (!playToggle) return;
-        playToggle.setAttribute('aria-label', playing ? 'Pause' : 'Play');
-        if (iconPause) iconPause.style.display = playing ? '' : 'none';
-        if (iconPlay) iconPlay.style.display = playing ? 'none' : '';
-      }
-
-      var muted = false;
-      if (muteBtn) {
-        muteBtn.addEventListener('click', function () {
-          muted = !muted;
-          muteBtn.setAttribute('aria-label', muted ? 'Unmute' : 'Mute');
-          muteBtn.classList.toggle('is-muted', muted);
-        });
-      }
-
-      function tick(ts) {
-        if (!playing) { rafId = null; return; }
-        if (lastTs === null) lastTs = ts;
-        var dt = ts - lastTs;
-        lastTs = ts;
-        elapsed += dt;
-        if (elapsed >= duration) {
-          next();
+        if ('IntersectionObserver' in window) {
+          var aboutEmberObserver = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+              active = entry.isIntersecting;
+            });
+          }, { threshold: 0.05 });
+          aboutEmberObserver.observe(section);
         } else {
+          active = true;
+        }
+
+        tick();
+      } catch (e) { /* animation init failed, skip silently */ }
+    })();
+
+    (function () {
+      try {
+        var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var canvas = document.getElementById('aboutSmoke');
+        var section = document.querySelector('.about');
+        if (!canvas || !section || reduced) return;
+        var ctx = canvas.getContext && canvas.getContext('2d');
+        if (!ctx) return;
+        var W, H, DPR = Math.min(window.devicePixelRatio || 1, 2);
+        var active = false;
+
+        function random(min, max) { return min + Math.random() * (max - min); }
+
+        function resize() {
+          W = section.offsetWidth;
+          H = section.offsetHeight;
+          canvas.width = W * DPR;
+          canvas.height = H * DPR;
+          canvas.style.width = W + 'px';
+          canvas.style.height = H + 'px';
+          ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+        }
+        resize();
+        window.addEventListener('resize', resize);
+
+        var spriteSize = 180;
+        var sprite = document.createElement('canvas');
+        sprite.width = sprite.height = spriteSize;
+        var sctx = sprite.getContext('2d');
+        sctx.filter = 'blur(12px)';
+        [
+          { x: 0.5, y: 0.55, r: 0.32 },
+          { x: 0.36, y: 0.6, r: 0.22 },
+          { x: 0.64, y: 0.58, r: 0.24 },
+          { x: 0.5, y: 0.42, r: 0.2 }
+        ].forEach(function (b) {
+          var cx = b.x * spriteSize, cy = b.y * spriteSize, r = b.r * spriteSize;
+          var g = sctx.createRadialGradient(cx, cy, 0, cx, cy, r);
+          g.addColorStop(0, 'rgba(239,230,216,0.55)');
+          g.addColorStop(0.55, 'rgba(239,230,216,0.22)');
+          g.addColorStop(1, 'rgba(239,230,216,0)');
+          sctx.fillStyle = g;
+          sctx.beginPath();
+          sctx.arc(cx, cy, r, 0, Math.PI * 2);
+          sctx.fill();
+        });
+
+        var puffs = [];
+
+        function spawn() {
+          puffs.push({
+            x0: random(W * 0.08, W * 0.92),
+            age: 0,
+            life: random(4200, 6800),
+            size: random(34, 56),
+            maxSize: random(100, 160),
+            rot: random(0, Math.PI * 2),
+            rotSpeed: random(-0.08, 0.08),
+            driftAmp: random(10, 22),
+            driftFreq: random(0.0006, 0.001),
+            driftPhase: random(0, Math.PI * 2),
+            rise: random(70, 120),
+            peak: random(0.3, 0.45)
+          });
+        }
+
+        var lastSpawn = 0;
+        var lastTime = null;
+
+        function tick(ts) {
+          if (lastTime === null) lastTime = ts;
+          var dt = ts - lastTime;
+          lastTime = ts;
+
+          if (active) {
+            if (ts - lastSpawn > random(500, 900) && puffs.length < 12) {
+              spawn();
+              lastSpawn = ts;
+            }
+
+            ctx.clearRect(0, 0, W, H);
+            ctx.globalCompositeOperation = 'screen';
+
+            for (var i = puffs.length - 1; i >= 0; i--) {
+              var p = puffs[i];
+              p.age += dt;
+              var t = p.age / p.life;
+              if (t >= 1) { puffs.splice(i, 1); continue; }
+
+              var drift = Math.sin(p.age * p.driftFreq + p.driftPhase) * p.driftAmp;
+              var x = p.x0 + drift * t;
+              var y = (H + 12) - t * (H * 0.75 + p.rise * 0.3);
+              var scale = (p.size + (p.maxSize - p.size) * t) / spriteSize;
+              var alpha = t < p.peak ? (t / p.peak) : (1 - (t - p.peak) / (1 - p.peak));
+              if (alpha < 0) alpha = 0;
+              alpha *= 0.3;
+
+              p.rot += p.rotSpeed * (dt / 1000);
+
+              ctx.save();
+              ctx.globalAlpha = alpha;
+              ctx.translate(x, y);
+              ctx.rotate(p.rot);
+              ctx.scale(scale, scale * 1.1);
+              ctx.drawImage(sprite, -spriteSize / 2, -spriteSize / 2);
+              ctx.restore();
+            }
+
+            ctx.globalCompositeOperation = 'source-over';
+          } else if (puffs.length) {
+            ctx.clearRect(0, 0, W, H);
+            puffs = [];
+          }
+
+          requestAnimationFrame(tick);
+        }
+
+        if ('IntersectionObserver' in window) {
+          var aboutSmokeObserver = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+              active = entry.isIntersecting;
+            });
+          }, { threshold: 0.05 });
+          aboutSmokeObserver.observe(section);
+        } else {
+          active = true;
+        }
+
+        requestAnimationFrame(tick);
+      } catch (e) { /* animation init failed, skip silently */ }
+    })();
+
+    (function () {
+      try {
+        var items = document.querySelectorAll('.spec-in-left, .spec-in-right, .spec-in-bottom');
+        if (!items.length) return;
+        if (!('IntersectionObserver' in window)) {
+          items.forEach(function (el) { el.classList.add('in-view'); });
+          return;
+        }
+        var observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry, i) {
+            if (entry.isIntersecting) {
+              setTimeout(function () { entry.target.classList.add('in-view'); }, i * 160);
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.2 });
+        items.forEach(function (el) { observer.observe(el); });
+      } catch (e) { /* animation init failed, skip silently */ }
+    })();
+
+    (function () {
+      try {
+        var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var canvas = document.getElementById('specEmbers');
+        var section = document.getElementById('specialities');
+        if (!canvas || !section || reduced) return;
+        var ctx = canvas.getContext && canvas.getContext('2d');
+        if (!ctx) return;
+        var particles = [];
+        var W, H, DPR = Math.min(window.devicePixelRatio || 1, 2);
+        var active = false;
+
+        function resize() {
+          W = section.offsetWidth;
+          H = section.offsetHeight;
+          canvas.width = W * DPR;
+          canvas.height = H * DPR;
+          canvas.style.width = W + 'px';
+          canvas.style.height = H + 'px';
+          ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+        }
+        resize();
+        window.addEventListener('resize', resize);
+
+        function spawn() {
+          particles.push({
+            x: Math.random() * W,
+            y: H + 10,
+            r: Math.random() * 1.8 + 0.5,
+            vy: Math.random() * 0.42 + 0.24,
+            vx: (Math.random() - 0.5) * 0.35,
+            life: 0,
+            maxLife: Math.random() * 260 + 200,
+            hue: Math.random() > 0.5 ? '200,84,46' : '229,118,30'
+          });
+        }
+
+        function tick() {
+          if (active) {
+            ctx.clearRect(0, 0, W, H);
+            if (particles.length < 30 && Math.random() > 0.62) spawn();
+            particles.forEach(function (p, i) {
+              p.life++;
+              p.y -= p.vy;
+              p.x += p.vx + Math.sin(p.life * 0.02) * 0.3;
+              var t = p.life / p.maxLife;
+              var alpha = t < 0.15 ? t / 0.15 : 1 - (t - 0.15) / 0.85;
+              if (alpha < 0) alpha = 0;
+              ctx.beginPath();
+              ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+              ctx.fillStyle = 'rgba(' + p.hue + ',' + (alpha * 0.7) + ')';
+              ctx.shadowBlur = 5;
+              ctx.shadowColor = 'rgba(' + p.hue + ',0.7)';
+              ctx.fill();
+              if (p.life >= p.maxLife || p.y < -10) particles.splice(i, 1);
+            });
+          } else if (particles.length) {
+            ctx.clearRect(0, 0, W, H);
+            particles = [];
+          }
+          requestAnimationFrame(tick);
+        }
+
+        if ('IntersectionObserver' in window) {
+          var specEmberObserver = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+              active = entry.isIntersecting;
+            });
+          }, { threshold: 0.05 });
+          specEmberObserver.observe(section);
+        } else {
+          active = true;
+        }
+
+        tick();
+      } catch (e) { /* animation init failed, skip silently */ }
+    })();
+
+    (function () {
+      try {
+        var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var canvas = document.getElementById('footerEmbers');
+        var section = document.querySelector('footer');
+        if (!canvas || !section || reduced) return;
+        var ctx = canvas.getContext && canvas.getContext('2d');
+        if (!ctx) return;
+        var particles = [];
+        var W, H, DPR = Math.min(window.devicePixelRatio || 1, 2);
+        var active = false;
+
+        function resize() {
+          W = section.offsetWidth;
+          H = section.offsetHeight;
+          canvas.width = W * DPR;
+          canvas.height = H * DPR;
+          canvas.style.width = W + 'px';
+          canvas.style.height = H + 'px';
+          ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+        }
+        resize();
+        window.addEventListener('resize', resize);
+
+        function spawn() {
+          particles.push({
+            x: Math.random() * W,
+            y: H + 10,
+            r: Math.random() * 1.8 + 0.5,
+            vy: Math.random() * 0.42 + 0.24,
+            vx: (Math.random() - 0.5) * 0.35,
+            life: 0,
+            maxLife: Math.random() * 260 + 200,
+            hue: Math.random() > 0.5 ? '200,84,46' : '229,118,30'
+          });
+        }
+
+        function tick() {
+          if (active) {
+            ctx.clearRect(0, 0, W, H);
+            if (particles.length < 30 && Math.random() > 0.62) spawn();
+            particles.forEach(function (p, i) {
+              p.life++;
+              p.y -= p.vy;
+              p.x += p.vx + Math.sin(p.life * 0.02) * 0.3;
+              var t = p.life / p.maxLife;
+              var alpha = t < 0.15 ? t / 0.15 : 1 - (t - 0.15) / 0.85;
+              if (alpha < 0) alpha = 0;
+              ctx.beginPath();
+              ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+              ctx.fillStyle = 'rgba(' + p.hue + ',' + (alpha * 0.7) + ')';
+              ctx.shadowBlur = 5;
+              ctx.shadowColor = 'rgba(' + p.hue + ',0.7)';
+              ctx.fill();
+              if (p.life >= p.maxLife || p.y < -10) particles.splice(i, 1);
+            });
+          } else if (particles.length) {
+            ctx.clearRect(0, 0, W, H);
+            particles = [];
+          }
+          requestAnimationFrame(tick);
+        }
+
+        if ('IntersectionObserver' in window) {
+          var footerEmberObserver = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+              active = entry.isIntersecting;
+            });
+          }, { threshold: 0.05 });
+          footerEmberObserver.observe(section);
+        } else {
+          active = true;
+        }
+
+        tick();
+      } catch (e) { /* animation init failed, skip silently */ }
+    })();
+
+    (function () {
+      try {
+        var stage = document.getElementById('cineStage');
+        if (!stage) return;
+        var slides = Array.from(document.querySelectorAll('.cine-slide'));
+        var cards = Array.from(document.querySelectorAll('.cine-card'));
+        var prevBtn = document.getElementById('cinePrev');
+        var nextBtn = document.getElementById('cineNext');
+        var playToggle = document.getElementById('cinePlayToggle');
+        var progressTrack = document.getElementById('cineProgressTrack');
+        var progressFill = document.getElementById('cineProgressFill');
+        var timeEl = document.getElementById('cineTime');
+        var counterEl = document.getElementById('cineCounter');
+        var muteBtn = document.getElementById('cineMute');
+
+        if (!slides.length || !cards.length) return;
+
+        var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var total = slides.length;
+        var current = 0;
+        var duration = 6000; // ms per slide (matches the "0:06" label)
+        var elapsed = 0;
+        var playing = !reduced;
+        var lastTs = null;
+        var rafId = null;
+
+        function pad(n) { return n < 10 ? '0' + n : '' + n; }
+        function formatTime(ms) { return '0:' + pad(Math.floor(ms / 1000)); }
+
+        function updateTimeDisplay() {
+          if (timeEl) timeEl.textContent = formatTime(elapsed) + ' / 0:' + pad(Math.floor(duration / 1000));
+        }
+
+        function goTo(index, resetElapsed) {
+          current = ((index % total) + total) % total;
+          slides.forEach(function (s, i) { s.classList.toggle('active', i === current); });
+          cards.forEach(function (c, i) { c.classList.toggle('active', i === current); });
+          if (counterEl) counterEl.textContent = pad(current + 1);
+          if (resetElapsed !== false) elapsed = 0;
           updateTimeDisplay();
           if (progressFill) progressFill.style.width = (elapsed / duration * 100) + '%';
         }
-        rafId = requestAnimationFrame(tick);
-      }
 
-      goTo(0);
-      updatePlayIcon();
-      if (playing) rafId = requestAnimationFrame(tick);
+        function next() { goTo(current + 1); }
+        function prev() { goTo(current - 1); }
+
+        if (prevBtn) prevBtn.addEventListener('click', function () { prev(); });
+        if (nextBtn) nextBtn.addEventListener('click', function () { next(); });
+
+        cards.forEach(function (card, i) {
+          card.addEventListener('click', function () { goTo(i); });
+        });
+
+        if (progressTrack) {
+          progressTrack.addEventListener('click', function (e) {
+            var rect = progressTrack.getBoundingClientRect();
+            var pct = Math.min(Math.max((e.clientX - rect.left) / rect.width, 0), 1);
+            elapsed = pct * duration;
+            updateTimeDisplay();
+            if (progressFill) progressFill.style.width = (pct * 100) + '%';
+          });
+        }
+
+        var iconPause, iconPlay;
+        if (playToggle) {
+          iconPause = playToggle.querySelector('.icon-pause');
+          iconPlay = playToggle.querySelector('.icon-play');
+          playToggle.addEventListener('click', function () {
+            playing = !playing;
+            updatePlayIcon();
+            if (playing) { lastTs = null; rafId = requestAnimationFrame(tick); }
+          });
+        }
+
+        function updatePlayIcon() {
+          if (!playToggle) return;
+          playToggle.setAttribute('aria-label', playing ? 'Pause' : 'Play');
+          if (iconPause) iconPause.style.display = playing ? '' : 'none';
+          if (iconPlay) iconPlay.style.display = playing ? 'none' : '';
+        }
+
+        var muted = false;
+        if (muteBtn) {
+          muteBtn.addEventListener('click', function () {
+            muted = !muted;
+            muteBtn.setAttribute('aria-label', muted ? 'Unmute' : 'Mute');
+            muteBtn.classList.toggle('is-muted', muted);
+          });
+        }
+
+        function tick(ts) {
+          if (!playing) { rafId = null; return; }
+          if (lastTs === null) lastTs = ts;
+          var dt = ts - lastTs;
+          lastTs = ts;
+          elapsed += dt;
+          if (elapsed >= duration) {
+            next();
+          } else {
+            updateTimeDisplay();
+            if (progressFill) progressFill.style.width = (elapsed / duration * 100) + '%';
+          }
+          rafId = requestAnimationFrame(tick);
+        }
+
+        goTo(0);
+        updatePlayIcon();
+        if (playing) rafId = requestAnimationFrame(tick);
       } catch (e) { /* gallery init failed, skip silently */ }
     })();
 

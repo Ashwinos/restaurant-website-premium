@@ -5351,6 +5351,68 @@ Restaurant — Fire-Cooked, Always</title>
     .hero-logo-stack .hero-logo {
       margin-bottom: 0;
     }
+    /* wrapper is invisible on desktop: social-rail keeps its own absolute position */
+.hero-side-stack {
+  display: contents;
+}
+
+.hero-order-btn {
+  display: none;
+}
+
+@media(max-width:900px) {
+  .hero-side-stack {
+    position: absolute;
+    left: 14px;
+    bottom: 16px;
+    z-index: 6;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .hero-side-stack .social-rail {
+    position: static;
+    left: auto;
+    bottom: auto;
+  }
+
+  .hero-order-btn {
+    display: inline-flex;
+  }
+}
+
+@media(max-width:520px) {
+  .hero-side-stack {
+    left: 18px;
+    bottom: 14px;
+    gap: 12px;
+  }
+}
+
+@media(max-width:900px) {
+  /* hero content ends above the absolutely-positioned button + social rail */
+  .hero {
+    padding: 0 24px 150px;
+  }
+
+  .hero-side-stack {
+    bottom: 24px;
+  }
+}
+
+@media(max-width:520px) {
+  .hero {
+    padding: 0 18px 140px;
+  }
+
+  .hero-side-stack {
+    left: 18px;
+    bottom: 20px;
+  }
+}
+
   </style>
 </head>
 
@@ -5433,6 +5495,23 @@ Restaurant — Fire-Cooked, Always</title>
     alt="Thai dishes served family style">
     </div>
     <canvas id="embers"></canvas>
+    <div class="hero-side-stack">
+  <a href="#" class="btn-grill hero-order-btn">
+    <svg class="grill-lines" viewBox="0 0 260 76" preserveAspectRatio="none" aria-hidden="true">
+      <line class="rail" x1="0" y1="6" x2="260" y2="6" />
+      <line class="rail" x1="0" y1="70" x2="260" y2="70" />
+      <line class="bar" x1="0" y1="22" x2="260" y2="22" />
+      <line class="bar" x1="0" y1="38" x2="260" y2="38" />
+      <line class="bar" x1="0" y1="54" x2="260" y2="54" />
+      <line class="glow" x1="0" y1="38" x2="260" y2="38" />
+    </svg>
+    <span class="label">
+      <svg class="flame" viewBox="0 0 64 64" fill="currentColor" aria-hidden="true">
+        <path d="M32 6c6 8-2 12-2 19a8 8 0 0 0 16 0c0-3-1-5-1-5 6 4 9 11 9 17 0 12.7-10.3 21-22 21S10 49.7 10 37c0-9 4-16 10-21-1 4 0 7 3 9 0-9 3-13 9-19Z" />
+      </svg>
+      Order Online
+    </span>
+  </a>
     <div class="social-rail">
       <a href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor">
           <path
@@ -5447,6 +5526,7 @@ Restaurant — Fire-Cooked, Always</title>
           <circle cx="12" cy="12" r="4" />
           <circle cx="17.2" cy="6.8" r="1" />
         </svg></a>
+    </div>
     </div>
     <div style="width:100%;">
       <div class="hero-logo-stack">

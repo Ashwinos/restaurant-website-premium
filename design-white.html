@@ -695,10 +695,10 @@ Restaurant — Fire-Cooked, Always</title>
       position: relative;
       z-index: 2;
       display: flex;
-      justify-content: space-between;
+      justify-content: start;
       align-items: flex-end;
-      gap: 60px;
-      margin-top: 38px;
+      /* gap: 60px; */
+      /* margin-top: 38px; */
       flex-wrap: wrap;
     }
 
@@ -5058,7 +5058,6 @@ Restaurant — Fire-Cooked, Always</title>
       nav ul li {
         width: 100%;
         border-bottom: 1px solid rgba(var(--bone-rgb), 0.1);
-        padding-bottom: 14px;
       }
 
       .nav-toggle {
@@ -5106,7 +5105,7 @@ Restaurant — Fire-Cooked, Always</title>
     @media(max-width:900px) {
       .hero {
         padding: 0 24px 70px;
-        min-height: 92vh;
+          min-height: 92svh;
       }
 
       .hero h1 {
@@ -5115,9 +5114,6 @@ Restaurant — Fire-Cooked, Always</title>
         letter-spacing: -1px;
       }
 
-      .hero-row {
-        gap: 26px;
-      }
 
       .hero-row .desc {
         max-width: 100%;
@@ -5220,7 +5216,6 @@ Restaurant — Fire-Cooked, Always</title>
       .hero-row {
         flex-direction: column;
         align-items: flex-start;
-        gap: 20px;
       }
 
       .about h2 {
@@ -5245,7 +5240,7 @@ Restaurant — Fire-Cooked, Always</title>
       }
     }
 
-    .vapour {
+ .vapour {
       position: relative;
       display: flex;
       z-index: 1;
@@ -5318,29 +5313,61 @@ Restaurant — Fire-Cooked, Always</title>
       animation-delay: calc(var(--v) * -0.5s);
     }
 
-    @keyframes animate {
-      0% {
-        transform: translateY(0) scaleX(1);
-        opacity: 0;
-      }
+@keyframes animate {
+  0% {
+    transform: translate3d(0, 0, 0) scaleX(1);
+    opacity: 0;
+  }
 
-      15% {
-        opacity: 1;
-      }
+  15% {
+    opacity: 1;
+  }
 
-      50% {
-        transform: translateY(-150px) scaleX(5);
-      }
+  50% {
+    transform: translate3d(0, -150px, 0) scaleX(5);
+  }
 
-      95% {
-        opacity: 0;
-      }
+  95% {
+    opacity: 0;
+  }
 
-      100% {
-        transform: translateY(-300px) scaleX(10);
-      }
-    }
+  100% {
+    transform: translate3d(0, -300px, 0) scaleX(10);
+    opacity: 0;
+  }
+}
 
+/* 26 animated layers is the real cost on a phone — thin the columns out */
+@media(max-width:900px) {
+
+  .vapour span:nth-child(n+4),
+  .vapour-left span:nth-child(n+4),
+  .vapour-center span:nth-child(n+6) {
+    display: none;
+  }
+}
+
+@media(max-width:520px) {
+  .vapour-left {
+    left: 40px;
+  }
+
+  .vapour span:nth-child(n+3),
+  .vapour-left span:nth-child(n+3),
+  .vapour-center span:nth-child(n+4) {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .vapour span,
+  .vapour-left span,
+  .vapour-center span {
+    animation: none !important;
+    opacity: 0 !important;
+  }
+}
     /* ---------- steam wisp behind the hero logo, reusing the .vapour banner technique at a smaller scale ---------- */
     .hero-logo-stack {
       position: relative;
@@ -5413,6 +5440,181 @@ Restaurant — Fire-Cooked, Always</title>
   }
 }
 
+
+
+@media (max-width: 520px) {
+  .hero-vapor { display: none; }   /* optional: kill it entirely on small phones */
+}
+
+/* 4 or more icons — shrink so the rail still fits the corner */
+.social-rail:has(a:nth-child(4)) a {
+  width: 25px;
+  height: 25px;
+}
+
+.social-rail:has(a:nth-child(4)) a svg {
+  width: 10px;
+  height: 10px;
+}
+
+.social-rail:has(a:nth-child(4)) {
+  gap: 8px;
+}
+
+.social-rail:has(a:nth-child(4)) {
+  right: 16px;
+  bottom: 12px;
+  gap: 8px;
+}
+
+/* wrapper is invisible on desktop: social-rail keeps its own absolute position */
+.hero-side-stack {
+  display: contents;
+}
+
+.hero-order-btn {
+  display: none;
+}
+
+/* ---------- social icons inside the burger drawer (mobile only) ---------- */
+.nav-social-row {
+  display: none;
+  gap: 12px;
+  margin-top: 22px;
+  width: 100%;
+}
+
+.nav-social-row a {
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(var(--bone-rgb), 0.3);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--bone);
+  flex-shrink: 0;
+  transition: background .3s ease, border-color .3s ease, transform .3s var(--ease);
+}
+
+.nav-social-row a svg {
+  width: 15px;
+  height: 15px;
+}
+
+.nav-social-row a:hover {
+  background: var(--ember);
+  border-color: var(--ember);
+  transform: translateY(-3px);
+}
+
+@media(max-width:900px) {
+  .hero-side-stack {
+    position: absolute;
+    left: 14px;
+    bottom: 24px;
+    z-index: 6;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  /* social icons move into the burger menu on mobile */
+  .hero-side-stack .social-rail {
+    display: none;
+  }
+
+  .nav-social-row {
+    display: flex;
+  }
+
+  .hero-order-btn {
+    display: inline-flex;
+  }
+
+  /* hero content ends above the absolutely-positioned order button */
+  .hero {
+    padding: 0 24px 130px;
+  }
+}
+
+@media(max-width:520px) {
+  .hero {
+    padding: 0 18px 120px;
+  }
+
+  .hero-side-stack {
+    left: 18px;
+    bottom: 20px;
+    gap: 12px;
+  }
+
+  .nav-social-row a {
+    width: 38px;
+    height: 38px;
+  }
+}
+
+.cs-social-row:has(a:nth-child(4)) {
+  flex-wrap: wrap;
+  max-width: 180px;
+  row-gap: 14px;
+}
+
+/* softness comes from a radial gradient, NOT an animated filter:
+   a blur must be re-rasterised every frame at the new scaleX(),
+   which is what flickers on mobile GPUs */
+.vapour span,
+.vapour-left span,
+.vapour-center span {
+  position: relative;
+  bottom: 0;
+  display: block;
+  width: 26px;
+  min-width: 26px;
+  height: 120px;
+  margin: 0 -8px 50px;
+  border-radius: 50%;
+  background: radial-gradient(closest-side ellipse,
+      rgba(255, 255, 255, .55) 0%,
+      rgba(255, 255, 255, .26) 45%,
+      rgba(255, 255, 255, 0) 100%);
+  opacity: 0;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  will-change: transform, opacity;
+  animation: animate 5s linear infinite;
+  animation-delay: calc(var(--v) * -0.5s);
+}
+
+/* ---------- mobile: center column only ---------- */
+@media(max-width:900px) {
+
+  .hero-vapor .vapour,
+  .hero-vapor .vapour-left {
+    display: none;
+  }
+
+  .vapour-center {
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0;
+  }
+
+  /* 12 overlapping layers is the real cost on a phone */
+  .vapour-center span:nth-child(n+6) {
+    display: none;
+  }
+}
+
+@media(max-width:520px) {
+  .vapour-center span:nth-child(n+5) {
+    display: none;
+  }
+}
+
   </style>
 </head>
 
@@ -5438,7 +5640,7 @@ Restaurant — Fire-Cooked, Always</title>
 
     <div class="nav-scrim" id="navScrim"></div>
 
-    <nav id="siteNav">
+      <nav id="siteNav">
       <ul>
         <li><a href="#">Home</a></li>
         <li><a href="#about">About</a></li>
@@ -5463,6 +5665,22 @@ Restaurant — Fire-Cooked, Always</title>
             Order Online
           </span>
         </a>
+
+        <div class="nav-social-row">
+          <a href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M18.9 2H22l-7.6 8.7L23 22h-6.8l-5.3-6.9L4.7 22H1.6l8.1-9.3L1 2h6.9l4.8 6.3L18.9 2Zm-1.2 18h1.9L7.4 4H5.3l12.4 16Z" />
+            </svg></a>
+          <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M13.5 22v-8.5H16l.5-3.5h-3V7.8c0-1 .3-1.7 1.8-1.7H16.6V3.1C16 3 15 2.9 13.9 2.9c-2.5 0-4.2 1.5-4.2 4.3V10H7v3.5h2.7V22h3.8Z" />
+            </svg></a>
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+              <rect x="3" y="3" width="18" height="18" rx="5" />
+              <circle cx="12" cy="12" r="4" />
+              <circle cx="17.2" cy="6.8" r="1" />
+            </svg></a>
+        </div>
       </ul>
 
     </nav>
